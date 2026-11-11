@@ -1,43 +1,56 @@
 /* ---------- Farben ---------- */
-:root {
-  --bg: #f6f6f4;
-  --card: #ffffff;
-  --text: #1f2328;
-  --muted: #6b7280;
-  --line: #e4e4e0;
-  --accent: #1f2328;
-  --accent-text: #ffffff;
+:root, ::backdrop {
+  --bg: #f5f3f3;
+  --card: #f8f7f3;
+  --text: #37383c;
+  --muted: #4a4c53;
+  --line: #DDD6C4;
+  --accent: #000000;
+  --accent-text: #FFFDF7;
+  --focus: #5A7FA3;   /* Fokusrahmen */
+  --shadow: rgb(95 95 95 / 0.25);
+  --backdrop: rgb(60 56 56 / 0.51);
+  --ok: #679F7B;      /* Sync-Punkt "synchronisiert" */
   --radius: 14px;
-  --due: #c81e1e;     /* Rot für ToDos, die morgen, heute oder überfällig sind */
-  --due-on: #ffffff;  /* Schrift auf rotem Grund */
+  --due: #e70a07;     /* Rot für ToDos, die morgen, heute oder überfällig sind */
+  --due-on: #FFFDF7;  /* Schrift auf rotem Grund */
 
   /* Semesterfarben: hier ändern, wenn du andere Farben möchtest */
-  --s1: #16a34a;  /* 1. Semester: grün */
-  --s2: #2563eb;  /* 2. Semester: blau */
-  --s3: #7c3aed;  /* 3. Semester: violett */
-  --s4: #d97706;  /* 4. Semester: orange */
-  --s5: #e11d48;  /* 5. Semester: rot */
-  --s6: #0d9488;  /* 6. Semester: türkis */
-  --s7: #4f46e5;
-  --s8: #65a30d;
-  --s9: #c026d3;
-  --s10: #475569;
-  --tint: 9%;
+  --s1: #6aa84f;  /* 1. Semester: grün */
+  --s2: #215b91;  /* 2. Semester: blau */
+  --s3: #e06666;  /* 3. Semester: pflaume */
+  --s4: #f1c232;  /* 4. Semester: orange */
+  --s5: #6c63a2;  /* 5. Semester: rot */
+  --s6: #ce7e00;  /* 6. Semester: petrol */
+  --s7: #1F2A62;
+  --s8: #F4C14A;
+  --s9: #B0C9A5;
+  --s10: #6B7A93;
+  /* Schriftfarbe auf der jeweiligen Semesterfarbe */
+  --on-s1: #1F2A62; --on-s2: #FFFDF7; --on-s3: #FFFDF7; --on-s4: #1F2A62; --on-s5: #FFFDF7;
+  --on-s6: #FFFDF7; --on-s7: #FFFDF7; --on-s8: #1F2A62; --on-s9: #1F2A62; --on-s10: #FFFDF7;
+  --tint: 10%;
 }
 @media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #131416;
-    --card: #1c1e21;
-    --text: #ececec;
-    --muted: #9ca3af;
-    --line: #2c2f33;
-    --accent: #ececec;
-    --accent-text: #131416;
-    --due: #f87171;
-    --due-on: #131416;
-    --s1: #4ade80; --s2: #60a5fa; --s3: #a78bfa; --s4: #fbbf24; --s5: #fb7185;
-    --s6: #2dd4bf; --s7: #818cf8; --s8: #a3e635; --s9: #e879f9; --s10: #94a3b8;
-    --tint: 13%;
+  :root, ::backdrop {
+    --bg: #161617;
+    --card: #212123;
+    --text: #E4E8F7;
+    --muted: #9EA8BA;
+    --line: #37373B;
+    --accent: #F8F7F3;
+    --accent-text: #161617;
+    --focus: #6FA3D8;
+    --shadow: rgb(0 0 0 / 0.45);
+    --backdrop: rgb(0 0 0 / 0.6);
+    --ok: #8FC477;
+    --due: #FF7B75;
+    --due-on: #161617;
+    --s1: #8FC477; --s2: #6FA3D8; --s3: #EC8A8A; --s4: #F3CD55; --s5: #A29BD4;
+    --s6: #E59A2E; --s7: #8E9BD9; --s8: #F4C14A; --s9: #BCD3B2; --s10: #9AA6BA;
+    --on-s1: #161617; --on-s2: #161617; --on-s3: #161617; --on-s4: #161617; --on-s5: #161617;
+    --on-s6: #161617; --on-s7: #161617; --on-s8: #161617; --on-s9: #161617; --on-s10: #161617;
+    --tint: 14%;
   }
 }
 
@@ -76,8 +89,8 @@ button { cursor: pointer; }
 
 .sync { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); flex-shrink: 0; }
 .sync .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--muted); }
-.sync .dot.on { background: var(--s1); }
-.sync .dot.err { background: var(--s5); }
+.sync .dot.on { background: var(--ok); }
+.sync .dot.err { background: var(--due); }
 .btn {
   border: 1px solid var(--line); background: var(--card); border-radius: 999px;
   padding: 7px 14px; font-size: 13px; font-weight: 600;
@@ -94,7 +107,7 @@ button { cursor: pointer; }
 }
 .search:focus-visible, .todo-add:focus-within, .sem:focus-visible, .btn:focus-visible,
 .chip:focus-visible, .card-title:focus-visible, .sec-head:focus-visible, .all-toggle:focus-visible, .brand a:focus-visible {
-  outline: 2px solid var(--s2); outline-offset: 2px;
+  outline: 2px solid var(--focus); outline-offset: 2px;
 }
 .chips-row { display: flex; align-items: center; gap: 10px; min-width: 0; flex: 1; }
 .chips-label { font-size: 12px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
@@ -175,9 +188,8 @@ main { padding-top: 16px; padding-bottom: 40px; min-height: 60vh; }
   background: var(--card); font-weight: 700; font-size: 15px;
   -webkit-appearance: none; appearance: none; padding: 0 4px;
 }
-.card.has-sem .sem { background: var(--sem); color: #fff; border-color: var(--sem); }
-@media (prefers-color-scheme: dark) { .card.has-sem .sem { color: #111; } }
-.sem option { color: initial; background: initial; }
+.card.has-sem .sem { background: var(--sem); color: var(--on-sem, var(--accent-text)); border-color: var(--sem); }
+.sem option { color: var(--text); background: var(--card); }
 
 .meta { display: flex; flex-wrap: wrap; gap: 2px 12px; font-size: 12.5px; color: var(--muted); align-items: center; }
 .meta .kind { font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text); }
@@ -192,8 +204,8 @@ main { padding-top: 16px; padding-bottom: 40px; min-height: 60vh; }
   border: 1.5px solid color-mix(in srgb, var(--text) 45%, transparent); background: var(--card);
   display: grid; place-content: center; cursor: pointer;
 }
-.todos input[type="checkbox"]:checked { background: var(--text); border-color: var(--text); }
-.todos input[type="checkbox"]:checked::after { content: ""; width: 9px; height: 5px; border-left: 2px solid var(--card); border-bottom: 2px solid var(--card); transform: rotate(-45deg) translate(1px, -1px); }
+.todos input[type="checkbox"]:checked { background: var(--accent); border-color: var(--accent); }
+.todos input[type="checkbox"]:checked::after { content: ""; width: 9px; height: 5px; border-left: 2px solid var(--accent-text); border-bottom: 2px solid var(--accent-text); transform: rotate(-45deg) translate(1px, -1px); }
 .todos li.done label span { text-decoration: line-through; }
 .todos li.urgent input[type="checkbox"] { border-color: var(--due); }
 .todos li.urgent input[type="checkbox"]:checked { background: var(--due); }
@@ -207,7 +219,7 @@ main { padding-top: 16px; padding-bottom: 40px; min-height: 60vh; }
 }
 .datebtn input::-webkit-calendar-picker-indicator { position: absolute; inset: 0; width: auto; height: auto; margin: 0; padding: 0; cursor: pointer; }
 .datebtn:hover, .datebtn:focus-within, .due-clear:hover, .add-btn:hover { background: color-mix(in srgb, var(--text) 9%, transparent); }
-.due-clear:focus-visible, .add-btn:focus-visible { outline: 2px solid var(--s2); outline-offset: 1px; }
+.due-clear:focus-visible, .add-btn:focus-visible { outline: 2px solid var(--focus); outline-offset: 1px; }
 
 .todo-meta { flex: 0 0 100%; min-width: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 0 8px; padding-left: 28px; margin-top: -3px; font-size: 12.5px; color: var(--muted); }
 .due { height: 24px; padding: 0 6px; margin-left: -6px; font-size: 12.5px; color: var(--muted); }
@@ -229,6 +241,7 @@ main { padding-top: 16px; padding-bottom: 40px; min-height: 60vh; }
   padding: 0 4px 0 10px; font-size: 16px; /* 16px verhindert das Zoomen in iOS */
 }
 .todo-add input::placeholder { color: var(--muted); font-size: 13.5px; }
+.search::placeholder, .add-custom input::placeholder { color: var(--muted); }
 .datebtn.new { height: 28px; min-width: 30px; padding: 0 7px; color: var(--muted); font-size: 12.5px; font-weight: 600; }
 .datebtn.new.has { color: var(--text); }
 .datebtn.new:not(.has) + .due-clear { display: none; }
@@ -245,9 +258,9 @@ main { padding-top: 16px; padding-bottom: 40px; min-height: 60vh; }
 .detail {
   border: 0; padding: 0; color: var(--text); background: var(--card);
   width: min(760px, calc(100vw - 32px)); max-height: min(86vh, 900px);
-  border-radius: 18px; box-shadow: 0 24px 80px rgba(0, 0, 0, 0.3);
+  border-radius: 18px; box-shadow: 0 24px 80px var(--shadow);
 }
-.detail::backdrop { background: rgba(0, 0, 0, 0.45); }
+.detail::backdrop { background: var(--backdrop); }
 .detail-inner { display: flex; flex-direction: column; max-height: inherit; }
 .detail-head { display: flex; gap: 12px; align-items: flex-start; padding: 20px 22px 14px; border-bottom: 1px solid var(--line); border-top: 6px solid var(--sem, var(--line)); }
 .detail-head h2 { margin: 0; font-size: 19px; line-height: 1.25; flex: 1; letter-spacing: -0.015em; }
@@ -267,7 +280,7 @@ main { padding-top: 16px; padding-bottom: 40px; min-height: 60vh; }
 }
 .datebtn.exam:not(.none) { border-style: solid; border-color: var(--line); font-weight: 600; }
 .datebtn.exam.none { color: var(--muted); }
-.datebtn.exam:focus-within { outline: 2px solid var(--s2); outline-offset: 2px; }
+.datebtn.exam:focus-within { outline: 2px solid var(--focus); outline-offset: 2px; }
 .facts.exams .due-clear { width: 30px; height: 30px; }
 .due-clear[hidden] { display: none; }
 .detail-body h3 { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin: 20px 0 6px; }
@@ -288,7 +301,7 @@ main { padding-top: 16px; padding-bottom: 40px; min-height: 60vh; }
   background: var(--accent); color: var(--accent-text);
   border-radius: 999px; padding: 9px 9px 9px 16px; font-size: 14px;
   display: flex; align-items: center; gap: 12px; max-width: calc(100vw - 32px);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 8px 30px var(--shadow);
 }
 .toast[hidden] { display: none; }
 .toast span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }

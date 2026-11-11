@@ -180,7 +180,7 @@
     if (m.exam) meta.push(`<span class="sep">${esc(m.exam)}</span>`);
     if (m.graded === false) meta.push('<span class="sep">unbenotet</span>');
     return `
-      <article class="card${s ? ' has-sem' : ''}" data-id="${esc(m.id)}"${s ? ` style="--sem:var(--s${s})"` : ''}>
+      <article class="card${s ? ' has-sem' : ''}" data-id="${esc(m.id)}"${s ? ` style="--sem:var(--s${s});--on-sem:var(--on-s${s})"` : ''}>
         <div class="card-head">
           <button class="card-title" data-act="detail" title="Details anzeigen">${esc(m.title)}</button>
           ${semSelect(m)}
