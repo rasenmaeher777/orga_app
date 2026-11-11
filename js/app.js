@@ -550,8 +550,8 @@
       if (status === 'local') el.innerHTML = '<span class="dot"></span><span title="Daten liegen nur in diesem Browser. Sync: siehe README.">Nur auf diesem Gerät</span>';
       else if (status === 'loading') el.innerHTML = '<span class="dot"></span><span>Verbinde …</span>';
       else if (status === 'out') el.innerHTML = '<button class="btn primary" data-sync="in">Mit Google anmelden</button>';
-      else if (status === 'in') el.innerHTML = `<span class="dot on"></span><span title="${esc(user.email || '')}">Synchronisiert</span><button class="btn ghost" data-sync="out">Abmelden</button>`;
-      else el.innerHTML = '<span class="dot err"></span><span>Sync nicht erreichbar</span><button class="btn ghost" data-sync="retry">Neu laden</button>';
+      else if (status === 'in') el.innerHTML = `<span class="dot on"></span><span title="Synchronisiert${user.email ? ' · ' + esc(user.email) : ''}">Sync.</span><button class="btn ghost" data-sync="out">Abmelden</button>`;
+      else el.innerHTML = '<span class="dot err"></span><span title="Sync nicht erreichbar">Sync-Fehler</span><button class="btn ghost" data-sync="retry">Neu laden</button>';
     }
 
     function prepare(patch) {
