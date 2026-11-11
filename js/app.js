@@ -1,4 +1,4 @@
-/* Studienplan – Module, Semester und ToDos.
+/* Uni Organisator – Module, Semester und ToDos.
    Aufbau:
    1. Zustand (Semester, ToDos, eigene Module) + Speichern
    2. Darstellung (Filter, Bereiche, Kästchen, Detailansicht)
@@ -11,23 +11,55 @@
   const AREAS = window.AREAS || [];
   const LS_STATE = 'uniapp-state-v1';
   const LS_OPEN = 'uniapp-open-v1';
+  const LS_ALL = 'uniapp-alltodos-v1';
   const MAX_SEM = 10;
 
   const $ = (sel, root = document) => root.querySelector(sel);
   const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
 
+  /* ---------- Datum (immer lokale Zeit, nie toISOString/UTC) ---------- */
+
+  const pad = (n) => String(n).padStart(2, '0');
+  const ymd = (d) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+  const fromYmd = (s) => { const [y, m, d] = s.split('-').map(Number); return new Date(y, m - 1, d); };
+  // gibt "YYYY-MM-DD" zurück, wenn es ein echtes Kalenderdatum ist, sonst ''
+  function validDue(v) {
+    if (typeof v !== 'string' || !/^2\d{3}-\d{2}-\d{2}$/.test(v)) return '';
+    return ymd(fromYmd(v)) === v ? v : '';
+  }
+  function dayInfo() {
+    const n = new Date();
+    return { today: ymd(n), tomorrow: ymd(new Date(n.getFullYear(), n.getMonth(), n.getDate() + 1)), year: n.getFullYear() };
+  }
+  let now = dayInfo(); // wird bei jedem Zeichnen aktualisiert
+  const fmtLong = new Intl.DateTimeFormat('de-DE', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+  const fmtShort = new Intl.DateTimeFormat('de-DE', { weekday: 'short', day: '2-digit', month: '2-digit' });
+  const fmtShortYear = new Intl.DateTimeFormat('de-DE', { weekday: 'short', day: '2-digit', month: '2-digit', year: 'numeric' });
+  // "Fr., 13.11." – mit Jahreszahl, wenn die Frist nicht im laufenden Jahr liegt
+  const dueText = (due) => { const d = fromYmd(due); return (d.getFullYear() === now.year ? fmtShort : fmtShortYear).format(d); };
+  // Fristen von heute, morgen und aus der Vergangenheit werden hervorgehoben
+  const dueStatus = (due) => (!due ? '' : due < now.today ? 'überfällig' : due === now.today ? 'heute' : due === now.tomorrow ? 'morgen' : '');
+  // nach Frist aufsteigend, ohne Frist ans Ende (sort() ist stabil, die Reihenfolge der Eingabe bleibt sonst erhalten)
+  const byDue = (a, b) => { const x = a.due || '9', y = b.due || '9'; return x < y ? -1 : x > y ? 1 : 0; };
+
   /* ---------- 1. Zustand ---------- */
 
   // sem:    { modulId: 1..10 | 0 }   (0 = bewusst ohne Semester; fehlt der Eintrag, gilt der Studienverlaufsplan)
-  // todos:  { modulId: [{ id, text }] }
+  // todos:  { modulId: [{ id, text, due? }] }   (due = Frist "YYYY-MM-DD"; ohne Frist fehlt das Feld)
   // custom: { modulId: { title, lp } } (selbst angelegte Module im Wahlbereich)
+  // Firestore lehnt undefined ab: due wird nur gesetzt, wenn es eine gültige Frist gibt
+  function todoItem(id, text, due) {
+    const item = { id, text };
+    if (validDue(due)) item.due = due;
+    return item;
+  }
   function normalize(raw) {
     const s = raw && typeof raw === 'object' ? raw : {};
     const out = { sem: {}, todos: {}, custom: {} };
     for (const [k, v] of Object.entries(s.sem || {})) if (Number.isInteger(v) && v >= 0 && v <= MAX_SEM) out.sem[k] = v;
     for (const [k, v] of Object.entries(s.todos || {})) {
-      if (Array.isArray(v)) out.todos[k] = v.filter((t) => t && typeof t.text === 'string').map((t) => ({ id: String(t.id || uid()), text: t.text }));
+      if (Array.isArray(v)) out.todos[k] = v.filter((t) => t && typeof t.text === 'string').map((t) => todoItem(String(t.id || uid()), t.text, t.due));
     }
     for (const [k, v] of Object.entries(s.custom || {})) if (v && typeof v.title === 'string') out.custom[k] = { title: v.title, lp: Number(v.lp) || 0 };
     return out;
@@ -40,8 +72,10 @@
   }
 
   let state = loadLocal();
-  const ui = { filter: 'all', q: '', open: new Set(['Pflichtbereich']) };
+  // done: gerade abgehakte ToDos, die noch kurz durchgestrichen zu sehen sind
+  const ui = { filter: 'all', q: '', open: new Set(['Pflichtbereich']), allOpen: false, done: new Set() };
   try { const o = JSON.parse(localStorage.getItem(LS_OPEN)); if (Array.isArray(o)) ui.open = new Set(o); } catch { /* Standard */ }
+  try { ui.allOpen = localStorage.getItem(LS_ALL) === '1'; } catch { /* Standard */ }
 
   const customModules = () => Object.entries(state.custom).map(([id, c]) => ({ id, title: c.title, lp: c.lp, kind: 'Wahl', areas: ['Wahlbereich'], custom: true }));
   const allModules = () => MODULES.concat(customModules());
@@ -85,9 +119,50 @@
     return `<select class="sem" data-sem="${esc(m.id)}" aria-label="Semester für ${esc(m.title)}" title="Semester">${opts}</select>`;
   }
 
+  const ICON_CAL = '<svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><rect x="2" y="3" width="12" height="11" rx="2.5"/><path d="M2 6.5h12M5.5 1.5v3M10.5 1.5v3"/></svg>';
+  const ICON_PLUS = '<svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 3v10M3 8h10"/></svg>';
+
+  // Fristanzeige eines ToDos. Darüber liegt ein unsichtbares Datumsfeld (siehe .datebtn in style.css),
+  // ein Klick oder Tipp öffnet also direkt die Datumsauswahl des Geräts.
+  const dueClass = (due) => { const st = dueStatus(due); return `datebtn due${due ? '' : ' none'}${st ? ' urgent' : ''}${st === 'morgen' ? ' soon' : ''}`; };
+  const dueInner = (due) => { const st = dueStatus(due); return (st ? `<b class="due-tag">${st}</b>` : ICON_CAL) + (due ? `<span>${esc(dueText(due))}</span>` : ''); };
+  // im schmalen Formular "ToDo hinzufügen" ohne Wochentag: "13.11."
+  const newDueInner = (due) => ICON_CAL + (due ? `<span>${esc(`${due.slice(8)}.${due.slice(5, 7)}.${due.startsWith(now.year + '-') ? '' : due.slice(0, 4)}`)}</span>` : '');
+
+  function todoRow(m, t, withModule) {
+    const done = ui.done.has(t.id);
+    const dateBtn = `<span class="${dueClass(t.due)}" data-due-for="${esc(t.id)}" title="${t.due ? 'Frist ändern' : 'Frist festlegen'}"><span class="due-label">${dueInner(t.due)}</span><input type="date" data-due="${esc(t.id)}" value="${esc(t.due || '')}" aria-label="Frist für ${esc(t.text)} ${t.due ? 'ändern' : 'festlegen'}"></span>`;
+    const meta = [];
+    if (t.due) meta.push(dateBtn, `<button class="due-clear" data-act="clear-due" data-todo-id="${esc(t.id)}" aria-label="Frist für ${esc(t.text)} entfernen" title="Frist entfernen">×</button>`);
+    if (withModule) meta.push(`<span class="todo-mod">${esc(m.title)}</span>`);
+    return `<li class="${dueStatus(t.due) ? 'urgent' : ''}${done ? ' done' : ''}" data-mod="${esc(m.id)}">
+        <label><input type="checkbox" data-todo="${esc(t.id)}"${done ? ' checked disabled' : ''}><span>${esc(t.text)}</span></label>
+        ${t.due ? '' : dateBtn}
+        ${meta.length ? `<div class="todo-meta">${meta.join('')}</div>` : ''}
+      </li>`;
+  }
+
+  // Kopfzeile des Inhalts: heutiges Datum und aufklappbare Liste aller offenen ToDos
+  function todayHtml() {
+    const rows = [];
+    for (const m of allModules()) for (const t of todosOf(m.id)) rows.push({ m, t });
+    rows.sort((a, b) => byDue(a.t, b.t));
+    const list = rows.length
+      ? `<ul class="todos all-list">${rows.map((r) => todoRow(r.m, r.t, true)).join('')}</ul>`
+      : '<p class="note">Keine offenen ToDos.</p>';
+    return `
+      <section class="today">
+        <div class="today-row">
+          <time class="today-date" datetime="${now.today}">${esc(fmtLong.format(new Date()))}</time>
+          <button class="all-toggle" data-act="toggle-all" data-focus="all-toggle" aria-expanded="${ui.allOpen}"><span class="chev"></span>Alle ToDos (${rows.length})</button>
+        </div>
+        ${ui.allOpen ? `<div class="all-panel">${list}</div>` : ''}
+      </section>`;
+  }
+
   function cardHtml(m, secIdx) {
     const s = semOf(m);
-    const todos = todosOf(m.id);
+    const todos = todosOf(m.id).slice().sort(byDue);
     const meta = [`<span class="kind">${esc(m.kind)}</span>`];
     if (m.lp) meta.push(`<span class="sep">${m.lp} LP</span>`);
     if (m.exam) meta.push(`<span class="sep">${esc(m.exam)}</span>`);
@@ -99,8 +174,13 @@
           ${semSelect(m)}
         </div>
         <div class="meta">${meta.join('')}</div>
-        ${todos.length ? `<ul class="todos">${todos.map((t) => `<li><label><input type="checkbox" data-todo="${esc(t.id)}"><span>${esc(t.text)}</span></label></li>`).join('')}</ul>` : ''}
-        <form class="todo-add" data-act="add-todo"><input name="text" data-focus="todo:${esc(m.id)}:${secIdx}" placeholder="ToDo hinzufügen …" aria-label="ToDo für ${esc(m.title)} hinzufügen" autocomplete="off" enterkeyhint="done" maxlength="300"></form>
+        ${todos.length ? `<ul class="todos">${todos.map((t) => todoRow(m, t, false)).join('')}</ul>` : ''}
+        <form class="todo-add" data-act="add-todo">
+          <input name="text" data-focus="todo:${esc(m.id)}:${secIdx}" placeholder="ToDo hinzufügen …" aria-label="ToDo für ${esc(m.title)} hinzufügen" autocomplete="off" enterkeyhint="done" maxlength="300">
+          <span class="datebtn new" title="Frist (optional)"><span class="due-label">${ICON_CAL}</span><input type="date" name="due" data-focus="tododue:${esc(m.id)}:${secIdx}" aria-label="Frist für das neue ToDo (optional)"></span>
+          <button type="button" class="due-clear" data-act="clear-new-due" aria-label="Frist wieder entfernen" title="Frist entfernen">×</button>
+          <button class="add-btn" aria-label="ToDo hinzufügen" title="ToDo hinzufügen">${ICON_PLUS}</button>
+        </form>
         ${m.custom ? '<button class="remove" data-act="remove-custom">Modul entfernen</button>' : ''}
       </article>`;
   }
@@ -109,15 +189,27 @@
     return list.slice().sort((a, b) => (semOf(a) || 99) - (semOf(b) || 99) || a.title.localeCompare(b.title, 'de'));
   }
 
+  // Solange ein Datumsfeld den Fokus hat (Datumsauswahl offen), wird nicht neu gezeichnet:
+  // sonst würde die Auswahl mitten in der Bedienung geschlossen. Nachgeholt wird beim Verlassen des Feldes.
+  let renderPending = false;
+  const dateBusy = () => { const a = document.activeElement; return !!a && a.tagName === 'INPUT' && a.type === 'date'; };
+  function refresh() {
+    if (dateBusy()) { renderPending = true; return; }
+    render();
+  }
+
   function render() {
-    // Fokus und Eingabe merken, damit beim Neuzeichnen (z. B. durch Sync) nichts verloren geht
+    renderPending = false;
+    now = dayInfo();
+    // Fokus und angefangene Eingaben merken, damit beim Neuzeichnen (z. B. durch Sync) nichts verloren geht
     const active = document.activeElement;
-    const keep = active && active.dataset && active.dataset.focus ? { key: active.dataset.focus, value: active.value, pos: active.selectionStart } : null;
+    const keep = active && active.dataset && active.dataset.focus ? { key: active.dataset.focus, pos: active.selectionStart } : null;
+    const drafts = [...document.querySelectorAll('#main input[data-focus]')].filter((el) => el.value).map((el) => [el.dataset.focus, el.value]);
 
     renderChips();
     const filtering = ui.filter !== 'all' || !!ui.q;
     const custom = customModules();
-    let html = '';
+    let html = todayHtml();
     let shown = 0;
 
     AREAS.forEach((area, idx) => {
@@ -152,10 +244,30 @@
     if (!shown && filtering) html += '<p class="empty">Keine Module für diese Auswahl.</p>';
     $('#main').innerHTML = html;
 
+    for (const [key, value] of drafts) {
+      const el = document.querySelector(`[data-focus="${CSS.escape(key)}"]`);
+      if (el) { el.value = value; if (el.type === 'date') paintNewDue(el); }
+    }
     if (keep) {
       const el = document.querySelector(`[data-focus="${CSS.escape(keep.key)}"]`);
-      if (el) { el.value = keep.value; el.focus({ preventScroll: true }); try { el.setSelectionRange(keep.pos, keep.pos); } catch { /* number-Felder */ } }
+      if (el) { el.focus({ preventScroll: true }); try { el.setSelectionRange(keep.pos, keep.pos); } catch { /* Felder ohne Textcursor */ } }
     }
+  }
+
+  // Anzeige neben dem Datumsfeld im Formular "ToDo hinzufügen" aktualisieren
+  function paintNewDue(input) {
+    const due = validDue(input.value);
+    const box = input.parentElement;
+    box.classList.toggle('has', !!due);
+    $('.due-label', box).innerHTML = newDueInner(due);
+  }
+  // Fristanzeige eines ToDos an Ort und Stelle aktualisieren (in allen sichtbaren Kopien), ohne neu zu zeichnen
+  function paintDue(todoId, due) {
+    document.querySelectorAll(`[data-due-for="${CSS.escape(todoId)}"]`).forEach((box) => {
+      box.className = dueClass(due);
+      $('.due-label', box).innerHTML = dueInner(due);
+      box.closest('li').classList.toggle('urgent', !!dueStatus(due));
+    });
   }
 
   const fact = (label, value) => `<div><dt>${esc(label)}</dt><dd>${esc(value || '–')}</dd></div>`;
@@ -211,12 +323,20 @@
   // Änderung übernehmen: lokal speichern, neu zeichnen, an Firestore schicken
   function commit(patch) {
     saveLocal();
-    render();
+    refresh();
     sync.push(patch);
   }
   function setTodos(id, list) {
     if (list.length) state.todos[id] = list; else delete state.todos[id];
     commit({ todos: { [id]: list } });
+  }
+  // Frist eines ToDos setzen (due = "YYYY-MM-DD") oder entfernen (due = '')
+  function setDue(modId, todoId, due) {
+    const before = todosOf(modId);
+    const old = before.find((x) => x.id === todoId);
+    if (!old || (old.due || '') === due) return;
+    paintDue(todoId, due);
+    setTodos(modId, before.map((x) => (x === old ? todoItem(x.id, x.text, due) : x)));
   }
 
   const main = $('#main');
@@ -231,6 +351,21 @@
       ui.open.has(a) ? ui.open.delete(a) : ui.open.add(a);
       try { localStorage.setItem(LS_OPEN, JSON.stringify([...ui.open])); } catch { /* egal */ }
       render();
+    } else if (el.dataset.act === 'toggle-all') {
+      ui.allOpen = !ui.allOpen;
+      try { localStorage.setItem(LS_ALL, ui.allOpen ? '1' : '0'); } catch { /* egal */ }
+      render();
+    } else if (el.dataset.act === 'clear-due') {
+      const modId = el.closest('[data-mod]').dataset.mod;
+      const todoId = el.dataset.todoId;
+      const old = todosOf(modId).find((x) => x.id === todoId);
+      if (!old || !old.due) return;
+      setDue(modId, todoId, '');
+      toast('Frist entfernt', () => setDue(modId, todoId, old.due));
+    } else if (el.dataset.act === 'clear-new-due') {
+      const input = el.closest('form').elements.due;
+      input.value = '';
+      paintNewDue(input);
     } else if (el.dataset.act === 'detail' && card) {
       openDetail(card.dataset.id);
     } else if (el.dataset.act === 'remove-custom' && card) {
@@ -253,12 +388,21 @@
       const id = t.dataset.sem;
       state.sem[id] = Number(t.value);
       commit({ sem: { [id]: state.sem[id] } });
+    } else if (t.matches('input[data-due]')) {
+      // Frist eines bestehenden ToDos geändert. Leer = Frist entfernt (z. B. "Zurücksetzen" in der Datumsauswahl).
+      // Unfertige Zwischenstände beim Tippen (Jahr "0002") werden übersprungen.
+      if (t.value && !validDue(t.value)) return;
+      setDue(t.closest('[data-mod]').dataset.mod, t.dataset.due, t.value);
+    } else if (t.matches('.todo-add input[type="date"]')) {
+      paintNewDue(t);
     } else if (t.matches('input[data-todo]')) {
-      const id = t.closest('.card').dataset.id;
+      const id = t.closest('[data-mod]').dataset.mod;
       const todoId = t.dataset.todo;
-      // in allen sichtbaren Kopien des Kästchens ausblenden, dann entfernen
+      // in allen sichtbaren Kopien (Kästchen und Gesamtliste) ausblenden, dann entfernen
+      ui.done.add(todoId);
       document.querySelectorAll(`input[data-todo="${CSS.escape(todoId)}"]`).forEach((cb) => { cb.checked = true; cb.disabled = true; cb.closest('li').classList.add('done'); });
       setTimeout(() => {
+        ui.done.delete(todoId);
         const before = todosOf(id);
         const index = before.findIndex((x) => x.id === todoId);
         if (index < 0) return;
@@ -278,10 +422,12 @@
     const form = e.target;
     if (form.dataset.act === 'add-todo') {
       const text = form.elements.text.value.trim();
-      if (!text) return;
+      if (!text) { form.elements.text.focus(); return; }
       const id = form.closest('.card').dataset.id;
-      form.elements.text.value = '';
-      setTodos(id, todosOf(id).concat({ id: uid(), text }));
+      const due = form.elements.due.value;
+      if (document.activeElement === form.elements.due) form.elements.text.focus({ preventScroll: true }); // Enter im Datumsfeld
+      form.reset();
+      setTodos(id, todosOf(id).concat(todoItem(uid(), text, due)));
     } else if (form.dataset.act === 'add-custom') {
       const title = form.elements.title.value.trim();
       if (!title) return;
@@ -311,8 +457,26 @@
   const dlg = $('#detail');
   dlg.addEventListener('click', (e) => { if (e.target === dlg || e.target.closest('[data-act="close"]')) dlg.close(); });
 
+  // Datumsfeld verlassen: aufgeschobenes Neuzeichnen nachholen. Kurz warten, damit der Klick,
+  // der das Feld verlassen hat, noch sein Ziel trifft (die Liste wird beim Zeichnen neu sortiert).
+  main.addEventListener('focusout', (e) => {
+    if (renderPending && e.target.matches('input[type="date"]')) setTimeout(() => { if (renderPending) refresh(); }, 300);
+  });
+  // Sicherheitsnetz fürs iPhone: Tipp neben ein noch fokussiertes Datumsfeld gibt den Fokus frei
+  document.addEventListener('pointerdown', (e) => {
+    const a = document.activeElement;
+    if (dateBusy() && a !== e.target) a.blur();
+  }, true);
+
   // Änderungen aus einem anderen Tab desselben Browsers übernehmen
-  window.addEventListener('storage', (e) => { if (e.key === LS_STATE) { state = loadLocal(); render(); } });
+  window.addEventListener('storage', (e) => { if (e.key === LS_STATE) { state = loadLocal(); refresh(); } });
+
+  // Tageswechsel: Seite bleibt über Mitternacht offen oder kommt wieder in den Vordergrund
+  const checkDay = () => { if (ymd(new Date()) !== now.today) refresh(); };
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) checkDay(); });
+  window.addEventListener('pageshow', checkDay);
+  window.addEventListener('focus', checkDay);
+  setInterval(checkDay, 30000);
 
   /* ---------- 4. Firestore-Sync ---------- */
 
@@ -367,7 +531,7 @@
             if (!snap.exists()) { fs.setDoc(ref, state); return; } // erste Anmeldung: lokalen Stand hochladen
             state = normalize(snap.data());
             saveLocal();
-            render();
+            refresh();
             if (status !== 'in') { status = 'in'; draw(); }
           }, (err) => { console.error('Sync-Fehler', err); status = 'error'; draw(); });
         });

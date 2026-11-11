@@ -1,4 +1,4 @@
-# Studienplan – Wirtschaftsinformatik B.Sc. (TU Berlin)
+# Uni Organisator – Wirtschaftsinformatik B.Sc. (TU Berlin)
 
 Web-App für Module, Semesterplanung und ToDos. Reines HTML/CSS/JavaScript ohne Build-Schritt, läuft auf GitHub Pages und ist für MacBook und iPhone ausgelegt.
 
@@ -8,6 +8,10 @@ Web-App für Module, Semesterplanung und ToDos. Reines HTML/CSS/JavaScript ohne 
 - Semesterfeld pro Modul (oben rechts im Kästchen). Das Kästchen wird in der Semesterfarbe eingefärbt. Pflichtmodule starten mit dem Semester aus dem Studienverlaufsplan.
 - „Sortieren": Filter nach Semester, nach „Ohne Semester" und nach „Mit ToDos". Jeder Semester-Chip zeigt die eingeplanten LP.
 - ToDos pro Modul: Text eingeben, Enter. Abhaken lässt das ToDo verschwinden (5 Sekunden lang „Rückgängig" möglich).
+- ToDos mit Frist: Beim Anlegen über das Kalendersymbol neben dem Textfeld ein Datum wählen (optional). Die Frist steht klein unter dem ToDo, z. B. „Fr., 13.11."; ein Tipp darauf ändert sie, das × daneben entfernt sie. ToDos ohne Frist haben rechts ein Kalendersymbol zum Nachtragen. Im Kästchen sind die ToDos nach Frist sortiert, ToDos ohne Frist stehen am Ende.
+- Oben steht das heutige Datum. Daneben klappt „Alle ToDos (Anzahl)" eine Liste aller offenen ToDos aller Module auf, sortiert nach Frist, mit Modultitel und zum Abhaken. Ob die Liste offen ist, merkt sich der Browser.
+- ToDos, die morgen oder heute fällig oder überfällig sind, werden rot hervorgehoben und tragen das Label „morgen", „heute" oder „überfällig". Gerechnet wird in der Ortszeit des Geräts; nach Mitternacht oder wenn die App wieder in den Vordergrund kommt, aktualisiert sich die Anzeige.
+- Link „StuPO (PDF)" im Kopfbereich lädt die Studien- und Prüfungsordnung herunter.
 - Klick auf den Modultitel öffnet die Detailansicht.
 - Wahlbereich: eigene Module (z. B. Sprachkurse) mit Titel und LP anlegen.
 - Suche über alle Module.
@@ -21,6 +25,7 @@ Web-App für Module, Semesterplanung und ToDos. Reines HTML/CSS/JavaScript ohne 
 | `js/app.js` | Logik: Zustand, Darstellung, Bedienung, Sync |
 | `js/firebase-config.js` | Firebase-Zugangsdaten für den Sync (anfangs leer) |
 | `data/modules.js` | Alle Moduldaten, fest im Quellcode |
+| `docs/StuPo.pdf` | Studien- und Prüfungsordnung für den Download-Link (Dateiname mit genau dieser Groß-/Kleinschreibung, GitHub Pages unterscheidet sie) |
 
 ## Lokal ansehen
 
@@ -40,7 +45,7 @@ Dann <http://localhost:8000> öffnen. Ohne Firebase-Konfiguration läuft die App
    ```bash
    git init
    git add .
-   git commit -m "Studienplan-App"
+   git commit -m "Uni Organisator"
    git branch -M main
    git remote add origin https://github.com/DEIN-NAME/UniApp.git
    git push -u origin main
@@ -82,11 +87,13 @@ Gut zu wissen:
 
 - Die Werte in `firebase-config.js` sind keine Geheimnisse und dürfen im öffentlichen Repository stehen. Den Schutz übernehmen die Regeln aus Schritt 5.
 - Bei der ersten Anmeldung wird der lokale Stand dieses Geräts hochgeladen. Existiert in Firestore schon ein Stand, ersetzt er den lokalen.
-- Gespeichert wird ein Dokument unter `users/<deine-uid>/state/main` mit Semestern, ToDos und eigenen Modulen.
+- Gespeichert wird ein Dokument unter `users/<deine-uid>/state/main` mit Semestern, ToDos und eigenen Modulen. Ein ToDo hat die Felder `id`, `text` und optional `due` (Frist als `"YYYY-MM-DD"`; ohne Frist fehlt das Feld).
 
 ## Anpassen (z. B. mit Claude Code)
 
 - **Semesterfarben:** `css/style.css`, Variablen `--s1` … `--s10` (hell und dunkel getrennt).
+- **Farbe für fällige ToDos:** `css/style.css`, Variablen `--due` und `--due-on` (hell und dunkel getrennt).
+- **StuPO austauschen:** neue PDF unter `docs/StuPo.pdf` ablegen. Bei anderem Dateinamen den Link in `index.html` anpassen.
 - **Moduldaten korrigieren:** `data/modules.js`. Jedes Modul hat `title`, `lp`, `exam`, `graded`, `kind`, `areas`, `defaultSemester` und optional `moses` mit den Detailfeldern.
 - **Standard-Semester:** Feld `defaultSemester` im jeweiligen Modul.
 
