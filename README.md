@@ -13,6 +13,7 @@ Web-App für Module, Semesterplanung und ToDos. Reines HTML/CSS/JavaScript ohne 
 - ToDos, die morgen oder heute fällig oder überfällig sind, werden rot hervorgehoben und tragen das Label „morgen", „heute" oder „überfällig". Gerechnet wird in der Ortszeit des Geräts; nach Mitternacht oder wenn die App wieder in den Vordergrund kommt, aktualisiert sich die Anzeige.
 - Link „StuPO (PDF)" im Kopfbereich lädt die Studien- und Prüfungsordnung herunter.
 - Klick auf den Modultitel öffnet die Detailansicht.
+- Klausurtermine: In der Detailansicht stehen unter „Klausurtermin" der 1. und 2. Termin. Ein Tipp auf das Feld öffnet die Datumsauswahl, das × daneben entfernt den Termin. Den Abschnitt gibt es nur bei Modulen mit schriftlicher Prüfung oder Portfolioprüfung und bei selbst angelegten Modulen, also z. B. nicht bei der Bachelorarbeit.
 - Wahlbereich: eigene Module (z. B. Sprachkurse) mit Titel und LP anlegen.
 - Suche über alle Module.
 
@@ -87,7 +88,7 @@ Gut zu wissen:
 
 - Die Werte in `firebase-config.js` sind keine Geheimnisse und dürfen im öffentlichen Repository stehen. Den Schutz übernehmen die Regeln aus Schritt 5.
 - Bei der ersten Anmeldung wird der lokale Stand dieses Geräts hochgeladen. Existiert in Firestore schon ein Stand, ersetzt er den lokalen.
-- Gespeichert wird ein Dokument unter `users/<deine-uid>/state/main` mit Semestern, ToDos und eigenen Modulen. Ein ToDo hat die Felder `id`, `text` und optional `due` (Frist als `"YYYY-MM-DD"`; ohne Frist fehlt das Feld).
+- Gespeichert wird ein Dokument unter `users/<deine-uid>/state/main` mit Semestern, ToDos und eigenen Modulen. Ein ToDo hat die Felder `id`, `text` und optional `due` (Frist als `"YYYY-MM-DD"`; ohne Frist fehlt das Feld). Klausurtermine liegen unter `exams` als `{ modulId: { t1, t2 } }`, ebenfalls als `"YYYY-MM-DD"` und nur, wenn ein Termin eingetragen ist.
 
 ## Anpassen (z. B. mit Claude Code)
 
@@ -96,6 +97,7 @@ Gut zu wissen:
 - **StuPO austauschen:** neue PDF unter `docs/StuPo.pdf` ablegen. Bei anderem Dateinamen den Link in `index.html` anpassen.
 - **Moduldaten korrigieren:** `data/modules.js`. Jedes Modul hat `title`, `lp`, `exam`, `graded`, `kind`, `areas`, `defaultSemester` und optional `moses` mit den Detailfeldern.
 - **Standard-Semester:** Feld `defaultSemester` im jeweiligen Modul.
+- **Welche Module Klausurtermine haben:** `js/app.js`, Liste `KLAUSUR_FORMS` (Prüfungsformen aus dem Feld `exam`).
 
 ## Datenquellen
 

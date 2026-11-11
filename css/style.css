@@ -258,6 +258,18 @@ main { padding-top: 16px; padding-bottom: 40px; min-height: 60vh; }
 .facts div { min-width: 0; }
 .facts dt { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); }
 .facts dd { margin: 2px 0 0; font-size: 14.5px; overflow-wrap: anywhere; }
+/* Klausurtermine: antippbares Feld, darüber liegt das unsichtbare Datumsfeld (siehe .datebtn) */
+.facts.exams { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); margin-bottom: 14px; }
+.facts.exams dd { display: flex; align-items: center; gap: 4px; margin-top: 5px; }
+.datebtn.exam {
+  height: 36px; padding: 0 12px 0 10px; border-radius: 9px; font-size: 14.5px;
+  border: 1px dashed color-mix(in srgb, var(--text) 25%, transparent);
+}
+.datebtn.exam:not(.none) { border-style: solid; border-color: var(--line); font-weight: 600; }
+.datebtn.exam.none { color: var(--muted); }
+.datebtn.exam:focus-within { outline: 2px solid var(--s2); outline-offset: 2px; }
+.facts.exams .due-clear { width: 30px; height: 30px; }
+.due-clear[hidden] { display: none; }
 .detail-body h3 { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin: 20px 0 6px; }
 .detail-body ul { margin: 0; padding-left: 18px; }
 .detail-body li { margin: 3px 0; }
@@ -310,5 +322,7 @@ main { padding-top: 16px; padding-bottom: 40px; min-height: 60vh; }
   .detail-body { padding-left: 16px; padding-right: 16px; }
   .parts .hide-s { display: none; }
   .facts { grid-template-columns: 1fr 1fr; gap: 12px 16px; }
+  .datebtn.exam { height: 40px; }
+  .facts.exams .due-clear { width: 36px; height: 36px; }
 }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }

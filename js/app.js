@@ -24,7 +24,7 @@
   const ymd = (d) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
   const fromYmd = (s) => { const [y, m, d] = s.split('-').map(Number); return new Date(y, m - 1, d); };
   // gibt "YYYY-MM-DD" zurück, wenn es ein echtes Kalenderdatum ist, sonst ''
-  function validDue(v) {
+  function validDate(v) {
     if (typeof v !== 'string' || !/^2\d{3}-\d{2}-\d{2}$/.test(v)) return '';
     return ymd(fromYmd(v)) === v ? v : '';
   }
@@ -48,20 +48,27 @@
   // sem:    { modulId: 1..10 | 0 }   (0 = bewusst ohne Semester; fehlt der Eintrag, gilt der Studienverlaufsplan)
   // todos:  { modulId: [{ id, text, due? }] }   (due = Frist "YYYY-MM-DD"; ohne Frist fehlt das Feld)
   // custom: { modulId: { title, lp } } (selbst angelegte Module im Wahlbereich)
+  // exams:  { modulId: { t1?, t2? } }  (1. und 2. Klausurtermin als "YYYY-MM-DD"; ohne Termin fehlt das Feld)
+  const EXAM_KEYS = ['t1', 't2'];
   // Firestore lehnt undefined ab: due wird nur gesetzt, wenn es eine gültige Frist gibt
   function todoItem(id, text, due) {
     const item = { id, text };
-    if (validDue(due)) item.due = due;
+    if (validDate(due)) item.due = due;
     return item;
   }
   function normalize(raw) {
     const s = raw && typeof raw === 'object' ? raw : {};
-    const out = { sem: {}, todos: {}, custom: {} };
+    const out = { sem: {}, todos: {}, custom: {}, exams: {} };
     for (const [k, v] of Object.entries(s.sem || {})) if (Number.isInteger(v) && v >= 0 && v <= MAX_SEM) out.sem[k] = v;
     for (const [k, v] of Object.entries(s.todos || {})) {
       if (Array.isArray(v)) out.todos[k] = v.filter((t) => t && typeof t.text === 'string').map((t) => todoItem(String(t.id || uid()), t.text, t.due));
     }
     for (const [k, v] of Object.entries(s.custom || {})) if (v && typeof v.title === 'string') out.custom[k] = { title: v.title, lp: Number(v.lp) || 0 };
+    for (const [k, v] of Object.entries(s.exams || {})) {
+      const e = {};
+      for (const key of EXAM_KEYS) if (v && validDate(v[key])) e[key] = v[key];
+      if (Object.keys(e).length) out.exams[k] = e;
+    }
     return out;
   }
   function loadLocal() {
@@ -81,6 +88,11 @@
   const allModules = () => MODULES.concat(customModules());
   const semOf = (m) => (m.id in state.sem ? state.sem[m.id] || null : m.defaultSemester || null);
   const todosOf = (id) => state.todos[id] || [];
+  const examsOf = (id) => state.exams[id] || {};
+  // Nur Module mit Klausur bekommen in der Detailansicht die Klausurtermine. Bei Portfolioprüfungen ist oft
+  // ein schriftlicher Test dabei; eigene Module haben keine Angabe zur Prüfungsform und sind deshalb auch dabei.
+  const KLAUSUR_FORMS = ['Schriftliche Prüfung', 'Portfolioprüfung'];
+  const hasKlausur = (m) => !!m.custom || KLAUSUR_FORMS.includes(m.exam);
 
   /* ---------- 2. Darstellung ---------- */
 
@@ -243,6 +255,7 @@
 
     if (!shown && filtering) html += '<p class="empty">Keine Module für diese Auswahl.</p>';
     $('#main').innerHTML = html;
+    paintExams(); // falls die Detailansicht offen ist und ein Termin z. B. per Sync kam
 
     for (const [key, value] of drafts) {
       const el = document.querySelector(`[data-focus="${CSS.escape(key)}"]`);
@@ -256,7 +269,7 @@
 
   // Anzeige neben dem Datumsfeld im Formular "ToDo hinzufügen" aktualisieren
   function paintNewDue(input) {
-    const due = validDue(input.value);
+    const due = validDate(input.value);
     const box = input.parentElement;
     box.classList.toggle('has', !!due);
     $('.due-label', box).innerHTML = newDueInner(due);
@@ -272,6 +285,31 @@
 
   const fact = (label, value) => `<div><dt>${esc(label)}</dt><dd>${esc(value || '–')}</dd></div>`;
   const bullets = (items) => (Array.isArray(items) ? `<ul>${items.map((i) => `<li>${esc(i)}</li>`).join('')}</ul>` : `<p>${esc(items)}</p>`);
+
+  // Klausurtermin in der Detailansicht: gleiche Technik wie bei den Fristen (.datebtn)
+  const examInner = (date) => ICON_CAL + `<span>${date ? esc(fmtShortYear.format(fromYmd(date))) : 'Termin eintragen'}</span>`;
+  function examsHtml(m) {
+    const e = examsOf(m.id);
+    return `<h3>Klausurtermin</h3><dl class="facts exams">${EXAM_KEYS.map((key, i) => `<div><dt>${i + 1}. Termin</dt><dd>
+        <span class="datebtn exam${e[key] ? '' : ' none'}" data-exam-for="${key}" title="Termin ${e[key] ? 'ändern' : 'eintragen'}"><span class="due-label">${examInner(e[key])}</span><input type="date" data-exam="${key}" value="${esc(e[key] || '')}" aria-label="${i + 1}. Klausurtermin für ${esc(m.title)}"></span>
+        <button class="due-clear" data-act="clear-exam" data-key="${key}" aria-label="${i + 1}. Klausurtermin entfernen" title="Termin entfernen"${e[key] ? '' : ' hidden'}>×</button>
+      </dd></div>`).join('')}</dl>`;
+  }
+  // Anzeige eines Termins in der geöffneten Detailansicht an Ort und Stelle aktualisieren
+  function paintExams() {
+    const dlg = $('#detail');
+    if (!dlg.open) return;
+    const e = examsOf(dlg.dataset.id);
+    dlg.querySelectorAll('[data-exam-for]').forEach((box) => {
+      const date = e[box.dataset.examFor] || '';
+      const input = $('input', box);
+      box.classList.toggle('none', !date);
+      box.title = `Termin ${date ? 'ändern' : 'eintragen'}`;
+      $('.due-label', box).innerHTML = examInner(date);
+      box.nextElementSibling.hidden = !date;
+      if (document.activeElement !== input) input.value = date;
+    });
+  }
 
   function openDetail(id) {
     const m = allModules().find((x) => x.id === id);
@@ -289,6 +327,7 @@
         ${m.custom ? '' : fact('Gültigkeit', d.gueltigkeit) + fact('Sprache', d.sprache) + fact('Lehrsprache', d.lehrsprache)
           + fact('Modulverantwortliche*r', d.verantwortlich) + fact('Fakultät', d.fakultaet) + fact('Institut', d.institut) + fact('Fachgebiet', d.fachgebiet)}
       </dl>`;
+    if (hasKlausur(m)) body += examsHtml(m);
     if (!m.custom) {
       if (!m.moses) body += '<p class="note">Die Details aus Moses (Verantwortliche, Lehrinhalte, Modulbestandteile …) sind für dieses Modul noch nicht hinterlegt.</p>';
       if (d.lernergebnisse && d.lernergebnisse.length) body += `<h3>Lernergebnisse</h3>${bullets(d.lernergebnisse)}`;
@@ -304,6 +343,7 @@
         <div class="detail-head"><h2>${esc(m.title)}<span class="sub">${esc(kind)}</span></h2><button class="close" data-act="close" aria-label="Schließen">×</button></div>
         <div class="detail-body">${body}</div>
       </div>`;
+    dlg.dataset.id = id;
     if (!dlg.open) dlg.showModal();
     $('.detail-body', dlg).scrollTop = 0;
   }
@@ -329,6 +369,14 @@
   function setTodos(id, list) {
     if (list.length) state.todos[id] = list; else delete state.todos[id];
     commit({ todos: { [id]: list } });
+  }
+  // Klausurtermin setzen (date = "YYYY-MM-DD") oder entfernen (date = ''); key ist 't1' oder 't2'
+  function setExam(id, key, date) {
+    const cur = { ...examsOf(id) };
+    if ((cur[key] || '') === date) return;
+    if (date) cur[key] = date; else delete cur[key];
+    if (Object.keys(cur).length) state.exams[id] = cur; else delete state.exams[id];
+    commit({ exams: { [id]: { [key]: date || sync.DELETE } } });
   }
   // Frist eines ToDos setzen (due = "YYYY-MM-DD") oder entfernen (due = '')
   function setDue(modId, todoId, due) {
@@ -370,14 +418,15 @@
       openDetail(card.dataset.id);
     } else if (el.dataset.act === 'remove-custom' && card) {
       const id = card.dataset.id;
-      const backup = { c: state.custom[id], s: state.sem[id], t: state.todos[id] };
-      delete state.custom[id]; delete state.sem[id]; delete state.todos[id];
-      commit({ custom: { [id]: sync.DELETE }, sem: { [id]: sync.DELETE }, todos: { [id]: sync.DELETE } });
+      const backup = { c: state.custom[id], s: state.sem[id], t: state.todos[id], e: state.exams[id] };
+      delete state.custom[id]; delete state.sem[id]; delete state.todos[id]; delete state.exams[id];
+      commit({ custom: { [id]: sync.DELETE }, sem: { [id]: sync.DELETE }, todos: { [id]: sync.DELETE }, exams: { [id]: sync.DELETE } });
       toast('Modul entfernt', () => {
         state.custom[id] = backup.c;
         if (backup.s !== undefined) state.sem[id] = backup.s;
         if (backup.t) state.todos[id] = backup.t;
-        commit({ custom: { [id]: backup.c }, sem: { [id]: backup.s ?? 0 }, todos: { [id]: backup.t || [] } });
+        if (backup.e) state.exams[id] = backup.e;
+        commit({ custom: { [id]: backup.c }, sem: { [id]: backup.s ?? 0 }, todos: { [id]: backup.t || [] }, exams: { [id]: backup.e || sync.DELETE } });
       });
     }
   });
@@ -391,7 +440,7 @@
     } else if (t.matches('input[data-due]')) {
       // Frist eines bestehenden ToDos geändert. Leer = Frist entfernt (z. B. "Zurücksetzen" in der Datumsauswahl).
       // Unfertige Zwischenstände beim Tippen (Jahr "0002") werden übersprungen.
-      if (t.value && !validDue(t.value)) return;
+      if (t.value && !validDate(t.value)) return;
       setDue(t.closest('[data-mod]').dataset.mod, t.dataset.due, t.value);
     } else if (t.matches('.todo-add input[type="date"]')) {
       paintNewDue(t);
@@ -455,11 +504,22 @@
   });
 
   const dlg = $('#detail');
-  dlg.addEventListener('click', (e) => { if (e.target === dlg || e.target.closest('[data-act="close"]')) dlg.close(); });
+  dlg.addEventListener('click', (e) => {
+    const clear = e.target.closest('[data-act="clear-exam"]');
+    if (clear) { setExam(dlg.dataset.id, clear.dataset.key, ''); paintExams(); }
+    else if (e.target === dlg || e.target.closest('[data-act="close"]')) dlg.close();
+  });
+  // Klausurtermin in der Detailansicht geändert. Leer = Termin entfernt; unfertige Zwischenstände beim Tippen überspringen.
+  dlg.addEventListener('change', (e) => {
+    const t = e.target;
+    if (!t.matches('input[data-exam]') || (t.value && !validDate(t.value))) return;
+    setExam(dlg.dataset.id, t.dataset.exam, t.value);
+    paintExams();
+  });
 
   // Datumsfeld verlassen: aufgeschobenes Neuzeichnen nachholen. Kurz warten, damit der Klick,
   // der das Feld verlassen hat, noch sein Ziel trifft (die Liste wird beim Zeichnen neu sortiert).
-  main.addEventListener('focusout', (e) => {
+  document.addEventListener('focusout', (e) => {
     if (renderPending && e.target.matches('input[type="date"]')) setTimeout(() => { if (renderPending) refresh(); }, 300);
   });
   // Sicherheitsnetz fürs iPhone: Tipp neben ein noch fokussiertes Datumsfeld gibt den Fokus frei
