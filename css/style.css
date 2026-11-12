@@ -308,6 +308,69 @@ main { padding-top: 16px; padding-bottom: 40px; min-height: 60vh; }
 .note { color: var(--muted); font-size: 13.5px; }
 .moses-link { display: inline-block; margin-top: 18px; font-size: 14px; font-weight: 600; color: inherit; }
 
+/* ---------- Noten ---------- */
+.today-btns { display: flex; gap: 8px; }
+.meta .grade { color: var(--text); }
+.meta .swap { position: relative; }
+.meta .swap i { visibility: hidden; font-style: normal; }
+.meta .swap span { position: absolute; left: 0; top: 0; white-space: nowrap; }
+/* Note auf dem Kästchen: liegt über der Ecke des Semesterfelds und nimmt keinen Platz ein, das Kästchen bleibt gleich groß */
+.grade-badge {
+  position: absolute; top: 5px; right: 6px; height: 17px; padding: 0 5px; border-radius: 999px;
+  background: var(--card); border: 1px solid var(--line); color: var(--text);
+  font-size: 11px; font-weight: 700; line-height: 15px; font-variant-numeric: tabular-nums; pointer-events: none;
+}
+
+/* Auswahlfeld in der Detailansicht (Pfeil aus zwei Farbverläufen, damit er die Textfarbe übernimmt) */
+.grade-select {
+  height: 36px; min-width: 112px; padding: 0 32px 0 12px; border-radius: 9px;
+  border: 1px solid var(--line); background-color: var(--card); font-size: 16px; font-weight: 600;
+  -webkit-appearance: none; appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, var(--muted) 50%), linear-gradient(135deg, var(--muted) 50%, transparent 50%);
+  background-position: calc(100% - 17px) 50%, calc(100% - 12px) 50%;
+  background-size: 5px 5px; background-repeat: no-repeat;
+}
+.grade-select.none { border-style: dashed; border-color: color-mix(in srgb, var(--text) 25%, transparent); color: var(--muted); font-weight: 400; }
+.grade-select option { color: var(--text); background: var(--card); font-weight: 400; }
+.grade-select:focus-visible, .goal-input:focus-visible, .row-title:focus-visible, .how-toggle:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+/* Notenübersicht (aufklappbar wie "Alle ToDos") */
+.grades { padding: 14px 14px 10px; }
+.grades h3 { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin: 18px 0 6px; }
+.grades .note { margin: 6px 0 0; }
+.stats { grid-template-columns: repeat(4, minmax(0, 1fr)); margin: 0; }
+.stats dd { font-size: 21px; font-weight: 700; letter-spacing: -0.01em; font-variant-numeric: tabular-nums; }
+.stats dd small { font-size: 13px; font-weight: 400; letter-spacing: 0; color: var(--muted); }
+.stats dd.sub { margin: 0; font-size: 12.5px; font-weight: 400; letter-spacing: 0; color: var(--muted); }
+
+.goal { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; }
+.goal-field { display: inline-flex; align-items: center; gap: 10px; font-size: 14.5px; font-weight: 600; }
+.goal-input {
+  width: 96px; height: 38px; border: 1px solid var(--line); background: var(--bg); border-radius: 10px;
+  padding: 0 12px; font-size: 16px; /* 16px verhindert das Zoomen in iOS */ font-weight: 400;
+}
+.goal-input::placeholder { color: var(--muted); }
+.goal-out { flex: 1 1 260px; min-width: 0; margin: 0; font-size: 14.5px; }
+.goal-out:empty { display: none; }
+
+.grade-table td { font-variant-numeric: tabular-nums; }
+.grade-table th:last-child, .grade-table td:last-child { padding-right: 0; }
+.row-title { background: none; border: 0; padding: 0; text-align: left; font-weight: 600; border-radius: 4px; overflow-wrap: anywhere; }
+.row-title:hover { text-decoration: underline; text-underline-offset: 3px; }
+.row-sub { display: none; font-size: 12.5px; color: var(--muted); }
+.grade-val { font-weight: 700; white-space: nowrap; }
+/* Zeilen, die nicht in den Zeugnisschnitt eingehen: blasser und ohne Fettdruck, gestrichene Noten zusätzlich durchgestrichen */
+.grade-table tr:is(.dropped, .custom, .ungraded) :is(td, .row-sub) { color: color-mix(in srgb, var(--text) 68%, transparent); }
+.grade-table tr:is(.dropped, .custom, .ungraded) :is(.row-title, .grade-val) { font-weight: 400; }
+.grade-table tr.dropped .grade-val { text-decoration: line-through; }
+
+.how-toggle { display: inline-flex; align-items: center; gap: 4px; margin-top: 10px; padding: 6px 2px; background: none; border: 0; border-radius: 6px; font-size: 13px; font-weight: 600; color: var(--muted); }
+.how-toggle .chev { width: 8px; height: 8px; border-right: 2px solid var(--muted); border-bottom: 2px solid var(--muted); transform: rotate(-45deg); transition: transform 0.15s; margin-right: 6px; }
+.how-toggle[aria-expanded="true"] .chev { transform: rotate(45deg) translate(-2px, -2px); }
+.how { margin: 4px 0 0; padding-left: 18px; font-size: 13.5px; color: var(--muted); }
+.how li { margin: 5px 0; }
+.how b { color: var(--text); font-weight: 600; }
+
 /* ---------- Hinweis (Rückgängig) ---------- */
 .toast {
   position: fixed; left: 50%; transform: translateX(-50%);
@@ -351,5 +414,11 @@ main { padding-top: 16px; padding-bottom: 40px; min-height: 60vh; }
   .facts { grid-template-columns: 1fr 1fr; gap: 12px 16px; }
   .datebtn.exam { height: 40px; }
   .facts.exams .due-clear { width: 36px; height: 36px; }
+  /* Noten: Semester, LP und Status stehen unter dem Modultitel statt in eigenen Spalten */
+  .grade-select, .goal-input { height: 40px; }
+  .row-sub { display: block; }
+  .row-title { padding: 3px 0; }
+  .stats dd { font-size: 19px; }
+  .grade-table th:nth-child(4), .grade-table .grade-val { text-align: right; padding-right: 0; }
 }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }

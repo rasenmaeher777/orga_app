@@ -1,18 +1,22 @@
-/* Uni Organisator – Module, Semester und ToDos.
+/* Uni Organisator – Module, Semester, ToDos und Noten.
    Aufbau:
-   1. Zustand (Semester, ToDos, eigene Module) + Speichern
-   2. Darstellung (Filter, Bereiche, Kästchen, Detailansicht)
+   1. Zustand (Semester, ToDos, eigene Module, Noten) + Speichern
+   2. Darstellung (Filter, Bereiche, Kästchen, Notenübersicht, Detailansicht)
    3. Bedienung (Klicks, Eingaben)
    4. Anmeldung und Firestore-Sync (nur aktiv, wenn js/firebase-config.js ausgefüllt ist;
-      dann ist die App erst nach der Anmeldung sichtbar) */
+      dann ist die App erst nach der Anmeldung sichtbar)
+   Die Notenberechnung selbst steht als reine Funktionen in js/grades.js (window.GRADES). */
 (() => {
   'use strict';
 
   const MODULES = window.MODULES || [];
   const AREAS = window.AREAS || [];
+  const GR = window.GRADES;
   const LS_STATE = 'uniapp-state-v1';
   const LS_OPEN = 'uniapp-open-v1';
   const LS_ALL = 'uniapp-alltodos-v1';
+  const LS_GRADES = 'uniapp-grades-v1'; // Notenübersicht aufgeklappt?
+  const LS_WISH = 'uniapp-wish-v1';     // Wunschschnitt im Zielrechner (nur in diesem Browser)
   const LS_UID = 'uniapp-uid-v1'; // Konto, zu dem der lokal gespeicherte Stand gehört
   const MAX_SEM = 10;
 
@@ -51,6 +55,7 @@
   // todos:  { modulId: [{ id, text, due? }] }   (due = Frist "YYYY-MM-DD"; ohne Frist fehlt das Feld)
   // custom: { modulId: { title, lp } } (selbst angelegte Module im Wahlbereich)
   // exams:  { modulId: { t1?, t2? } }  (1. und 2. Klausurtermin als "YYYY-MM-DD"; ohne Termin fehlt das Feld)
+  // grades: { modulId: 10..40 | 'p' }  (Note als Zehntelnote, 23 = 2,3; 'p' = bestanden ohne Note; ohne Note fehlt der Eintrag)
   const EXAM_KEYS = ['t1', 't2'];
   // Firestore lehnt undefined ab: due wird nur gesetzt, wenn es eine gültige Frist gibt
   function todoItem(id, text, due) {
@@ -60,7 +65,7 @@
   }
   function normalize(raw) {
     const s = raw && typeof raw === 'object' ? raw : {};
-    const out = { sem: {}, todos: {}, custom: {}, exams: {} };
+    const out = { sem: {}, todos: {}, custom: {}, exams: {}, grades: {} };
     for (const [k, v] of Object.entries(s.sem || {})) if (Number.isInteger(v) && v >= 0 && v <= MAX_SEM) out.sem[k] = v;
     for (const [k, v] of Object.entries(s.todos || {})) {
       if (!Array.isArray(v)) continue;
@@ -73,6 +78,7 @@
       for (const key of EXAM_KEYS) if (v && validDate(v[key])) e[key] = v[key];
       if (Object.keys(e).length) out.exams[k] = e;
     }
+    for (const [k, v] of Object.entries(s.grades || {})) if (GR.isValue(v)) out.grades[k] = v;
     return out;
   }
   function loadLocal() {
@@ -84,9 +90,10 @@
 
   let state = loadLocal();
   // done: gerade abgehakte ToDos, die noch kurz durchgestrichen zu sehen sind
-  const ui = { filter: 'all', q: '', open: new Set(['Pflichtbereich']), allOpen: false, done: new Set() };
+  const ui = { filter: 'all', q: '', open: new Set(['Pflichtbereich']), allOpen: false, done: new Set(), gradesOpen: false, howOpen: false, wish: '' };
   try { const o = JSON.parse(localStorage.getItem(LS_OPEN)); if (Array.isArray(o)) ui.open = new Set(o); } catch { /* Standard */ }
   try { ui.allOpen = localStorage.getItem(LS_ALL) === '1'; } catch { /* Standard */ }
+  try { ui.gradesOpen = localStorage.getItem(LS_GRADES) === '1'; ui.wish = localStorage.getItem(LS_WISH) || ''; } catch { /* Standard */ }
 
   const customModules = () => Object.entries(state.custom).map(([id, c]) => ({ id, title: c.title, lp: c.lp, kind: 'Wahl', areas: ['Wahlbereich'], custom: true }));
   const allModules = () => MODULES.concat(customModules());
@@ -97,6 +104,14 @@
   // ein schriftlicher Test dabei; eigene Module haben keine Angabe zur Prüfungsform und sind deshalb auch dabei.
   const KLAUSUR_FORMS = ['Schriftliche Prüfung', 'Portfolioprüfung'];
   const hasKlausur = (m) => !!m.custom || KLAUSUR_FORMS.includes(m.exam);
+  // Noten: benotete Module haben 1,0 bis 4,0, unbenotete nur "bestanden", eigene Module beides.
+  // Ein gespeicherter Wert, der zum Modul nicht passt, gilt als nicht eingetragen.
+  const gradeOptions = (m) => (m.custom ? GR.VALUES.concat(GR.PASSED) : m.graded === false ? [GR.PASSED] : GR.VALUES);
+  const gradeOf = (m) => (gradeOptions(m).includes(state.grades[m.id]) ? state.grades[m.id] : null);
+  const gradeText = (v) => (v === GR.PASSED ? 'bestanden' : GR.fmt1(v));
+  // Eingabe für die Berechnung in js/grades.js: ein Eintrag je Modul mit Note
+  const gradeResult = () => GR.compute(allModules().filter((m) => gradeOf(m) !== null)
+    .map((m) => ({ id: m.id, title: m.title, lp: m.lp || 0, sem: semOf(m) || 0, custom: !!m.custom, areas: m.areas, value: gradeOf(m) })));
 
   /* ---------- 2. Darstellung ---------- */
 
@@ -170,10 +185,87 @@
       <section class="today">
         <div class="today-row">
           <time class="today-date" datetime="${now.today}">${esc(fmtLong.format(new Date()))}</time>
-          <button class="all-toggle" data-act="toggle-all" data-focus="all-toggle" aria-expanded="${ui.allOpen}"><span class="chev"></span>Alle ToDos (${rows.length})</button>
+          <div class="today-btns">
+            <button class="all-toggle" data-act="toggle-all" data-focus="all-toggle" aria-expanded="${ui.allOpen}"><span class="chev"></span>Alle ToDos (${rows.length})</button>
+            <button class="all-toggle" data-act="toggle-grades" data-focus="grades-toggle" aria-expanded="${ui.gradesOpen}"><span class="chev"></span>Noten</button>
+          </div>
         </div>
         ${ui.allOpen ? `<div class="all-panel">${list}</div>` : ''}
+        ${ui.gradesOpen ? gradesHtml() : ''}
       </section>`;
+  }
+
+  // Notenübersicht: Kennzahlen, Zielrechner, Tabelle aller Module mit Note, Erklärtext
+  function gradesHtml() {
+    const r = gradeResult();
+    const how = `<button class="how-toggle" data-act="toggle-how" data-focus="how-toggle" aria-expanded="${ui.howOpen}"><span class="chev"></span>So wird gerechnet</button>${ui.howOpen ? howHtml(r) : ''}`;
+    if (!r.rows.length) {
+      return `<div class="all-panel grades"><p class="note">Noch keine Noten eingetragen. Tippe auf einen Modultitel und wähle in der Detailansicht unter „Note“ deine Note aus.</p>${how}</div>`;
+    }
+    const avgAll = GR.mean2(r.allSum, r.allLp);
+    const avg = GR.mean2(r.countSum, r.countLp);
+    const stat = (label, value, sub = '') => `<div><dt>${label}</dt><dd>${value}</dd>${sub}</div>`;
+    const stats = stat('Bestandene LP', `${r.passedLp} <small>/ ${GR.TOTAL_LP}</small>`)
+      + stat('Schnitt aller Noten', avgAll === null ? '–' : GR.fmt2(avgAll))
+      + stat('Zeugnisschnitt nach § 8 StuPO', avg === null ? '–' : GR.fmt2(avg),
+        avg === null ? '' : `<dd class="sub">voraussichtliche Zeugnisnote ${GR.fmt1(GR.cut1(r.countSum, r.countLp))}</dd>`)
+      + stat('Gezählte LP', r.countLp);
+    const rows = r.rows.slice().sort((a, b) => (a.sem || 99) - (b.sem || 99) || a.title.localeCompare(b.title, 'de')).map((row) => {
+      const status = GR.STATUS[row.status];
+      return `<tr class="${row.status}">
+          <td><button class="row-title" data-act="grade-detail" data-id="${esc(row.id)}" title="Details anzeigen">${esc(row.title)}</button>
+            <span class="row-sub">${row.sem ? `${row.sem}. Sem. · ` : ''}${row.lp} LP · ${status}</span></td>
+          <td class="hide-s">${row.sem || '–'}</td><td class="hide-s">${row.lp}</td>
+          <td class="grade-val">${gradeText(row.value)}</td><td class="hide-s">${status}</td>
+        </tr>`;
+    }).join('');
+    return `<div class="all-panel grades">
+        <dl class="facts stats">${stats}</dl>
+        <h3>Zielrechner</h3>
+        <div class="goal">
+          <label class="goal-field">Wunschschnitt <input class="goal-input" data-focus="wish" inputmode="decimal" autocomplete="off" maxlength="4" placeholder="z. B. 2,0" value="${esc(ui.wish)}"></label>
+          <p class="goal-out" role="status">${goalHtml(r)}</p>
+        </div>
+        <p class="note">Die Bachelorarbeit (12 LP) zählt wie zwei 6-LP-Module.</p>
+        <h3>Module mit Note</h3>
+        <table class="parts grade-table"><thead><tr><th>Modul</th><th class="hide-s">Semester</th><th class="hide-s">LP</th><th>Note</th><th class="hide-s">Status</th></tr></thead><tbody>${rows}</tbody></table>
+        ${how}
+      </div>`;
+  }
+
+  // Ergebnis des Zielrechners (nur feste Texte und Zahlen, keine Nutzereingaben)
+  function goalHtml(r) {
+    const wish = GR.parseWish(ui.wish);
+    const t = GR.target(r, wish ?? 10);
+    if (t.kind === 'done') {
+      const avg = GR.mean2(r.countSum, r.countLp);
+      return `Alle zählenden Leistungen sind eingetragen.${avg === null ? '' : ` Dein Zeugnisschnitt: <b>${GR.fmt2(avg)}</b>.`}`;
+    }
+    if (!ui.wish.trim()) return '';
+    if (wish === null) return 'Bitte einen Wert von 1,0 bis 4,0 in Schritten von 0,1 eingeben.';
+    if (t.kind === 'impossible') return `Mit den bisherigen Noten nicht mehr erreichbar. Bester noch erreichbarer Schnitt: <b>${GR.fmt2(t.best)}</b>.`;
+    if (t.kind === 'safe') return 'Bereits sicher, sofern du alle offenen Module bestehst.';
+    return `Du brauchst in den noch offenen ${t.open} LP im Schnitt <b>${GR.fmt2(t.need)}</b>.`;
+  }
+  // Zielrechner an Ort und Stelle aktualisieren, ohne neu zu zeichnen (das Eingabefeld behält den Fokus)
+  function paintGoal() {
+    const out = $('#main .goal-out');
+    if (out) out.innerHTML = goalHtml(gradeResult());
+  }
+
+  function howHtml(r) {
+    const t = GR.target(r, 10);
+    return `<ul class="how">
+        <li><b>Schnitt aller Noten:</b> alle eingetragenen Noten, gewichtet nach LP. Eigene Module aus dem Wahlbereich und „bestanden“ ohne Note zählen dabei nicht mit.</li>
+        <li><b>Zeugnisschnitt (§ 8 StuPO):</b> Von den 180 LP gehen 45 LP nicht in die Note ein: 18 LP Wahlbereich, 6 LP Programmierpraktikum und 21 LP mit deinen schlechtesten Noten. Hast du weitere unbenotete Module bestanden, werden deren LP von den 21 LP abgezogen.</li>
+        <li><b>Streichen:</b> Die schlechteste Note fällt zuerst weg, dann die nächstschlechtere (bei gleicher Note zuerst das Modul mit mehr LP, dann das im höheren Semester). Es fallen nur ganze Module weg. Passt das nächste Modul nicht mehr in die verbleibenden LP, ist Schluss; kleinere Module mit besserer Note werden nicht vorgezogen.</li>
+        <li><b>Bachelorarbeit:</b> zählt immer und wird nie gestrichen.</li>
+        <li><b>Rechnung:</b> Summe aus Note × LP der gezählten Module, geteilt durch deren LP, kaufmännisch auf zwei Nachkommastellen gerundet.</li>
+        <li><b>Voraussichtliche Zeugnisnote:</b> Annahme nach üblicher Praxis: Der Schnitt wird nach der ersten Nachkommastelle abgeschnitten, nicht gerundet (2,48 wird 2,4).</li>
+        <li><b>Zielrechner:</b> Annahme: Gestrichen bleiben nur die bisher schlechtesten Noten, alle künftigen Noten zählen. Das Ergebnis ist dadurch nie zu optimistisch. Die nötige Note wird abgerundet (also strenger), der beste erreichbare Schnitt aufgerundet.</li>
+        ${r.rows.length ? `<li><b>Dein Stand:</b> ${r.ungradedLp} LP weitere unbenotete Module, damit ${r.budget} LP zum Streichen, davon ${r.droppedLp} LP gestrichen. Am Ende gehen 156 − ${r.ungradedLp} − ${r.droppedLp} = ${t.total} LP in die Note ein, ${Math.max(0, t.open)} LP davon sind noch offen.</li>` : ''}
+      </ul>
+      <p class="note">Orientierungswert. Verbindlich ist die Berechnung des Prüfungsamts.</p>`;
   }
 
   function cardHtml(m, secIdx) {
@@ -182,7 +274,12 @@
     const meta = [`<span class="kind">${esc(m.kind)}</span>`];
     if (m.lp) meta.push(`<span class="sep">${m.lp} LP</span>`);
     if (m.exam) meta.push(`<span class="sep">${esc(m.exam)}</span>`);
-    if (m.graded === false) meta.push('<span class="sep">unbenotet</span>');
+    // Note, ohne dass sich das Kästchen verändert: Eine Zahl steht als kleines Schild an der Ecke des Semesterfelds
+    // (siehe .grade-badge). "bestanden" steht in der Metazeile; bei unbenoteten Modulen ersetzt es "unbenotet" und
+    // belegt genau dessen Breite (unsichtbarer Platzhalter), damit die Zeile nicht anders umbricht.
+    const grade = gradeOf(m);
+    if (m.graded === false) meta.push(grade === null ? '<span class="sep">unbenotet</span>' : '<span class="sep grade swap"><i>unbenotet</i><span>bestanden</span></span>');
+    else if (grade === GR.PASSED) meta.push('<span class="sep grade">bestanden</span>');
     return `
       <article class="card${s ? ' has-sem' : ''}" data-id="${esc(m.id)}"${s ? ` style="--sem:var(--s${s});--on-sem:var(--on-s${s})"` : ''}>
         <div class="card-head">
@@ -190,6 +287,7 @@
           ${semSelect(m)}
         </div>
         <div class="meta">${meta.join('')}</div>
+        ${typeof grade === 'number' ? `<span class="grade-badge" title="Note">${gradeText(grade)}</span>` : ''}
         ${todos.length ? `<ul class="todos">${todos.map((t) => todoRow(m, t, false)).join('')}</ul>` : ''}
         <form class="todo-add" data-act="add-todo">
           <input name="text" data-focus="todo:${esc(m.id)}:${secIdx}" placeholder="ToDo hinzufügen …" aria-label="ToDo für ${esc(m.title)} hinzufügen" autocomplete="off" enterkeyhint="done" maxlength="300">
@@ -279,6 +377,7 @@
     if (!shown && filtering) html += '<p class="empty">Keine Module für diese Auswahl.</p>';
     $('#main').innerHTML = html;
     paintExams(); // falls die Detailansicht offen ist und ein Termin z. B. per Sync kam
+    paintGrade();
 
     for (const [key, value] of drafts) {
       const el = document.querySelector(`[data-focus="${CSS.escape(key)}"]`);
@@ -346,6 +445,23 @@
     });
   }
 
+  // Note in der Detailansicht: Auswahlfeld, "–" entfernt den Eintrag
+  function gradeHtml(m) {
+    const cur = gradeOf(m);
+    const opts = gradeOptions(m).map((v) => `<option value="${v}"${v === cur ? ' selected' : ''}>${v === GR.PASSED && m.custom ? 'bestanden (unbenotet)' : gradeText(v)}</option>`).join('');
+    return `<h3>Note</h3><select class="grade-select${cur === null ? ' none' : ''}" data-grade aria-label="Note für ${esc(m.title)}"><option value="">–</option>${opts}</select>`;
+  }
+  // Auswahlfeld in der geöffneten Detailansicht auf den aktuellen Stand bringen (z. B. nach Sync)
+  function paintGrade() {
+    const dlg = $('#detail');
+    const sel = dlg.open ? $('select[data-grade]', dlg) : null;
+    const m = sel && allModules().find((x) => x.id === dlg.dataset.id);
+    if (!m) return;
+    const value = String(gradeOf(m) ?? '');
+    sel.classList.toggle('none', !value);
+    if (sel.value !== value) sel.value = value;
+  }
+
   function openDetail(id) {
     const m = allModules().find((x) => x.id === id);
     if (!m) return;
@@ -363,6 +479,7 @@
           + fact('Modulverantwortliche*r', d.verantwortlich) + fact('Fakultät', d.fakultaet) + fact('Institut', d.institut) + fact('Fachgebiet', d.fachgebiet)}
       </dl>`;
     if (hasKlausur(m)) body += examsHtml(m);
+    body += gradeHtml(m);
     if (!m.custom) {
       if (!m.moses) body += '<p class="note">Die Details aus Moses (Verantwortliche, Lehrinhalte, Modulbestandteile …) sind für dieses Modul noch nicht hinterlegt.</p>';
       if (d.lernergebnisse && d.lernergebnisse.length) body += `<h3>Lernergebnisse</h3>${outcomes(d.lernergebnisse)}`;
@@ -413,6 +530,12 @@
     if (Object.keys(cur).length) state.exams[id] = cur; else delete state.exams[id];
     commit({ exams: { [id]: { [key]: date || sync.DELETE } } });
   }
+  // Note setzen (Zehntelnote oder 'p') oder entfernen (value = null)
+  function setGrade(id, value) {
+    if ((state.grades[id] ?? null) === value) return;
+    if (value === null) delete state.grades[id]; else state.grades[id] = value;
+    commit({ grades: { [id]: value === null ? sync.DELETE : value } });
+  }
   // Frist eines ToDos setzen (due = "YYYY-MM-DD") oder entfernen (due = '')
   function setDue(modId, todoId, due) {
     const before = todosOf(modId);
@@ -438,6 +561,15 @@
       ui.allOpen = !ui.allOpen;
       try { localStorage.setItem(LS_ALL, ui.allOpen ? '1' : '0'); } catch { /* egal */ }
       render();
+    } else if (el.dataset.act === 'toggle-grades') {
+      ui.gradesOpen = !ui.gradesOpen;
+      try { localStorage.setItem(LS_GRADES, ui.gradesOpen ? '1' : '0'); } catch { /* egal */ }
+      render();
+    } else if (el.dataset.act === 'toggle-how') {
+      ui.howOpen = !ui.howOpen;
+      render();
+    } else if (el.dataset.act === 'grade-detail') {
+      openDetail(el.dataset.id);
     } else if (el.dataset.act === 'clear-due') {
       const modId = el.closest('[data-mod]').dataset.mod;
       const todoId = el.dataset.todoId;
@@ -453,15 +585,16 @@
       openDetail(card.dataset.id);
     } else if (el.dataset.act === 'remove-custom' && card) {
       const id = card.dataset.id;
-      const backup = { c: state.custom[id], s: state.sem[id], t: state.todos[id], e: state.exams[id] };
-      delete state.custom[id]; delete state.sem[id]; delete state.todos[id]; delete state.exams[id];
-      commit({ custom: { [id]: sync.DELETE }, sem: { [id]: sync.DELETE }, todos: { [id]: sync.DELETE }, exams: { [id]: sync.DELETE } });
+      const backup = { c: state.custom[id], s: state.sem[id], t: state.todos[id], e: state.exams[id], g: state.grades[id] };
+      delete state.custom[id]; delete state.sem[id]; delete state.todos[id]; delete state.exams[id]; delete state.grades[id];
+      commit({ custom: { [id]: sync.DELETE }, sem: { [id]: sync.DELETE }, todos: { [id]: sync.DELETE }, exams: { [id]: sync.DELETE }, grades: { [id]: sync.DELETE } });
       toast('Modul entfernt', () => {
         state.custom[id] = backup.c;
         if (backup.s !== undefined) state.sem[id] = backup.s;
         if (backup.t) state.todos[id] = backup.t;
         if (backup.e) state.exams[id] = backup.e;
-        commit({ custom: { [id]: backup.c }, sem: { [id]: backup.s ?? 0 }, todos: { [id]: backup.t || [] }, exams: { [id]: backup.e || sync.DELETE } });
+        if (backup.g !== undefined) state.grades[id] = backup.g;
+        commit({ custom: { [id]: backup.c }, sem: { [id]: backup.s ?? 0 }, todos: { [id]: backup.t || [] }, exams: { [id]: backup.e || sync.DELETE }, grades: { [id]: backup.g ?? sync.DELETE } });
       });
     }
   });
@@ -479,6 +612,10 @@
       setDue(t.closest('[data-mod]').dataset.mod, t.dataset.due, t.value);
     } else if (t.matches('.todo-add input[type="date"]')) {
       paintNewDue(t);
+    } else if (t.matches('.goal-input')) {
+      // Feld verlassen: gültige Eingabe einheitlich schreiben ("2.3" wird "2,3")
+      const wish = GR.parseWish(t.value);
+      if (wish !== null) setWish(t, GR.fmt1(wish));
     } else if (t.matches('input[data-todo]')) {
       const id = t.closest('[data-mod]').dataset.mod;
       const todoId = t.dataset.todo;
@@ -522,6 +659,23 @@
     }
   });
 
+  // Zielrechner: Wunschschnitt merken (nur in diesem Browser) und das Ergebnis sofort anzeigen
+  function setWish(input, text) {
+    if (input.value !== text) input.value = text;
+    ui.wish = text;
+    try { localStorage.setItem(LS_WISH, text); } catch { /* egal */ }
+    paintGoal();
+  }
+  main.addEventListener('input', (e) => { if (e.target.matches('.goal-input')) setWish(e.target, e.target.value); });
+  // Pfeiltasten ändern den Wunschschnitt in Schritten von 0,1
+  main.addEventListener('keydown', (e) => {
+    if (!e.target.matches('.goal-input') || (e.key !== 'ArrowUp' && e.key !== 'ArrowDown')) return;
+    const wish = GR.parseWish(e.target.value);
+    if (wish === null) return;
+    e.preventDefault();
+    setWish(e.target, GR.fmt1(Math.max(10, Math.min(40, wish + (e.key === 'ArrowUp' ? 1 : -1)))));
+  });
+
   $('#chips').addEventListener('click', (e) => {
     const b = e.target.closest('[data-filter]');
     if (!b) return;
@@ -544,9 +698,17 @@
     if (clear) { setExam(dlg.dataset.id, clear.dataset.key, ''); paintExams(); }
     else if (e.target === dlg || e.target.closest('[data-act="close"]')) dlg.close();
   });
-  // Klausurtermin in der Detailansicht geändert. Leer = Termin entfernt; unfertige Zwischenstände beim Tippen überspringen.
+  // Note oder Klausurtermin in der Detailansicht geändert.
+  // Termin: leer = entfernt; unfertige Zwischenstände beim Tippen überspringen.
   dlg.addEventListener('change', (e) => {
     const t = e.target;
+    if (t.matches('select[data-grade]')) {
+      const m = allModules().find((x) => x.id === dlg.dataset.id);
+      const value = t.value === GR.PASSED ? GR.PASSED : t.value ? Number(t.value) : null;
+      if (m && (value === null || gradeOptions(m).includes(value))) setGrade(m.id, value);
+      paintGrade();
+      return;
+    }
     if (!t.matches('input[data-exam]') || (t.value && !validDate(t.value))) return;
     setExam(dlg.dataset.id, t.dataset.exam, t.value);
     paintExams();
