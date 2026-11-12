@@ -1,7 +1,8 @@
 // Firebase-Konfiguration für die Synchronisation zwischen MacBook und iPhone.
 //
 // Solange apiKey leer ist, läuft die App im lokalen Modus: Semester und ToDos
-// werden nur im Browser dieses Geräts gespeichert.
+// werden nur im Browser dieses Geräts gespeichert, eine Anmeldung gibt es nicht.
+// Ist apiKey gesetzt, zeigt die App ihre Inhalte erst nach der Anmeldung.
 //
 // Einrichtung: siehe README.md, Abschnitt "Firestore-Sync einrichten".
 // Die Werte findest du in der Firebase-Konsole unter

@@ -3,7 +3,8 @@
    1. Zustand (Semester, ToDos, eigene Module) + Speichern
    2. Darstellung (Filter, Bereiche, Kästchen, Detailansicht)
    3. Bedienung (Klicks, Eingaben)
-   4. Firestore-Sync (nur aktiv, wenn js/firebase-config.js ausgefüllt ist) */
+   4. Anmeldung und Firestore-Sync (nur aktiv, wenn js/firebase-config.js ausgefüllt ist;
+      dann ist die App erst nach der Anmeldung sichtbar) */
 (() => {
   'use strict';
 
@@ -12,6 +13,7 @@
   const LS_STATE = 'uniapp-state-v1';
   const LS_OPEN = 'uniapp-open-v1';
   const LS_ALL = 'uniapp-alltodos-v1';
+  const LS_UID = 'uniapp-uid-v1'; // Konto, zu dem der lokal gespeicherte Stand gehört
   const MAX_SEM = 10;
 
   const $ = (sel, root = document) => root.querySelector(sel);
@@ -61,7 +63,9 @@
     const out = { sem: {}, todos: {}, custom: {}, exams: {} };
     for (const [k, v] of Object.entries(s.sem || {})) if (Number.isInteger(v) && v >= 0 && v <= MAX_SEM) out.sem[k] = v;
     for (const [k, v] of Object.entries(s.todos || {})) {
-      if (Array.isArray(v)) out.todos[k] = v.filter((t) => t && typeof t.text === 'string').map((t) => todoItem(String(t.id || uid()), t.text, t.due));
+      if (!Array.isArray(v)) continue;
+      const list = v.filter((t) => t && typeof t.text === 'string').map((t) => todoItem(String(t.id || uid()), t.text, t.due));
+      if (list.length) out.todos[k] = list;
     }
     for (const [k, v] of Object.entries(s.custom || {})) if (v && typeof v.title === 'string') out.custom[k] = { title: v.title, lp: Number(v.lp) || 0 };
     for (const [k, v] of Object.entries(s.exams || {})) {
@@ -210,7 +214,26 @@
     render();
   }
 
+  // Anmeldesperre: Solange gesperrt ist, wird nichts gezeichnet. Im Dokument stehen dann weder Module noch ToDos,
+  // zu sehen ist nur der einfarbige Hintergrund mit der Anmeldung (#gate). Gesteuert wird sie in Abschnitt 4.
+  let locked = document.documentElement.classList.contains('locked');
+  function setLocked(on) {
+    if (on === locked) return;
+    locked = on;
+    document.documentElement.classList.toggle('locked', on);
+    if (!on) { render(); return; }
+    renderPending = false;
+    $('#main').innerHTML = '';
+    $('#chips').innerHTML = '';
+    const dlg = $('#detail');
+    if (dlg.open) dlg.close();
+    dlg.innerHTML = '';
+    clearTimeout(toastTimer);
+    $('#toast').hidden = true;
+  }
+
   function render() {
+    if (locked) return;
     renderPending = false;
     now = dayInfo();
     // Fokus und angefangene Eingaben merken, damit beim Neuzeichnen (z. B. durch Sync) nichts verloren geht
@@ -285,6 +308,18 @@
 
   const fact = (label, value) => `<div><dt>${esc(label)}</dt><dd>${esc(value || '–')}</dd></div>`;
   const bullets = (items) => (Array.isArray(items) ? `<ul>${items.map((i) => `<li>${esc(i)}</li>`).join('')}</ul>` : `<p>${esc(items)}</p>`);
+  // Lernergebnisse beginnen oft mit einem Einleitungssatz ("Die Studierenden können:"), dem die übrigen Punkte
+  // untergeordnet sind. Er steht dann über der Aufzählung, statt selbst ein Punkt zu sein.
+  const isIntro = (text, next) => /:$/.test(text)
+    || (text.length <= 70 && (/(…|\.\.\.)$/.test(text) || (!/[.,;!?]$/.test(text) && /^[a-zäöü]/.test(next))));
+  function outcomes(items) {
+    if (!Array.isArray(items)) return bullets(items);
+    const i = items.findIndex((text, k) => k < items.length - 1 && isIntro(text, items[k + 1]));
+    if (i < 0) return bullets(items);
+    const rest = bullets(items.slice(i + 1));
+    if (i === 0) return `<p>${esc(items[0])}</p>${rest}`;
+    return `<ul>${items.slice(0, i).map((t) => `<li>${esc(t)}</li>`).join('')}<li>${esc(items[i])}${rest}</li></ul>`;
+  }
 
   // Klausurtermin in der Detailansicht: gleiche Technik wie bei den Fristen (.datebtn)
   const examInner = (date) => ICON_CAL + `<span>${date ? esc(fmtShortYear.format(fromYmd(date))) : 'Termin eintragen'}</span>`;
@@ -330,7 +365,7 @@
     if (hasKlausur(m)) body += examsHtml(m);
     if (!m.custom) {
       if (!m.moses) body += '<p class="note">Die Details aus Moses (Verantwortliche, Lehrinhalte, Modulbestandteile …) sind für dieses Modul noch nicht hinterlegt.</p>';
-      if (d.lernergebnisse && d.lernergebnisse.length) body += `<h3>Lernergebnisse</h3>${bullets(d.lernergebnisse)}`;
+      if (d.lernergebnisse && d.lernergebnisse.length) body += `<h3>Lernergebnisse</h3>${outcomes(d.lernergebnisse)}`;
       if (d.lehrinhalte && d.lehrinhalte.length) body += `<h3>Lehrinhalte</h3>${bullets(d.lehrinhalte)}`;
       if (d.bestandteile && d.bestandteile.length) {
         body += `<h3>Modulbestandteile</h3><table class="parts"><thead><tr><th>Art</th><th>Veranstaltung</th><th>SWS</th><th class="hide-s">Turnus</th><th class="hide-s">Sprache</th></tr></thead><tbody>${d.bestandteile.map((b) =>
@@ -538,15 +573,22 @@
   window.addEventListener('focus', checkDay);
   setInterval(checkDay, 30000);
 
-  /* ---------- 4. Firestore-Sync ---------- */
+  /* ---------- 4. Anmeldung und Firestore-Sync ---------- */
 
   const sync = (() => {
     const cfg = window.FIREBASE_CONFIG || {};
     const el = $('#sync');
+    const gate = $('#gate');
     const DELETE = { __delete: true }; // Platzhalter, wird beim Senden durch deleteField() ersetzt
     let fb = null, ref = null, user = null, unsub = null, status = cfg.apiKey ? 'loading' : 'local';
 
     function draw() {
+      // Anmeldesperre: Ist Firebase eingerichtet, bleibt die App gesperrt, bis jemand angemeldet ist.
+      // Beim Verbinden ist die Seite leer; danach steht dort die Anmeldung oder ein Hinweis, falls sie nicht erreichbar ist.
+      setLocked(!!cfg.apiKey && !user);
+      gate.innerHTML = status === 'out' ? '<button class="btn primary" data-sync="in">Mit Google anmelden</button>'
+        : status === 'error' ? '<p>Die Anmeldung ist gerade nicht erreichbar.</p><button class="btn" data-sync="retry">Neu laden</button>'
+        : '';
       if (status === 'local') el.innerHTML = '<span class="dot"></span><span title="Daten liegen nur in diesem Browser. Sync: siehe README.">Nur auf diesem Gerät</span>';
       else if (status === 'loading') el.innerHTML = '<span class="dot"></span><span>Verbinde …</span>';
       else if (status === 'out') el.innerHTML = '<button class="btn primary" data-sync="in">Mit Google anmelden</button>';
@@ -584,16 +626,24 @@
           if (unsub) { unsub(); unsub = null; }
           ref = null;
           if (!u) { status = 'out'; draw(); return; }
+          // Der lokal gespeicherte Stand gehört dem zuletzt angemeldeten Konto. Meldet sich in diesem Browser
+          // ein anderes Konto an, beginnt es leer, statt fremde ToDos zu sehen oder als eigene hochzuladen.
+          try {
+            const owner = localStorage.getItem(LS_UID);
+            if (owner && owner !== u.uid) { state = normalize(null); saveLocal(); }
+            localStorage.setItem(LS_UID, u.uid);
+          } catch { /* Speicher nicht verfügbar */ }
           ref = fs.doc(db, 'users', u.uid, 'state', 'main');
           status = 'in'; draw();
+          const failed = (err) => { console.error('Sync-Fehler', err); status = 'error'; draw(); };
           unsub = fs.onSnapshot(ref, (snap) => {
             if (snap.metadata.hasPendingWrites) return; // eigene, noch nicht bestätigte Änderung
-            if (!snap.exists()) { fs.setDoc(ref, state); return; } // erste Anmeldung: lokalen Stand hochladen
+            if (!snap.exists()) { fs.setDoc(ref, state).catch(failed); return; } // erste Anmeldung: lokalen Stand hochladen
             state = normalize(snap.data());
             saveLocal();
             refresh();
             if (status !== 'in') { status = 'in'; draw(); }
-          }, (err) => { console.error('Sync-Fehler', err); status = 'error'; draw(); });
+          }, failed);
         });
       } catch (err) {
         console.error('Firebase konnte nicht geladen werden', err);
@@ -601,7 +651,8 @@
       }
     }
 
-    el.addEventListener('click', (e) => {
+    // Die Knöpfe stehen im Kopfbereich (#sync) oder, solange gesperrt ist, auf der leeren Seite (#gate)
+    document.addEventListener('click', (e) => {
       const b = e.target.closest('[data-sync]');
       if (!b) return;
       if (b.dataset.sync === 'in') fb.signInWithPopup(fb.auth, new fb.GoogleAuthProvider()).catch((err) => { if (err.code !== 'auth/popup-closed-by-user') toast('Anmeldung fehlgeschlagen'); console.error(err); });

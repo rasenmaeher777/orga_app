@@ -18,10 +18,10 @@
   /* Semesterfarben: hier ändern, wenn du andere Farben möchtest */
   --s1: #6aa84f;  /* 1. Semester: grün */
   --s2: #215b91;  /* 2. Semester: blau */
-  --s3: #e06666;  /* 3. Semester: pflaume */
-  --s4: #f1c232;  /* 4. Semester: orange */
-  --s5: #6c63a2;  /* 5. Semester: rot */
-  --s6: #ce7e00;  /* 6. Semester: petrol */
+  --s3: #e06666;  /* 3. Semester: rot */
+  --s4: #f1c232;  /* 4. Semester: gelb */
+  --s5: #6c63a2;  /* 5. Semester: violett */
+  --s6: #ce7e00;  /* 6. Semester: orange */
   --s7: #1F2A62;
   --s8: #F4C14A;
   --s9: #B0C9A5;
@@ -73,6 +73,19 @@ button { cursor: pointer; }
   padding-left: max(16px, env(safe-area-inset-left));
   padding-right: max(16px, env(safe-area-inset-right));
 }
+
+/* ---------- Anmeldesperre ---------- */
+/* Solange <html> die Klasse "locked" trägt, ist nur der einfarbige Hintergrund mit der Anmeldung zu sehen. */
+.gate { display: none; }
+.locked .top, .locked main, .locked .foot { display: none; }
+.locked .gate {
+  min-height: 100vh; min-height: 100dvh;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px;
+  padding: 24px; text-align: center; color: var(--muted); font-size: 14px;
+}
+.gate p { margin: 0; }
+.gate .btn { padding: 10px 18px; font-size: 14px; }
+.gate .btn:not(.primary) { color: var(--text); }
 
 /* ---------- Kopfbereich ---------- */
 .top {
@@ -287,6 +300,7 @@ main { padding-top: 16px; padding-bottom: 40px; min-height: 60vh; }
 .detail-body ul { margin: 0; padding-left: 18px; }
 .detail-body li { margin: 3px 0; }
 .detail-body p { margin: 0; }
+.detail-body p + ul, .detail-body li > ul { margin-top: 3px; } /* Einleitungssatz über einer Aufzählung */
 .parts { width: 100%; border-collapse: collapse; font-size: 14px; }
 .parts th { text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); font-weight: 700; padding: 4px 10px 4px 0; }
 .parts td { padding: 6px 10px 6px 0; border-top: 1px solid var(--line); vertical-align: top; }

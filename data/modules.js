@@ -73,7 +73,7 @@ window.MODULES = [
     "Die Studierenden sollen",
     "über die methodischen Grundlagen zur mathematischen Fundierung der Natur- und Ingenieurwissenschaften verfügen,",
     "fundierte Kenntnisse über die naturwissenschaftlichen und mathematischen Inhalte, Prinzipien und Methoden haben,",
-    "die Differential- und Integralrechnung für Funktionen einer reellen Variablen als Voraussetzung für den Umgang mit mathematischen Modellen der Ingenieurwissenschaften beherrschen,"
+    "die Differential- und Integralrechnung für Funktionen einer reellen Variablen als Voraussetzung für den Umgang mit mathematischen Modellen der Ingenieurwissenschaften beherrschen, …"
    ],
    "bestandteile": [
     {
@@ -132,9 +132,9 @@ window.MODULES = [
     "Ethische und soziale Aspekte der Datenwissenschaft"
    ],
    "lernergebnisse": [
-    "Durchdringen von Data Science Abläufen",
-    "Die Fähigkeit Data Science Pipelines mit Hilfe gängiger Pythonbibliotheken zu erstellen",
-    "Verständnis für die Relevanz von Datenvorbereitungsschritte",
+    "Durchdringen von Data-Science-Abläufen",
+    "Die Fähigkeit, Data-Science-Pipelines mit Hilfe gängiger Pythonbibliotheken zu erstellen",
+    "Verständnis für die Relevanz von Datenvorbereitungsschritten",
     "Hürden und Fallen im Erstellen von datengetriebenen Anwendungen verstehen"
    ],
    "bestandteile": [
@@ -188,7 +188,7 @@ window.MODULES = [
    ],
    "lernergebnisse": [
     "Studierende beherrschen die Grundbegriffe und Methoden der beschreibenden Statistik sowie der Wahrscheinlichkeitsrechnung.",
-    "Sie sind in der Lage statistische Probleme in der wirtschaftswissenschaftlichen Anwendungen zu lösen.",
+    "Sie sind in der Lage, statistische Probleme in wirtschaftswissenschaftlichen Anwendungen zu lösen.",
     "Beherrschung der statistischen Arbeitsweise, Umgang mit statistischen Erhebungen.",
     "Präsentation und Diskussion von statistischen Ergebnissen."
    ],
@@ -242,10 +242,10 @@ window.MODULES = [
     "Moderne Datensysteme: NoSQL, Zeitreihen, verteilte Speicherung, Datenströme"
    ],
    "lernergebnisse": [
-    "Die Studierenden verstehen den generellen Aufbau und die Nutzung traditioneller, relationaler Datenbanksystemen als auch moderner Data Management Techniken und Systeme.",
-    "Damit sind die Studierenden in der Lage auf effektive Weise effiziente datenzentrische Anwendungen, von der Datenmodellierung, über die persistente Speicherung und deren Tuning, bis hin …",
+    "Die Studierenden verstehen den generellen Aufbau und die Nutzung traditioneller relationaler Datenbanksysteme als auch moderner Data-Management-Techniken und -Systeme.",
+    "Damit sind die Studierenden in der Lage, auf effektive Weise effiziente datenzentrische Anwendungen, von der Datenmodellierung, über die persistente Speicherung und deren Tuning, bis hin …",
     "Mit einem Teil der vermittelten Themen zu den Interna von Datensystemen vertiefen die Studierenden weiterhin bereits erworbenes Wissen zu Algorithmen und Datenstrukturen, …",
-    "Die Kombination aus Vorlesungen und Übungen (im Sinne praktischer Programmieraufgaben mit wählbaren Programmsprachen) ermöglicht hierbei sowohl ein theoretisches Verständnis als auch …"
+    "Die Kombination aus Vorlesungen und Übungen (im Sinne praktischer Programmieraufgaben mit wählbaren Programmiersprachen) ermöglicht hierbei sowohl ein theoretisches Verständnis als auch …"
    ],
    "bestandteile": [
     {
@@ -297,7 +297,7 @@ window.MODULES = [
     "Human Factors, Privatsphäre und Datenschutzrecht"
    ],
    "lernergebnisse": [
-    "Die Studierenden wissen um die Bedeutungen der Informationssicherheit und dem Datenschutz in unserer modernen, vernetzten Gesellschaft zukommen und welche Methoden dafür im …",
+    "Die Studierenden wissen, welche Bedeutung der Informationssicherheit und dem Datenschutz in unserer modernen, vernetzten Gesellschaft zukommt und welche Methoden dafür im …",
     "Sie verfügen über das notwendige Problembewusstsein und können dieses anderen Nutzenden vermitteln.",
     "Die Studierenden verstehen die Relevanz kontinuierlich anpassbarer Sicherheitskonzeptionen sowie deren Abwägung gegenüber konkurrierenden organisatorischen und rechtlichen Interessen.",
     "Ferner können sie die Grundkenntnisse über gängige Verschlüsselungstechniken, Protokolle zur sicheren Kommunikation und Authentifikation sowie zum sicheren Betrieb von Rechnern und …"
@@ -404,7 +404,7 @@ window.MODULES = [
     "Asynchrone Kommunikation und serviceorientierte Architekturen"
    ],
    "lernergebnisse": [
-    "Studierende kennen nach dem erfolgreichen Abschluss dieses Moduls unterschiedliche Architekturstile verteilter Anwendungssysteme und ausgewählte, diesen zugrunde liegenden, Middleware- …",
+    "Studierende kennen nach dem erfolgreichen Abschluss dieses Moduls unterschiedliche Architekturstile verteilter Anwendungssysteme und ausgewählte, diesen zugrunde liegende Middleware- …",
     "Sie sind in der Lage, Anwendungsarchitekturen unter dem Einsatz dieser Technologien zu gestalten und unter Berücksichtigung technischer und betriebswirtschaftlicher Aspekte zu bewerten."
    ],
    "bestandteile": [
@@ -727,9 +727,8 @@ window.MODULES = [
    ],
    "lernergebnisse": [
     "Ziel des Moduls ist es, ein Verständnis für Online-Plattformen und Marktplätze (von A wie Amazon bis Z wie Zalando; von Airbnb bis Uber) zu vermitteln.",
-    "Dazu gehören die Analyse von Netzwerken und Netzwerkeffekten, das Konzept der kritischen Masse, sowie Konvergenz- und Gleichgewichtsverhalten.",
-    "Weiterhin beschäftigt sich der Kurs mit Vertrauen und Online-Reputationssystemen, Regulierung und Wettbewerbspolitik, sowie Strategien für das Pricing digitaler Güter (z.",
-    "B."
+    "Dazu gehören die Analyse von Netzwerken und Netzwerkeffekten, das Konzept der kritischen Masse sowie Konvergenz- und Gleichgewichtsverhalten.",
+    "Weiterhin beschäftigt sich der Kurs mit Vertrauen und Online-Reputationssystemen, Regulierung und Wettbewerbspolitik sowie Strategien für das Pricing digitaler Güter."
    ],
    "bestandteile": [
     {
@@ -784,7 +783,7 @@ window.MODULES = [
     "Dieses Modul bildet die Grundlage für die Teilnahme an weiterführenden Wahlfächern sowohl im Bachelor- als auch im Masterstudiengang.",
     "Nach erfolgreichem Abschluss des Moduls werden die Studierenden in der Lage sein:",
     "das Finanz- und Rechnungswesen als integralen Bestandteil der Unternehmensführung zu erklären,",
-    "zwischen den verschiedenen Komponenten des Rechnungswesens zu unterscheiden und ihre jeweiligen Funktionen zu erläutern,"
+    "zwischen den verschiedenen Komponenten des Rechnungswesens zu unterscheiden und ihre jeweiligen Funktionen zu erläutern, …"
    ],
    "bestandteile": [
     {
@@ -826,7 +825,7 @@ window.MODULES = [
    "nummer": "70174",
    "version": "3",
    "url": "https://moseskonto.tu-berlin.de/moses/modultransfersystem/bolognamodule/beschreibung/anzeigen.html?number=70174&version=3&sprache=1",
-   "gueltigkeit": "Seit SS 2018",
+   "gueltigkeit": "Seit SoSe 2018",
    "sprache": "Deutsch",
    "lehrsprache": "Deutsch",
    "verantwortlich": "Hirth, Hans",
@@ -844,8 +843,8 @@ window.MODULES = [
    ],
    "lernergebnisse": [
     "Die Studierenden beherrschen die grundlegenden Methoden der Investitionsrechnung und die gängigen Finanzinstrumente und Finanzierungsformen.",
-    "Die erworbenden Kenntnisse ermöglichen es ihnen, über die absolute und relative Vorteilhaftigkeit von Investitionsprojekten zu entscheiden.",
-    "Dabei erkennen sie die Schwächen bestimmter Vorteilhaftskriterien in Hinblick auf deren mangelnder Nachhaltigkeit.",
+    "Die erworbenen Kenntnisse ermöglichen es ihnen, über die absolute und relative Vorteilhaftigkeit von Investitionsprojekten zu entscheiden.",
+    "Dabei erkennen sie die Schwächen bestimmter Vorteilhaftigkeitskriterien im Hinblick auf deren mangelnde Nachhaltigkeit.",
     "Ebenso sind die Studierenden in der Lage, Vor- und Nachteile verschiedener Finanzierungsinstrumente zu beurteilen, Kapitalkosten zu ermitteln, Kapitalstrukturentscheidungen zu optimieren …"
    ],
    "bestandteile": [
@@ -897,7 +896,7 @@ window.MODULES = [
     "Projektmanagement und Werkzeuge des Software Engineerings"
    ],
    "lernergebnisse": [
-    "Absolventinnen und Absolventen des Moduls haben",
+    "Absolventinnen und Absolventen des Moduls haben:",
     "Methoden der Softwaretechnik praktisch anhand einer komplexen Aufgabenstellung erprobt,",
     "Teamerfahrungen gesammelt und ihre Teamfähigkeiten verbessert,",
     "ein verteiltes Softwaresystem Cloud-basiert und mit modernen Werkzeugen der Softwareentwicklung und des Datenmanagements implementiert."
@@ -937,7 +936,7 @@ window.MODULES = [
    "fachgebiet": "FG S-Professur Service Centric Networking (SNET)",
    "turnus": "WiSe/SoSe",
    "pruefungsform": "Portfolioprüfung",
-   "dauer": "100 Punkte insgesamt: Dokumentation (20 P, ca. 15 Seiten); Meilensteinpräsentationen (30 P, ca. 6 Termine à 45 Minuten); Software-Funktionalität (25 P, ca 10 Wochen); Software-Qualität (5 P, ca 10 Wochen, semesterbegleitend); Aktive Mitarbeit im Gitlab (10 P, 15 Stunden); Bewertete Reflexion der eigenen Leistungen in einem Projekt-/Lerntagebuch (10 P, 7,5 Stunden)",
+   "dauer": "100 Punkte insgesamt: Dokumentation (20 P, ca. 15 Seiten); Meilensteinpräsentationen (30 P, ca. 6 Termine à 45 Minuten); Software-Funktionalität (25 P, ca. 10 Wochen); Software-Qualität (5 P, ca. 10 Wochen, semesterbegleitend); Aktive Mitarbeit im Gitlab (10 P, 15 Stunden); Bewertete Reflexion der eigenen Leistungen in einem Projekt-/Lerntagebuch (10 P, 7,5 Stunden)",
    "lehrinhalte": [
     "Softwaretechnische Umsetzung einer praxisnahen Aufgabe im Team",
     "Agiler, iterativer Entwicklungsprozess mit modernen Werkzeugen",
@@ -993,8 +992,8 @@ window.MODULES = [
    "lernergebnisse": [
     "Absolventen und Absolventinnen des Moduls ...",
     "haben Algorithmen für Spiele oder zur Lösung von Puzzle entwickelt,",
-    "haben Teamerfahrungen gesammelt, ihre Teamfähigkeiten verbessert und Techniken der Projektorganisation erfolgreich anwendet,",
-    "haben effiziente Algorithmen entwickelt und sie mit modernen Werkzeugen der Softwareentwicklung implementiert,"
+    "haben Teamerfahrungen gesammelt, ihre Teamfähigkeiten verbessert und Techniken der Projektorganisation erfolgreich angewendet,",
+    "haben effiziente Algorithmen entwickelt und sie mit modernen Werkzeugen der Softwareentwicklung implementiert, …"
    ],
    "bestandteile": [
     {
@@ -1038,9 +1037,9 @@ window.MODULES = [
    ],
    "lernergebnisse": [
     "Absolventen und Absolventinnen des Moduls ...",
-    "haben Methoden der Algorthmenentwicklung praktisch anhand einer komplexen Aufgabenstellung erprobt,",
-    "haben Teamerfahrungen gesammelt, Projektmanagement Werkzeuge verwendet und ihre Teamfähigkeiten verbessert,",
-    "haben effiziente Algorithmen entwickelt und sie mit modernen Werkzeugen der Softwareentwicklung implementiert,"
+    "haben Methoden der Algorithmenentwicklung praktisch anhand einer komplexen Aufgabenstellung erprobt,",
+    "haben Teamerfahrungen gesammelt, Projektmanagement-Werkzeuge verwendet und ihre Teamfähigkeiten verbessert,",
+    "haben effiziente Algorithmen entwickelt und sie mit modernen Werkzeugen der Softwareentwicklung implementiert, …"
    ],
    "bestandteile": [
     {
@@ -1088,7 +1087,7 @@ window.MODULES = [
     "Die Studierenden können:",
     "Lasten- und Pflichtenhefte für kleinere Softwareprojekte aufstellen,",
     "In einem Entwicklerteam unterschiedliche Rollen übernehmen,",
-    "Gemäß gegebener Spezifikation Softwaremodule und -komponenten entwerfen und implementieren,"
+    "Gemäß gegebener Spezifikation Softwaremodule und -komponenten entwerfen und implementieren, …"
    ],
    "bestandteile": [
     {
@@ -1135,7 +1134,7 @@ window.MODULES = [
     "Mit Abschluss des Moduls sind die Studierenden im Stande:",
     "Software-Engineering-Methoden anzuwenden, um eine komplexe praktische Aufgabe zu lösen",
     "Sich als Team in gemeinschaftlicher Projektarbeit zu organisieren",
-    "Gängige Methoden zum Fairness-Auditing von Automatischen Entscheidungssystemen zu evaluieren"
+    "Gängige Methoden zum Fairness-Auditing von automatischen Entscheidungssystemen zu evaluieren"
    ],
    "bestandteile": [
     {
@@ -1181,7 +1180,7 @@ window.MODULES = [
    ],
    "lernergebnisse": [
     "Absolventen dieses Moduls haben Kenntnisse und praktische Erfahrungen im Bereich des Entwurfs und der Implementierung von Programmiersprachen.",
-    "Schwerpunkte sind der Softwareentwurf, Programmierung und Umsetzung von Programmiersprachen, z.B. in (domänenspezifischen) Compilern, aber auch IDEs, Debuggern und anderer Werkzeuge zur …",
+    "Schwerpunkte sind der Softwareentwurf, Programmierung und Umsetzung von Programmiersprachen, z.B. in (domänenspezifischen) Compilern, aber auch IDEs, Debuggern und anderen Werkzeugen zur …",
     "Die Projektarbeit im Team vermittelt zusätzlich soziale und Projektmanagement-Kompetenzen."
    ],
    "bestandteile": [
@@ -1226,9 +1225,9 @@ window.MODULES = [
    ],
    "lernergebnisse": [
     "Absolventen und Absolventinnen des Moduls ...",
-    "haben Teamerfahrungen gesammelt, ihre Teamfähigkeiten verbessert und Techniken der Projektorganisation erfolgreich anwendet,",
+    "haben Teamerfahrungen gesammelt, ihre Teamfähigkeiten verbessert und Techniken der Projektorganisation erfolgreich angewendet,",
     "haben Beiträge für öffentlich genutzte freie Software implementiert,",
-    "haben Softwarekriterien existierender Open Source Software kennengelernt und berücksichtigt,"
+    "haben Softwarekriterien existierender Open Source Software kennengelernt und berücksichtigt, …"
    ],
    "bestandteile": [
     {
@@ -1265,7 +1264,7 @@ window.MODULES = [
    "fachgebiet": "FG Software and Business Engineering (SBE)",
    "turnus": "WiSe/SoSe",
    "pruefungsform": "Portfolioprüfung",
-   "dauer": "100 Punkte insgesamt: Implementierung (40 P, Gesamtes Semester); Abschlussreport (20 P, ca. 3 Wochen); Zwischenpräsentation (10 P, 10 Minutes); Abschlusspräsentation (10 P, 15 Minuten); Bewertete Projektbeiträge, mündliche Überprüfung (20 P, 20 Minuten)",
+   "dauer": "100 Punkte insgesamt: Implementierung (40 P, Gesamtes Semester); Abschlussreport (20 P, ca. 3 Wochen); Zwischenpräsentation (10 P, 10 Minuten); Abschlusspräsentation (10 P, 15 Minuten); Bewertete Projektbeiträge, mündliche Überprüfung (20 P, 20 Minuten)",
    "lehrinhalte": [
     "Implementierung und Bewertung von Algorithmen des föderierten Lernens",
     "Gesamter Ablauf von Datenintegration bis Inferenz und Bereitstellung",
@@ -1321,8 +1320,8 @@ window.MODULES = [
     "Umsetzung in z. B. C++ oder Python mit Werkzeugen wie git"
    ],
    "lernergebnisse": [
-    "Die Studierenden haben praktische Erfahrung bei der Softwaretechnischen Umsetzung neuer Applikationen und Einsatzszenarien erlangt.",
-    "Der Schwerpunkt liegt dabei vor allem auf modernen Systemen der drahtlosen Kommunikation, sowie die dabei eingesetzten Internetprotokolle und Anwendungen.",
+    "Die Studierenden haben praktische Erfahrung bei der softwaretechnischen Umsetzung neuer Applikationen und Einsatzszenarien erlangt.",
+    "Der Schwerpunkt liegt dabei vor allem auf modernen Systemen der drahtlosen Kommunikation sowie den dabei eingesetzten Internetprotokollen und Anwendungen.",
     "Durch die Projektarbeit in Teams sind zusätzlich Projektmanagement- und Sozialkompetenzen geschult worden."
    ],
    "bestandteile": [
@@ -1351,7 +1350,7 @@ window.MODULES = [
    "nummer": "40956",
    "version": "1",
    "url": "https://moseskonto.tu-berlin.de/moses/modultransfersystem/bolognamodule/beschreibung/anzeigen.html?number=40956&version=1&sprache=1",
-   "gueltigkeit": "Seit WS 2019/20",
+   "gueltigkeit": "Seit WiSe 2019/20",
    "sprache": "Deutsch",
    "lehrsprache": "Deutsch",
    "verantwortlich": "Dieckerhoff, Sibylle",
@@ -1370,7 +1369,7 @@ window.MODULES = [
     "Die Studierenden können Lasten- und Pflichtenhefte für kleine Softwareprojekte erstellen und ihre erworbenen Programmierkenntnisse hardwarenah einsetzen.",
     "Weiterhin beherrschen die Studierenden die Grundlagen der Leistungselektronik, welche notwendig sind, um unterschiedliche Programmieraufgaben in leistungselektronischen Systemen zu …",
     "Sie sind in der Lage, die Schnittstellen eines Mikrocontrollers für die Ansteuerung leistungselektronischer Schaltungen zu verwenden.",
-    "Weiterhin besitzen Sie die Fähigkeit, Aufgabenstellungen in einer Gruppe zu lösen."
+    "Weiterhin besitzen sie die Fähigkeit, Aufgabenstellungen in einer Gruppe zu lösen."
    ],
    "bestandteile": [
     {
@@ -1414,7 +1413,7 @@ window.MODULES = [
     "Projektmanagement und Werkzeuge des Software Engineerings"
    ],
    "lernergebnisse": [
-    "Absolventinnen und Absolventen des Moduls haben",
+    "Absolventinnen und Absolventen des Moduls haben:",
     "Microservices als Architekturstil praktisch anhand einer komplexen Aufgabenstellung erprobt,",
     "DevOps- und Teamerfahrungen gesammelt und ihre Teamfähigkeiten verbessert,",
     "Microservices mit modernen Werkzeugen der Softwareentwicklung implementiert und betrieben."
@@ -1503,7 +1502,7 @@ window.MODULES = [
    "dauer": "100 Punkte insgesamt: Einführungspräsentation (Projektvorstellung) (5 P, 15 Minuten); Programmierleistung (85 P, 105 Stunden); Abschlusspräsentation (10 P, 30 Minuten)",
    "lehrinhalte": [
     "Webanwendungen: Dateneigentum, Privatsphäre, Sicherheit und Verschlüsselung",
-    "Technologien „Datex\" (Datentransfer) und „UIX\" (User-Interface-Framework)",
+    "Technologien „Datex“ (Datentransfer) und „UIX“ (User-Interface-Framework)",
     "Konzeption und Umsetzung einer eigenen Webanwendung in Gruppen"
    ],
    "lernergebnisse": [
@@ -1701,7 +1700,7 @@ window.MODULES = [
     "Die Studierenden können:",
     "Gemäß gegebener Spezifikation Softwarekomponenten entwerfen und implementieren,",
     "Effiziente Algorithmen entwickeln und implementieren,",
-    "Mit aktuellen Werkzeugen zur Softwareentwicklung und -analyse umgehen,"
+    "Mit aktuellen Werkzeugen zur Softwareentwicklung und -analyse umgehen, …"
    ],
    "bestandteile": [
     {
@@ -1729,7 +1728,7 @@ window.MODULES = [
    "nummer": "40277",
    "version": "5",
    "url": "https://moseskonto.tu-berlin.de/moses/modultransfersystem/bolognamodule/beschreibung/anzeigen.html?number=40277&version=5&sprache=1",
-   "gueltigkeit": "Seit SS 2019",
+   "gueltigkeit": "Seit SoSe 2019",
    "sprache": "Deutsch",
    "lehrsprache": "Deutsch",
    "verantwortlich": "Glesner, Sabine",
@@ -1797,7 +1796,7 @@ window.MODULES = [
     "Studierende, die das Modul abschließen...",
     "können ein Projekt im Bereich Data Science mit klaren Forschungszielen vorschlagen und planen,",
     "kennen und können moderne Werkzeuge der Data Science anwenden: R, Python, relevante Erweiterungsbibliotheken, Versionskontrolle mit Git und Datenvisualisierungstechniken,",
-    "können in Gruppen arbeiten und dabei agile Softwareentwicklungsprinzipien befolgen,"
+    "können in Gruppen arbeiten und dabei agile Softwareentwicklungsprinzipien befolgen, …"
    ],
    "bestandteile": [
     {
@@ -1935,9 +1934,9 @@ window.MODULES = [
     "Versionskontrolle, testgetriebene Entwicklung, Dokumentation"
    ],
    "lernergebnisse": [
-    "Die Studierenden lernen",
+    "Die Studierenden lernen:",
     "Software-Engineering-Methoden anzuwenden, um eine komplexe praktische Aufgabe zu lösen,",
-    "Gemeinschaftliche Projektarbeit,",
+    "gemeinschaftliche Projektarbeit,",
     "gängige Methoden zur Implementierung ausgewählter Komponenten von Pipelines für maschinelles Lernen zu nutzen"
    ],
    "bestandteile": [
@@ -1986,7 +1985,7 @@ window.MODULES = [
     "Am Ende dieses Kurses werden die Studierenden ein solides Verständnis der grundlegenden Funktionen des Unity-Editors haben, wodurch sie in der Lage sein werden, Spielobjekte, Materialien …",
     "Sie werden grundlegende Fähigkeiten in der C#-Programmierung entwickeln, mit einem Fokus auf wesentliche Skripttechniken zur Steuerung von Spielverhalten und Benutzerinteraktionen.",
     "Darüber hinaus werden die Studierenden grundlegende Kenntnisse in der Entwicklung von Augmented Reality (AR) unter Verwendung von ARCore oder ARKit erwerben und lernen, wie sie …",
-    "Weiterhin werden die Studierenden den Umgang mit essentiellen Werkzeuge für die Projektarbeit in teambasierter Softwareentwicklung lernen."
+    "Weiterhin werden die Studierenden den Umgang mit essentiellen Werkzeugen für die Projektarbeit in teambasierter Softwareentwicklung lernen."
    ],
    "bestandteile": [
     {
@@ -2034,7 +2033,7 @@ window.MODULES = [
     "Absolvent*innen des Moduls…",
     "haben Methoden der Softwaretechnik und Werkzeuge dafür ausprobiert,",
     "haben Team-Arbeitsweisen entwickelt und reflektiert,",
-    "haben einen Modellierungsmechanismus aus der Theorie verteilter Systeme näher kennen gelernt."
+    "haben einen Modellierungsmechanismus aus der Theorie verteilter Systeme näher kennengelernt."
    ],
    "bestandteile": [
     {
@@ -2351,9 +2350,8 @@ window.MODULES = [
     "Monopol und Oligopol"
    ],
    "lernergebnisse": [
-    "Ziel der Veranstaltung ist es, den Studierenden eine Einführung in das ökonomische Denken und in die Methoden und grundlegende Resultate der Mikroökonomie zu geben.",
-    "Studenten ohne Vorkenntnisse in Wirtschaftswissenschaft werden befähigt, aufbauende Veranstaltungen (u. a.",
-    "Industrieökonomik, Wirtschaftspolitik und Spieltheorie) mit Erfolg zu besuchen."
+    "Ziel der Veranstaltung ist es, den Studierenden eine Einführung in das ökonomische Denken und in die Methoden und grundlegenden Resultate der Mikroökonomie zu geben.",
+    "Studenten ohne Vorkenntnisse in Wirtschaftswissenschaft werden befähigt, aufbauende Veranstaltungen (u. a. Industrieökonomik, Wirtschaftspolitik und Spieltheorie) mit Erfolg zu besuchen."
    ],
    "bestandteile": [
     {
@@ -2469,7 +2467,7 @@ window.MODULES = [
     "Die Studierenden sollen:",
     "das Cradle to Cradle Konzept verstehen, in den Nachhaltigkeitsdiskurs einordnen und anwenden können",
     "Unterschiede zwischen den Nachhaltigkeitsstrategien verstehen und analytisch differenzieren können",
-    "die Grundlagen und Historie der Umwelt- und Circular Economy-Debatte kennen,"
+    "die Grundlagen und Historie der Umwelt- und Circular Economy-Debatte kennen, …"
    ],
    "bestandteile": [
     {
@@ -2557,7 +2555,7 @@ window.MODULES = [
    "pruefungsform": "Portfolioprüfung",
    "dauer": "100 Punkte insgesamt: Essay (Individualleistung) (60 P, 15 Seiten); Posterpräsentation (Gruppenarbeit) (40 P, ca. 5 Seiten (DinA4) pro Person (ca. 12.500 Zeichen))",
    "lehrinhalte": [
-    "Nachhaltigkeitsdiskurs und „Triple Bottom Line\"",
+    "Nachhaltigkeitsdiskurs und „Triple Bottom Line“",
     "Politische Initiativen, Globalisierung, Zustand der Erde",
     "Business Case für nachhaltiges Wirtschaften, Stakeholder-Management",
     "Umweltmanagement, Corporate Social Responsibility, Nachhaltigkeitsberichte"
@@ -2661,7 +2659,6 @@ window.MODULES = [
    ],
    "lernergebnisse": [
     "Studierende, die dieses Curriculum absolvieren, erwerben ein fundiertes Verständnis wertbasierter Standardisierung sowie der wirtschaftlichen Auswirkungen von Standards auf Unternehmens- …",
-    "Beschreibung:",
     "Diese Reihe von Einführungsvorlesungen konzentriert sich speziell auf die europäische wertbasierte Standardisierung und behandelt darüber hinaus das umfassendere System der …",
     "Aus wirtschaftlicher und unternehmerischer Sicht kann Standardisierung als Katalysator für Innovation wirken, indem sie den Wissenstransfer und die Diffusion von Technologien auf den …"
    ],
@@ -2712,15 +2709,15 @@ window.MODULES = [
    "pruefungsform": "Hausarbeit",
    "dauer": "3000 Wörter",
    "lehrinhalte": [
-    "„Flourishing Business Model Canvas\" und seine Komponenten",
+    "„Flourishing Business Model Canvas“ und seine Komponenten",
     "Große gesellschaftliche Herausforderungen und unternehmerische Lösungsansätze",
     "Analyse bestehender nachhaltiger Geschäftsmodelle in Teams"
    ],
    "lernergebnisse": [
     "Das Modul \"Nachhaltiges Unternehmertum\" zielt darauf ab, den Studierenden einen Überblick über den wissenschaftlichen Bereich \"Nachhaltiges Unternehmertum\" und seine vielfältigen Themen …",
-    "Der Kurs wird verschiedene soziale und ökologische Probleme untersuchen, die durch das derzeitige System der Ausbeutung zu Gunsten wirtschaftlichen Gewinn, verursacht werden. …",
+    "Der Kurs wird verschiedene soziale und ökologische Probleme untersuchen, die durch das derzeitige System der Ausbeutung zugunsten wirtschaftlichen Gewinns verursacht werden. …",
     "Mittels vielfältiger Lehrinhalte und Lehrmethoden erhalten die Studierenden ein fundiertes Verständnis relevanter und aktueller Forschungsthemen rund um nachhaltiges Unternehmertum. Die …",
-    "Darüber hinaus werden die Studierenden befähigt sich kritisch mit der Rolle des nachhaltigen Unternehmertums zur Bewältigung drängender gesellschaftlicher Probleme und seinen Beitrag zur …"
+    "Darüber hinaus werden die Studierenden befähigt, sich kritisch mit der Rolle des nachhaltigen Unternehmertums zur Bewältigung drängender gesellschaftlicher Probleme und seinem Beitrag zur …"
    ],
    "bestandteile": [
     {
@@ -2817,8 +2814,8 @@ window.MODULES = [
    ],
    "lernergebnisse": [
     "Absolventen des Moduls verfügen über die Fähigkeit zum Einsatz und zur Erprobung von Technologien zur Erleichterung des Alltags.",
-    "Sie können technisches und methodisches Wissens im Bereich Ambient Assisted Living / vernetzte Heimumgebung einsetzen.",
-    "Sie haben Erfahrungen gesammelt bei der Bewältigung einer komplexen Aufgabe in einem Team in einer modernen Softwareentwicklungsumbegung."
+    "Sie können technisches und methodisches Wissen im Bereich Ambient Assisted Living / vernetzte Heimumgebung einsetzen.",
+    "Sie haben Erfahrungen gesammelt bei der Bewältigung einer komplexen Aufgabe in einem Team in einer modernen Softwareentwicklungsumgebung."
    ],
    "bestandteile": [
     {
@@ -2858,7 +2855,7 @@ window.MODULES = [
    "fachgebiet": "FG Telekommunikationsnetze",
    "turnus": "WiSe/SoSe",
    "pruefungsform": "Portfolioprüfung",
-   "dauer": "100 Punkte insgesamt: Projektfortschritt im Rahmen von 3 Meilensteinen (10 Punkte pro Meilenstein) (30 P, 3x40 min); Darstellung des Fortschritts als Präsentation (presentation skills) (10 P, 40m); Abschlussdokumentation (Report) (20 P, ~20-30 Seiten); Qualität der erarbeiteten Lösung (Funktionalität, Programmcode, Dokumentation) (20 P, 30h andauernd); Einzelleistung im Rahmen der Gruppenarbeit (20 P, ganzes Semester)",
+   "dauer": "100 Punkte insgesamt: Projektfortschritt im Rahmen von 3 Meilensteinen (10 Punkte pro Meilenstein) (30 P, 3x40 min); Darstellung des Fortschritts als Präsentation (presentation skills) (10 P, 40 min); Abschlussdokumentation (Report) (20 P, ~20-30 Seiten); Qualität der erarbeiteten Lösung (Funktionalität, Programmcode, Dokumentation) (20 P, 30h andauernd); Einzelleistung im Rahmen der Gruppenarbeit (20 P, ganzes Semester)",
    "lehrinhalte": [
     "Größere Teamaufgabe selbständig planen, lösen, dokumentieren und präsentieren",
     "Semesterweise wechselnde Themen aus der aktuellen Forschung",
@@ -2866,8 +2863,8 @@ window.MODULES = [
    ],
    "lernergebnisse": [
     "Die Studierenden erlangen praktische Erfahrung im Umgang mit modernen Kommunikationssystemen, deren Entwurf, Bewertung und Implementierung.",
-    "Der Schwerpunkt liegt dabei vor allem auf modernen Systemen der drahtlosen Mobilkommunikation, sowie auf Internetprotokollen und Anwendungen.",
-    "Die Studierenden sind in die Lage, Kommunikationssysteme zu konzipieren, programmieren und zu bewerten.",
+    "Der Schwerpunkt liegt dabei vor allem auf modernen Systemen der drahtlosen Mobilkommunikation sowie auf Internetprotokollen und Anwendungen.",
+    "Die Studierenden sind in der Lage, Kommunikationssysteme zu konzipieren, zu programmieren und zu bewerten.",
     "Durch die Projektarbeit in Teams erlernen sie zusätzlich Projektmanagement- und Sozial-Kompetenzen."
    ],
    "bestandteile": [
@@ -2916,7 +2913,7 @@ window.MODULES = [
    ],
    "lernergebnisse": [
     "Absolventen dieses Moduls haben Kenntnisse und praktische Erfahrungen im Bereich moderner, verteilter und komplexer IT-Systeme.",
-    "Schwerpunkte sind der Softwareentwurf, Programmierung und Umsetzung Verteilter Systeme.",
+    "Schwerpunkte sind der Softwareentwurf, Programmierung und Umsetzung verteilter Systeme.",
     "Die Projektarbeit im Team vermittelt zusätzlich soziale und Projektmanagement-Kompetenzen."
    ],
    "bestandteile": [
@@ -2957,7 +2954,7 @@ window.MODULES = [
    "fachgebiet": "FG Wirtschaftsinformatik - Information Systems Engineering (ISE)",
    "turnus": "WiSe/SoSe",
    "pruefungsform": "Portfolioprüfung",
-   "dauer": "100 Punkte insgesamt: Entwickelte Software-Artefakte (30 P, a. 160 Stunden); Dokumentation (20 P, ca. 60 Stunden); Ergebnispräsentation (20 P, ca 20 Stunden); Lernprozessevaluation) Mündliche Rücksprache (30 P, ca. 15 Minuten)",
+   "dauer": "100 Punkte insgesamt: Entwickelte Software-Artefakte (30 P, ca. 160 Stunden); Dokumentation (20 P, ca. 60 Stunden); Ergebnispräsentation (20 P, ca. 20 Stunden); Mündliche Rücksprache (30 P, ca. 15 Minuten)",
    "lehrinhalte": [
     "Kleingruppen lösen anspruchsvolle Software- und Prototyping-Probleme",
     "Blockchain-Technologien wie Ethereum und moderne Technologie-Stacks",
@@ -2966,8 +2963,7 @@ window.MODULES = [
    ],
    "lernergebnisse": [
     "Die Studierenden sammeln praktische Erfahrungen mit allen Aspekten der Softwareprojektarbeit (einschließlich teamorientierter Softwareentwicklung, Projektmanagement, gemeinsamer …",
-    "Sie sind in der Lage, reale Probleme im Zusammenhang mit dem Entwurf, der Implementierung und der Bewertung von Blockchain-basierten Anwendungssystemen zu lösen, z.",
-    "B. in Unternehmen, Start-ups und im IoT-Kontext."
+    "Sie sind in der Lage, reale Probleme im Zusammenhang mit dem Entwurf, der Implementierung und der Bewertung von Blockchain-basierten Anwendungssystemen zu lösen, z. B. in Unternehmen, Start-ups und im IoT-Kontext."
    ],
    "bestandteile": [
     {
@@ -3007,7 +3003,7 @@ window.MODULES = [
    "fachgebiet": "FG Wirtschaftsinformatik - Information Systems Engineering (ISE)",
    "turnus": "WiSe/SoSe",
    "pruefungsform": "Portfolioprüfung",
-   "dauer": "100 Punkte insgesamt: Entwickelte Software-Artefakte (30 P, ca. 160 Stunden); Dokumentation (20 P, ca. 60 Stunde); Ergebnispräsentation (20 P, ca. 20 Stunden); Mündliche Rücksprache (30 P, ca. 15 Minuten)",
+   "dauer": "100 Punkte insgesamt: Entwickelte Software-Artefakte (30 P, ca. 160 Stunden); Dokumentation (20 P, ca. 60 Stunden); Ergebnispräsentation (20 P, ca. 20 Stunden); Mündliche Rücksprache (30 P, ca. 15 Minuten)",
    "lehrinhalte": [
     "Kleingruppen lösen anspruchsvolle Software- und Prototyping-Probleme",
     "Öffentliche Cloud-Dienste (z. B. AWS) und moderne Technologie-Stacks",
@@ -3016,8 +3012,7 @@ window.MODULES = [
    ],
    "lernergebnisse": [
     "Die Studierenden sammeln praktische Erfahrungen mit allen Aspekten der Softwareprojektarbeit (einschließlich teamorientierter Softwareentwicklung, Projektmanagement, gemeinsamer …",
-    "Sie sind in der Lage, reale Probleme im Zusammenhang mit dem Entwurf, der Implementierung und der Bewertung von cloudbasierten Anwendungssystemen zu lösen, z.",
-    "B. in Unternehmen, Start-ups und im IoT-Kontext."
+    "Sie sind in der Lage, reale Probleme im Zusammenhang mit dem Entwurf, der Implementierung und der Bewertung von cloudbasierten Anwendungssystemen zu lösen, z. B. in Unternehmen, Start-ups und im IoT-Kontext."
    ],
    "bestandteile": [
     {
@@ -3057,14 +3052,14 @@ window.MODULES = [
    "fachgebiet": "FG Datenbanksysteme und Informationsmanagement (DIMA)",
    "turnus": "WiSe/SoSe",
    "pruefungsform": "Portfolioprüfung",
-   "dauer": "100 Punkte insgesamt: 2 Meilsteinpräsentationen (15 P, je 10 Minuten); Abschlusspräsentation (20 P, 15 Minuten); Implementierung und Testen der Projektaufgabe (50 P, etwa 80 Stunden); Projektbericht und Dokumentation des Projekt-Codes (15 P, etwa 25 Stunden / 10 Seiten)",
+   "dauer": "100 Punkte insgesamt: 2 Meilensteinpräsentationen (15 P, je 10 Minuten); Abschlusspräsentation (20 P, 15 Minuten); Implementierung und Testen der Projektaufgabe (50 P, etwa 80 Stunden); Projektbericht und Dokumentation des Projekt-Codes (15 P, etwa 25 Stunden / 10 Seiten)",
    "lehrinhalte": [
     "Entwurf und Implementierung zentraler Komponenten eines Informationssystems",
     "Zusammenarbeit mit Versionskontrolle (Git), Debugging-Techniken",
     "Effiziente Programmierung für moderne Hardware, Profiling"
    ],
    "lernergebnisse": [
-    "Nach Abschluss des Kurses sind Studierende in der Lage, performante Komponenten eines Informationssystems zu entwerfen, implementieren, debuggen und in Hinsicht auf Laufzeit zu analysieren.",
+    "Nach Abschluss des Kurses sind Studierende in der Lage, performante Komponenten eines Informationssystems zu entwerfen, zu implementieren, zu debuggen und im Hinblick auf die Laufzeit zu analysieren.",
     "Weiterhin wissen Studierende, wie man möglichst reibungslos mit Hilfe von Versionskontrollsystemen in Teams Software entwickelt."
    ],
    "bestandteile": [
@@ -3097,8 +3092,8 @@ window.MODULES = [
    "version": "6",
    "url": "https://moseskonto.tu-berlin.de/moses/modultransfersystem/bolognamodule/beschreibung/anzeigen.html?number=40985&version=6&sprache=1",
    "gueltigkeit": "Seit SoSe 2024",
-   "sprache": "English",
-   "lehrsprache": "English",
+   "sprache": "Englisch",
+   "lehrsprache": "Englisch",
    "verantwortlich": "Bermbach, David",
    "fakultaet": "Fakultät IV",
    "institut": "Institut für Wirtschaftsinformatik und Quantitative Methoden",
@@ -3164,7 +3159,7 @@ window.MODULES = [
     "Nach erfolgreichem Abschluss des Kurses haben Studierende:",
     "praktische Erfahrungen bei der Anwendung von Software-Engineering-Methoden während der Entwicklung von Edge-KI-Systemen gesammelt;",
     "ihre Programmierkenntnisse vertieft, insbesondere bei der Implementierung und Integration von KI-Komponenten;",
-    "geeignete Edge-, Cloud- und KI-Technologien für spezifische Anwendungsszenarien ausgewählt und angewendet;"
+    "geeignete Edge-, Cloud- und KI-Technologien für spezifische Anwendungsszenarien ausgewählt und angewendet; …"
    ],
    "bestandteile": [
     {
@@ -3215,8 +3210,7 @@ window.MODULES = [
    "lernergebnisse": [
     "Information Systems Prototyping vermittelt den Studierenden praktische Kenntnisse in der Softwareentwicklung.",
     "Die Studierenden sammeln dabei im Rahmen des Moduls Erfahrungen in einem Praxisprojekt mit Partnern aus der Wirtschaft und Forschung.",
-    "Sie lernen Facetten realer Projektarbeit kennen (bspw.",
-    "Entscheidungsfindung, Implementierung, Projektdokumentation, und Ergebnispräsentation) und können teamorientiert komplexe Aufgaben im Kontext der Gestaltung und Bewertung von IT-Systemen …"
+    "Sie lernen Facetten realer Projektarbeit kennen (bspw. Entscheidungsfindung, Implementierung, Projektdokumentation und Ergebnispräsentation) und können teamorientiert komplexe Aufgaben im Kontext der Gestaltung und Bewertung von IT-Systemen …"
    ],
    "bestandteile": [
     {
@@ -3256,7 +3250,7 @@ window.MODULES = [
    "fachgebiet": "FG S-Professur Security in Telecommunications (SecT)",
    "turnus": "WiSe/SoSe",
    "pruefungsform": "Portfolioprüfung",
-   "dauer": "100 Punkte insgesamt: Abschlussbericht (25 P, 10 - 25 Seiten); Abschlusspräsentation (25 P, 30 Minuten); Ergebnisprüfung) Projektergebnisse (50 P, dynamisch)",
+   "dauer": "100 Punkte insgesamt: Abschlussbericht (25 P, 10 - 25 Seiten); Abschlusspräsentation (25 P, 30 Minuten); Projektergebnisse (50 P, dynamisch)",
    "lehrinhalte": [
     "Individuell angepasstes Projekt zur Netzwerk- und Systemsicherheit",
     "Sicherheitsanalyse eingebetteter Systeme (Router, Smart-TVs)",
@@ -3316,7 +3310,7 @@ window.MODULES = [
    "lernergebnisse": [
     "Verständnis spezifischer Eigenschaften sicherer Computersysteme",
     "Wissen zu Schwachstellen komplexer Computersysteme",
-    "Erfahrung und praktische Kenntnisse in der Untersuchung der Sicherheit Computersysteme"
+    "Erfahrung und praktische Kenntnisse in der Untersuchung der Sicherheit von Computersystemen"
    ],
    "bestandteile": [
     {
@@ -3405,7 +3399,7 @@ window.MODULES = [
    "fachgebiet": "FG Forschungsdateninfrastruktur",
    "turnus": "WiSe/SoSe",
    "pruefungsform": "Portfolioprüfung",
-   "dauer": "100 Punkte insgesamt: Durchführung (40 P, 18 Stunden im Wochendurchschnitt); Dokumentation (30 P, 15 Seiten); Vortrag (30 P, 3 Präsentationen á 20 Minuten)",
+   "dauer": "100 Punkte insgesamt: Durchführung (40 P, 18 Stunden im Wochendurchschnitt); Dokumentation (30 P, 15 Seiten); Vortrag (30 P, 3 Präsentationen à 20 Minuten)",
    "lehrinhalte": [
     "Praktisches Projekt: Softwarekomponente spezifizieren, implementieren, testen",
     "Semantic Web, Linked Data und Knowledge Graphs",
@@ -3603,7 +3597,7 @@ window.MODULES = [
    "nummer": "40725",
    "version": "6",
    "url": "https://moseskonto.tu-berlin.de/moses/modultransfersystem/bolognamodule/beschreibung/anzeigen.html?number=40725&version=6&sprache=1",
-   "gueltigkeit": "Seit SS 2017",
+   "gueltigkeit": "Seit SoSe 2017",
    "sprache": "Deutsch, Englisch",
    "lehrsprache": "Deutsch, Englisch",
    "verantwortlich": "Möller, Sebastian",
@@ -3620,7 +3614,7 @@ window.MODULES = [
     "Sprach-, Audio- und visuelle Interaktion"
    ],
    "lernergebnisse": [
-    "Students gain",
+    "Students gain:",
     "Knowledge in working on specific State-of-the-Art topics in the field of Usability.",
     "Measurement of quality and usability of interactive Systems.",
     "Practical experience in technical realization of human-machine interfaces."
@@ -3654,7 +3648,7 @@ window.MODULES = [
    "nummer": "40726",
    "version": "6",
    "url": "https://moseskonto.tu-berlin.de/moses/modultransfersystem/bolognamodule/beschreibung/anzeigen.html?number=40726&version=6&sprache=1",
-   "gueltigkeit": "Seit SS 2017",
+   "gueltigkeit": "Seit SoSe 2017",
    "sprache": "Deutsch, Englisch",
    "lehrsprache": "Deutsch, Englisch",
    "verantwortlich": "Möller, Sebastian",
@@ -3671,7 +3665,7 @@ window.MODULES = [
     "Sprach-, Audio- und visuelle Interaktion"
    ],
    "lernergebnisse": [
-    "Students gain",
+    "Students gain:",
     "Knowledge in working on specific State-of-the-Art topics in the field of Usability.",
     "Measurement of quality and usability of interactive Systems.",
     "Practical experience in technical realization of human-machine interfaces."
@@ -3915,7 +3909,7 @@ window.MODULES = [
    ],
    "lernergebnisse": [
     "AbsolventInnen des Moduls haben ein solides Grundverständnis für zentrale Problemstellungen der visuellen Wahrnehmungsforschung. Sie kennen wissenschaftliche Methoden zur Untersuchung …",
-    "Die Studierenden verstehen, interpretieren und beurteilen einschlägige Originalarbeiten. Sie präsentieren und diskutieren diese vor einem Fachpublikum. Sie sind befähigt schriftliche …"
+    "Die Studierenden verstehen, interpretieren und beurteilen einschlägige Originalarbeiten. Sie präsentieren und diskutieren diese vor einem Fachpublikum. Sie sind befähigt, schriftliche …"
    ],
    "bestandteile": [
     {
@@ -4013,7 +4007,7 @@ window.MODULES = [
     "Fachspezifisch: Die Studierenden kennen einige vertiefte Themen zu Algorithmen und Datenstrukturen und haben detailliertes Wissen zu einem ausgewählten Thema.",
     "Fachübergreifend: Die Studierenden",
     "können Quellen recherchieren und reflektiert beurteilen",
-    "sind in der Lage wissenschaftliche Themen vor Publikum zu präsentieren und kritisch zu diskutieren"
+    "sind in der Lage, wissenschaftliche Themen vor Publikum zu präsentieren und kritisch zu diskutieren"
    ],
    "bestandteile": [
     {
@@ -4203,7 +4197,7 @@ window.MODULES = [
    "fachgebiet": "FG Intelligent Networks and Management of Distributed Systems (INET)",
    "turnus": "WiSe",
    "pruefungsform": "Portfolioprüfung",
-   "dauer": "100 Punkte insgesamt: Präsentation (50 P, 30 Minuten); Seminarrbeit (50 P, 20 Seiten)",
+   "dauer": "100 Punkte insgesamt: Präsentation (50 P, 30 Minuten); Seminararbeit (50 P, 20 Seiten)",
    "lehrinhalte": [
     "Blockchain-Technologie und Kryptowährungen wie Bitcoin und Ethereum",
     "Skalierbarkeit als zentrale Herausforderung",
@@ -4308,9 +4302,8 @@ window.MODULES = [
    ],
    "lernergebnisse": [
     "Nach erfolgreichem Abschluss der Lehrveranstaltung können die Studierenden:",
-    "Forschungsfragen formulieren:",
-    "Präzise, empirisch untersuchbare Forschungsfragen und Hypothesen im Kontext von AR/VR-Interaktionen ableiten.",
-    "Studien planen:"
+    "Forschungsfragen formulieren: präzise, empirisch untersuchbare Forschungsfragen und Hypothesen im Kontext von AR/VR-Interaktionen ableiten.",
+    "Studien planen …"
    ],
    "bestandteile": [
     {
@@ -4665,7 +4658,7 @@ window.MODULES = [
    ],
    "lernergebnisse": [
     "Ziel der Veranstaltung ist ein intuitives Verständnis elementarer Konzepte des Maschinellen Lernens, deren Entstehung und ihrer Anwendung in aktuellen Problemstellungen. Am Ende der …",
-    "Je nach Wahlpflichtkurs können die Studierenden zudem entweder ihre mathematisch Kenntnisse oder ein individuell gewähltes Anwendungsgebiet aus dem Maschinellen Lernen vertiefen."
+    "Je nach Wahlpflichtkurs können die Studierenden zudem entweder ihre mathematischen Kenntnisse oder ein individuell gewähltes Anwendungsgebiet aus dem Maschinellen Lernen vertiefen."
    ],
    "bestandteile": [
     {
@@ -4771,7 +4764,7 @@ window.MODULES = [
    "lernergebnisse": [
     "Absolventen dieses Moduls kennen industriell und wirtschaftlich relevante Anwendungsgebiete für die Methoden der symbolischen künstlichen Intelligenz.",
     "Sie können die erlernten Methoden zum Lösen typischer Probleme einsetzen.",
-    "Sie sind in der Lage, die Leistungsfägkeit der besprochenen Verfahren einzuschätzen und sie auf neuartige Probleme in den Anwendungsdomänen erfolgreich anzuwenden."
+    "Sie sind in der Lage, die Leistungsfähigkeit der besprochenen Verfahren einzuschätzen und sie auf neuartige Probleme in den Anwendungsdomänen erfolgreich anzuwenden."
    ],
    "bestandteile": [
     {
@@ -5044,7 +5037,7 @@ window.MODULES = [
    ],
    "lernergebnisse": [
     "Zu einem Thema ihrer Wahl aus dem Bereich Open Distributed Systems verfügen die Studierenden über tiefgreifende Kenntnisse und sie sind in der Lage, zu solchen Themen eine …",
-    "Ihre Kenntnisse sowie ihre eigene Meinung im Thema Open Distributed Systems können sie in Wort und Schrift auf einer verständlichen und überzeugend argumentierten Weise darstellen und in …",
+    "Ihre Kenntnisse sowie ihre eigene Meinung zum Thema Open Distributed Systems können sie in Wort und Schrift auf verständliche und überzeugend argumentierte Weise darstellen und in …",
     "Letztlich sind die Studierenden befähigt, eigenständig die Qualität von wissenschaftlichen Veröffentlichungen und Vorträgen zu beurteilen und zu kritisieren."
    ],
    "bestandteile": [
@@ -5091,7 +5084,7 @@ window.MODULES = [
     "Anwendung auf praktische Probleme"
    ],
    "lernergebnisse": [
-    "Students gain",
+    "Students gain:",
     "Understanding of “Usability” as inter-disciplinary research and application area in the development of information and communication technologies",
     "Fundamental knowledge of multimodal human-computer interaction",
     "Knowledge of the implementation of human-computer interfaces"
@@ -5297,8 +5290,8 @@ window.MODULES = [
    "lernergebnisse": [
     "Absolventinnen und Absolventen dieses Moduls kennen und verstehen - anhand von einer ausgewählten Menge von Beispielen - die Auswirkungen von Softwarefehlern, die in der Praxis entweder …",
     "Sie gewinnen Wertschätzung für Qualitätssicherungspraktiken und haben ein höheres Bewusstsein für mögliche Fehler.",
-    "Die Studierenden sind in der Lage wissenschaftliche Themen vor einem Fachpublikum zu präsentieren und in einem anschließenden Streitgepräch über ihr Thema zu diskutieren.",
-    "Dabei kennen sie grundlegende und fortgeschrittene Präsentationstechniken um den Inhalt eines Referats möglichst klar und verständlich anzubringen."
+    "Die Studierenden sind in der Lage, wissenschaftliche Themen vor einem Fachpublikum zu präsentieren und in einem anschließenden Streitgespräch über ihr Thema zu diskutieren.",
+    "Dabei kennen sie grundlegende und fortgeschrittene Präsentationstechniken, um den Inhalt eines Referats möglichst klar und verständlich anzubringen."
    ],
    "bestandteile": [
     {
@@ -5441,7 +5434,7 @@ window.MODULES = [
    "nummer": "40317",
    "version": "4",
    "url": "https://moseskonto.tu-berlin.de/moses/modultransfersystem/bolognamodule/beschreibung/anzeigen.html?number=40317&version=4&sprache=1",
-   "gueltigkeit": "Seit SS 2019",
+   "gueltigkeit": "Seit SoSe 2019",
    "sprache": "Deutsch",
    "lehrsprache": "Deutsch",
    "verantwortlich": "Albayrak, Sahin",
@@ -5714,8 +5707,8 @@ window.MODULES = [
    ],
    "lernergebnisse": [
     "Die Studierenden kennen die spezifischen Anforderungen sowohl der hardwarenahen Entwicklung als auch der Betriebssystementwicklung. Sie kennen die Aufgaben eines Betriebssystems, …",
-    "Sie sind in der Lage, bei gegebener Aufgabenstellung Lösungsvarianten zu entwickelten, die harwarespezifischen Notwendigkeiten einzubeziehen und Lösungsmöglichkeiten gegeneinander …",
-    "Zusätzlich sind die Studierenden in der Lage, Fehler systematisch zu suchen und beheben."
+    "Sie sind in der Lage, bei gegebener Aufgabenstellung Lösungsvarianten zu entwickeln, die hardwarespezifischen Notwendigkeiten einzubeziehen und Lösungsmöglichkeiten gegeneinander …",
+    "Zusätzlich sind die Studierenden in der Lage, Fehler systematisch zu suchen und zu beheben."
    ],
    "bestandteile": [
     {
@@ -5979,7 +5972,7 @@ window.MODULES = [
    "fachgebiet": "FG Intelligent Networks and Management of Distributed Systems (INET)",
    "turnus": "SoSe",
    "pruefungsform": "Portfolioprüfung",
-   "dauer": "100 Punkte insgesamt: Praktisches Projekt (50 P, 1 Semester - ein schriftlicher Report (circa 8 Seite) oder Präsentation (15 Minuten) gegen Ende des Semesters); Abschlusstest (50 P, mündliche (20 Minuten) oder schriftliche (60 Minuten) Prüfung)",
+   "dauer": "100 Punkte insgesamt: Praktisches Projekt (50 P, 1 Semester - ein schriftlicher Report (circa 8 Seiten) oder Präsentation (15 Minuten) gegen Ende des Semesters); Abschlusstest (50 P, mündliche (20 Minuten) oder schriftliche (60 Minuten) Prüfung)",
    "lehrinhalte": [
     "Softwaredefinierte Netze mit logisch zentralisierter Steuerung",
     "Netzwerke in Rechenzentren",
@@ -6094,8 +6087,8 @@ window.MODULES = [
     "Algorithmische Prinzipien: dynamisches Programmieren, Entscheidungsbäume"
    ],
    "lernergebnisse": [
-    "Die Student:innen gewinnen ein integratives Verständnis des Forschungsgebiets Künstliche Intelligenz, das daten-basierte KI (insb. Maschinelles Lernen) und model-basierte KI (insb. …",
-    "Die Student:innen verstehen KI aus Sicht der Entscheidungs-Theorie, des Maschinellen Lernens, der Optimierung, und des klassischen Problemlösens.",
+    "Die Student:innen gewinnen ein integratives Verständnis des Forschungsgebiets Künstliche Intelligenz, das datenbasierte KI (insb. Maschinelles Lernen) und modellbasierte KI (insb. …",
+    "Die Student:innen verstehen KI aus Sicht der Entscheidungstheorie, des Maschinellen Lernens, der Optimierung und des klassischen Problemlösens.",
     "Die Student:innen können grundlegende Algorithmen aus den genannten Gebieten eigenständig von Grund auf implementieren und im Detail verstehen.",
     "Die Student:innen wissen, welche Problemformulierung und Algorithmen der KI für ein gegebenes Anwendungsproblem adäquat sind."
    ],
@@ -6200,7 +6193,7 @@ window.MODULES = [
    "fachgebiet": "FG Mensch-Computer-Interaktion (HCI)",
    "turnus": "WiSe",
    "pruefungsform": "Portfolioprüfung",
-   "dauer": "100 Punkte insgesamt: Poster mündlich (20 P, 5 Minuten); Poster schriftlich (20 P, Alle Poster werden während der Präsentation vorgestellt. Ein Poster hat eine Größe von einem A3-Blatt. (8 Stunden)); Präsentation (30 P, Über die Dauer vom Seminar); Seminarprojekt (30 P, 6 × 2 Seiten (PowerPoint), 48-60 Stunden)",
+   "dauer": "100 Punkte insgesamt: Poster mündlich (20 P, 5 Minuten); Poster schriftlich (20 P, Alle Poster werden während der Präsentation vorgestellt. Ein Poster hat eine Größe von einem A3-Blatt. (8 Stunden)); Präsentation (30 P, Über die Dauer des Seminars); Seminarprojekt (30 P, 6 × 2 Seiten (PowerPoint), 48-60 Stunden)",
    "lehrinhalte": [
     "Benutzer verstehen: Nutzerverhalten, Interviews, Usability-Tests",
     "Gestaltung von Benutzeroberflächen und Interaktionsparadigmen",
@@ -6211,7 +6204,7 @@ window.MODULES = [
     "Anwendung von HCI-Prinzipien zur Gestaltung benutzerfreundlicher Schnittstellen.",
     "Durchführung von grundlegender Nutzerforschung und Analyse der Nutzerbedürfnisse.",
     "Prinzipien des iterativen Prototypings und der Evaluierung interaktiver Systeme verstehen.",
-    "HCI-Konzepte effektiv zu kommunizieren."
+    "HCI-Konzepte effektiv kommunizieren."
    ],
    "bestandteile": [
     {
@@ -6356,7 +6349,7 @@ window.MODULES = [
    "fachgebiet": "FG Intelligent Networks and Management of Distributed Systems (INET)",
    "turnus": "SoSe",
    "pruefungsform": "Portfolioprüfung",
-   "dauer": "100 Punkte insgesamt: Praktisches Projekt (50 P, 1 Semester - ein schriftlicher Report (circa 8 Seite) oder Präsentation (15 Minuten) gegen Ende des Semesters); Abschlusstest (50 P, mündliche (20 Minuten) oder schriftliche (60 Minuten) Prüfung)",
+   "dauer": "100 Punkte insgesamt: Praktisches Projekt (50 P, 1 Semester - ein schriftlicher Report (circa 8 Seiten) oder Präsentation (15 Minuten) gegen Ende des Semesters); Abschlusstest (50 P, mündliche (20 Minuten) oder schriftliche (60 Minuten) Prüfung)",
    "lehrinhalte": [
     "Sicherheit und Zuverlässigkeit vernetzter Systeme analysieren",
     "Schutz bestehender Netzwerkschichten, Verifikation von Protokollen",
@@ -6470,7 +6463,7 @@ window.MODULES = [
    "lernergebnisse": [
     "Absolventen dieses Moduls kennen industriell und wirtschaftlich relevante Anwendungsgebiete für die Methoden der symbolischen künstlichen Intelligenz.",
     "Sie können die erlernten Methoden zum Lösen typischer Probleme einsetzen.",
-    "Sie sind in der Lage, die Leistungsfägkeit der besprochenen Verfahren einzuschätzen und sie auf neuartige Probleme in den Anwendungsdomänen erfolgreich anzuwenden."
+    "Sie sind in der Lage, die Leistungsfähigkeit der besprochenen Verfahren einzuschätzen und sie auf neuartige Probleme in den Anwendungsdomänen erfolgreich anzuwenden."
    ],
    "bestandteile": [
     {
@@ -6693,7 +6686,7 @@ window.MODULES = [
    "lernergebnisse": [
     "The students know the basic principles, algorithms and architectures of computer networks.",
     "They are able to understand complex correlations and to interpret results of simulations.",
-    "The goal is to master the basics of communications in computer networks, who hopefully have a long half-life period.",
+    "The goal is to master the basics of communications in computer networks, which hopefully have a long half-life.",
     "This means that the discussed principles outlast current mainstreams."
    ],
    "bestandteile": [
@@ -6734,14 +6727,14 @@ window.MODULES = [
    "fachgebiet": "FG Scalable Software-Systems (3S)",
    "turnus": "SoSe",
    "pruefungsform": "Portfolioprüfung",
-   "dauer": "100 Punkte insgesamt: Prototyping-Ergebnisse (25 P, ca. 4 Wochen); studentische Präsentation (25 P, max. 15 Minuten); Abschlusstest (50 P, siehe unten (schritlich max. 60 Minuten, mündlich ca. 15 Minuten))",
+   "dauer": "100 Punkte insgesamt: Prototyping-Ergebnisse (25 P, ca. 4 Wochen); studentische Präsentation (25 P, max. 15 Minuten); Abschlusstest (50 P, siehe unten (schriftlich max. 60 Minuten, mündlich ca. 15 Minuten))",
    "lehrinhalte": [
     "Grundkonzepte der Skalierbarkeit für zustandslose und zustandsbehaftete Systeme",
     "Typische Patterns wie Constant Load oder Retry with Exponential Backoff",
     "Fallstudien zur Skalierbarkeit existierender Systeme"
    ],
    "lernergebnisse": [
-    "Studierende sind in der Lage die Skalierbarkeit von Softwaresystemen zu bewerten und eigene hochskalierbare Softwaresysteme zu gestalten."
+    "Studierende sind in der Lage, die Skalierbarkeit von Softwaresystemen zu bewerten und eigene hochskalierbare Softwaresysteme zu gestalten."
    ],
    "bestandteile": [
     {
@@ -6822,7 +6815,7 @@ window.MODULES = [
    "nummer": "40750",
    "version": "5",
    "url": "https://moseskonto.tu-berlin.de/moses/modultransfersystem/bolognamodule/beschreibung/anzeigen.html?number=40750&version=5&sprache=1",
-   "gueltigkeit": "Seit SS 2019",
+   "gueltigkeit": "Seit SoSe 2019",
    "sprache": "Deutsch",
    "lehrsprache": "Deutsch",
    "verantwortlich": "Möller, Sebastian",
@@ -6831,7 +6824,7 @@ window.MODULES = [
    "fachgebiet": "FG S-Professur Quality and Usability",
    "turnus": "SoSe",
    "pruefungsform": "Portfolioprüfung",
-   "dauer": "100 Punkte insgesamt: 2 Hausaufgaben à 3 Punkte (6 P, 120 min); Präsentation zur Themen der Veranstaltung (18 P, 30 min); Durchführung einer Nutzerstudie (18 P, 150 min); 2 Schriftliche Tests à 29 Punkte (58 P, 80 min)",
+   "dauer": "100 Punkte insgesamt: 2 Hausaufgaben à 3 Punkte (6 P, 120 min); Präsentation zu Themen der Veranstaltung (18 P, 30 min); Durchführung einer Nutzerstudie (18 P, 150 min); 2 Schriftliche Tests à 29 Punkte (58 P, 80 min)",
    "lehrinhalte": [
     "Begriffe von Qualität und Usability, Grundlagen der Psychophysik",
     "Messung und Vorhersage von Qualität, Skalierung",
@@ -7007,7 +7000,7 @@ window.MODULES = [
    ],
    "lernergebnisse": [
     "Studierende, die dieses Modul erfolgreich abschließen, haben einen Überblick über die grundlegenden Technologien des World Wide Web (WWW) und deren Anwendung. Sie haben Kenntnisse von …",
-    "Studierende sind in der Lage Webinhalte semantisch zu strukturieren, zu gestalten und miteinander zu verlinken. Es ist ihnen möglich dynamische Webseiten zu erstellen. Weiterhin lernen …"
+    "Studierende sind in der Lage, Webinhalte semantisch zu strukturieren, zu gestalten und miteinander zu verlinken. Es ist ihnen möglich, dynamische Webseiten zu erstellen. Weiterhin lernen …"
    ],
    "bestandteile": [
     {
@@ -7108,13 +7101,13 @@ window.MODULES = [
    "dauer": "100 Punkte insgesamt: Case Study Ausarbeitung (30 P, 60 Minuten); Ergebnis in Markstrat (30 P, 40 Minuten); Kick Off Quiz (15 P, 20 Minuten); Markstrat Präsentation (25 P, 10 Folien)",
    "lehrinhalte": [
     "Grundlagen des Marketingmanagements mit Präsentationen",
-    "Computergestütztes Simulationsspiel „Markstrat\"",
+    "Computergestütztes Simulationsspiel „Markstrat“",
     "Teams treffen Marketingentscheidungen als konkurrierende Unternehmen",
     "Konkurrenzanalyse und Reaktion auf Mitbewerber"
    ],
    "lernergebnisse": [
     "Die Zielsetzung dieses Kurses ist es, Studierenden im Umgang mit Marketingplanungskonzepten zu helfen und diese zu erlernen. Der Schwerpunkt liegt hierbei auf der Festlegung einer …",
-    "Dieser Kurs fokussiert sich auf die Analyse, die Marketingentscheidungen unterstützt und die in der Formation von Marketingstrategien hilft. Es werden Verhaltens- und numerische Analysen …",
+    "Dieser Kurs fokussiert sich auf die Analyse, die Marketingentscheidungen unterstützt und die bei der Entwicklung von Marketingstrategien hilft. Es werden Verhaltens- und numerische Analysen …",
     "Der Kurs hat drei Zielsetzungen:",
     "Entwickeln von analytischen Fähigkeiten und dem Treffen von Entscheidungen durch Analysieren aktueller Entscheidungssituationen im Marketing und dem Geben von Empfehlungen"
    ],
@@ -7253,7 +7246,7 @@ window.MODULES = [
    "verantwortlich": "Hirschhausen, Christian",
    "fakultaet": "Fakultät VII",
    "institut": "Institut für Volkswirtschaftslehre und Wirtschaftsrecht",
-   "fachgebiet": "FG Volkswirtschaftlehre, insb. Wirtschafts- und Infrastrukturpolitik",
+   "fachgebiet": "FG Volkswirtschaftslehre, insb. Wirtschafts- und Infrastrukturpolitik",
    "turnus": "WiSe/SoSe",
    "pruefungsform": "Portfolioprüfung",
    "dauer": "100 Punkte insgesamt: Präsentation (30 P, 20 Min.); Seminararbeit (70 P, max. 20 S.)",
@@ -7264,8 +7257,8 @@ window.MODULES = [
     "Seminararbeit in Dreiergruppen zu einem Thema der Wirtschaftspolitik"
    ],
    "lernergebnisse": [
-    "Nach Belegung dieses Modules sind die Studierenden in der Lage eine schriftliche Arbeit nach grundlegenden wissenschaftlichen Methoden und Techniken anzufertigen.",
-    "Neben formalen Regeln wie Zitation und Stil, werden auch Techniken der Recherche und Themenplanung, sowie Zeitplanung vermittelt."
+    "Nach Belegung dieses Moduls sind die Studierenden in der Lage, eine schriftliche Arbeit nach grundlegenden wissenschaftlichen Methoden und Techniken anzufertigen.",
+    "Neben formalen Regeln wie Zitation und Stil werden auch Techniken der Recherche und Themenplanung sowie der Zeitplanung vermittelt."
    ],
    "bestandteile": [
     {
@@ -7314,7 +7307,7 @@ window.MODULES = [
    ],
    "lernergebnisse": [
     "Die Software R entwickelt sich immer mehr zur Standardsprache für statistisches Rechnen in Wissenschaft und Wirtschaft. Gleichzeitig wachsen die Anwendungen von statistischem Rechnen im …",
-    "Studierende können ihr Kenntnisse und Fähigkeiten aus dem „Online R Labor“ in der weiterführenden Veranstaltung „Computergestütze Statistik mit R“ optimal vertiefen und erweitern vor …"
+    "Studierende können ihre Kenntnisse und Fähigkeiten aus dem „Online R Labor“ in der weiterführenden Veranstaltung „Computergestützte Statistik mit R“ optimal vertiefen und erweitern vor …"
    ],
    "bestandteile": [
     {
@@ -7524,10 +7517,10 @@ window.MODULES = [
     "Paneldaten- und Zeitreihenmodelle"
    ],
    "lernergebnisse": [
-    "Die Studierenden sind in der Lage eigenständig ein kleines empirisches Projekt durchzuführen.",
-    "Sie sind in der Lage, eine relevante und konkrete Forschungsfrage zu entwickeln und zu formulieren, und anschließend mit einem Datensatz zu untersuchen.",
-    "Sie können hierbei Datensätze aufarbeiten, geeignete empirische Methoden zur Beantwortung der Forschungsfrage anwenden und Ergebnisse mit der Statistik Software R erzeugen.",
-    "Sie sind in der Lage die Ergebnisse verständlich darzustellen, zu präsentieren und zu diskutieren."
+    "Die Studierenden sind in der Lage, eigenständig ein kleines empirisches Projekt durchzuführen.",
+    "Sie sind in der Lage, eine relevante und konkrete Forschungsfrage zu entwickeln und zu formulieren und anschließend mit einem Datensatz zu untersuchen.",
+    "Sie können hierbei Datensätze aufarbeiten, geeignete empirische Methoden zur Beantwortung der Forschungsfrage anwenden und Ergebnisse mit der Statistiksoftware R erzeugen.",
+    "Sie sind in der Lage, die Ergebnisse verständlich darzustellen, zu präsentieren und zu diskutieren."
    ],
    "bestandteile": [
     {
@@ -7558,13 +7551,13 @@ window.MODULES = [
    "nummer": "70218",
    "version": "4",
    "url": "https://moseskonto.tu-berlin.de/moses/modultransfersystem/bolognamodule/beschreibung/anzeigen.html?number=70218&version=4&sprache=1",
-   "gueltigkeit": "Seit WS 2019/20",
+   "gueltigkeit": "Seit WiSe 2019/20",
    "sprache": "Deutsch, Englisch",
    "lehrsprache": "Deutsch",
    "verantwortlich": "Heinemann, Frank",
    "fakultaet": "Fakultät VII",
    "institut": "Institut für Volkswirtschaftslehre und Wirtschaftsrecht",
-   "fachgebiet": "FG Volkswirtschaftlehre, insbesondere Makroökonomie",
+   "fachgebiet": "FG Volkswirtschaftslehre, insbesondere Makroökonomie",
    "turnus": "WiSe/SoSe",
    "pruefungsform": "Portfolioprüfung",
    "dauer": "100 Punkte insgesamt: Präsentationen und mündliche Beteiligung im Seminar (50 P, 45 min/ 30 h); Seminararbeit (50 P, 15-20 Seiten)",
@@ -7659,7 +7652,7 @@ window.MODULES = [
    "verantwortlich": "Hirschhausen, Christian",
    "fakultaet": "Fakultät VII",
    "institut": "Institut für Volkswirtschaftslehre und Wirtschaftsrecht",
-   "fachgebiet": "FG Volkswirtschaftlehre, insb. Wirtschafts- und Infrastrukturpolitik",
+   "fachgebiet": "FG Volkswirtschaftslehre, insb. Wirtschafts- und Infrastrukturpolitik",
    "turnus": "WiSe/SoSe",
    "pruefungsform": "Portfolioprüfung",
    "dauer": "100 Punkte insgesamt: Präsentation (30 P, 20 min); Seminararbeit (70 P, 18-22 Seiten)",
@@ -7768,7 +7761,7 @@ window.MODULES = [
     "Aktives Lernen im Team mit eigener Strategie"
    ],
    "lernergebnisse": [
-    "Das Unternehmensplanspiel soll Studierenden die Möglichkeit bieten, ihre betriebs-wirtschaftlichen Kenntnisse und Denkweisen praktisch anzuwenden und zu vertiefen.",
+    "Das Unternehmensplanspiel soll Studierenden die Möglichkeit bieten, ihre betriebswirtschaftlichen Kenntnisse und Denkweisen praktisch anzuwenden und zu vertiefen.",
     "Durch das Management aller wichtigen Unternehmensbereiche können unternehmensweite Zusammenhänge (interne wie externe Einflussgrößen) erkannt und die Prozesse der Entscheidungsfindung im …"
    ],
    "bestandteile": [
@@ -7809,7 +7802,7 @@ window.MODULES = [
    "fachgebiet": "FG Nachhaltige Nutzung natürlicher Ressourcen",
    "turnus": "WiSe/SoSe",
    "pruefungsform": "Hausarbeit",
-   "dauer": "Maximal 15seitige Hausarbeit.",
+   "dauer": "Maximal 15-seitige Hausarbeit",
    "lehrinhalte": [
     "Ökonomische Perspektiven auf die Klimapolitik",
     "Faktoren für die gesellschaftliche Akzeptanz von CO2-Preisen",
@@ -7867,7 +7860,7 @@ window.MODULES = [
    "lernergebnisse": [
     "Das Modul vermittelt ein grundlegendes und umfassendes Verständnis des operativen Managements industrieller Produktionsprozesse. Im Mittelpunkt steht der gezielte Einsatz von …",
     "Die Studierenden erwerben Kompetenzen entlang des gesamten Prozesses der datengetriebenen Entscheidungsunterstützung: von der strukturierten Analyse und Problemdefinition über die …",
-    "Die Absolventinnen und Absolventen sind sich der Möglichkeiten und Grenzen aktueller Methoden bewusst und befähigt, auf Basis neuester Forschung innovative Lösungen zu entwickeln"
+    "Die Absolventinnen und Absolventen sind sich der Möglichkeiten und Grenzen aktueller Methoden bewusst und befähigt, auf Basis neuester Forschung innovative Lösungen zu entwickeln."
    ],
    "bestandteile": [
     {
@@ -7907,7 +7900,7 @@ window.MODULES = [
    "fachgebiet": "FG Management im Gesundheitswesen",
    "turnus": "WiSe",
    "pruefungsform": "Portfolioprüfung",
-   "dauer": "100 Punkte insgesamt: Abgabe & Präsentation von Übungsaufgaben in Kleingruppen (40 P, 20 Minütige Präsentation pro Gruppe); Schriftlicher Test (60 P, 60 Minuten)",
+   "dauer": "100 Punkte insgesamt: Abgabe & Präsentation von Übungsaufgaben in Kleingruppen (40 P, 20-minütige Präsentation pro Gruppe); Schriftlicher Test (60 P, 60 Minuten)",
    "lehrinhalte": [
     "Begriffe rund um Digital Health und das deutsche Gesundheitssystem",
     "Informationsmanagement im Gesundheitswesen",
@@ -8124,8 +8117,7 @@ window.MODULES = [
    "lernergebnisse": [
     "Nach Absolvieren dieses Moduls sind die Studierenden mit den Grundlagen des operativen Projektmanagements vertraut.",
     "Sie sind in der Lage, komplexe interdisziplinäre Aufgabenstellungen selbständig zu planen, zu realisieren, zu überwachen und zu steuern.",
-    "Dabei haben sie u. a.",
-    "Kenntnisse über die verschiedenen Organisationsformen des Projektmanagements, die Koordination der Arbeit in Projektteams, sowie die Anforderungen und Aufgaben eines Projektleiters erlangt."
+    "Dabei haben sie u. a. Kenntnisse über die verschiedenen Organisationsformen des Projektmanagements, die Koordination der Arbeit in Projektteams sowie die Anforderungen und Aufgaben eines Projektleiters erlangt."
    ],
    "bestandteile": [
     {
@@ -8233,7 +8225,7 @@ window.MODULES = [
     "Die Studierenden sind in der Lage, die integrierenden Wirkungsprinzipien der Logistik, die Bereiche der Betriebswirtschaftslehre, Materialflusstechnik, Produktionstechnik, Verkehrswesen …",
     "Sie verstehen diesen übergreifenden Ansatz und die Prozessorientierung der Logistik und können die gelehrten Methoden in der Logistikplanung anwenden.",
     "Die Studierenden kennen die Aufgaben, Inhalte und Herausforderungen der Logistik.",
-    "Die erworbenen Erkenntnisse ermöglichen es Logistiksysteme unter Berücksichtigung der Gestaltungsaufgaben der Logistik sowie den dabei zu berücksichtigenden Abhängigkeiten und …"
+    "Die erworbenen Erkenntnisse ermöglichen es, Logistiksysteme unter Berücksichtigung der Gestaltungsaufgaben der Logistik sowie den dabei zu berücksichtigenden Abhängigkeiten und …"
    ],
    "bestandteile": [
     {
@@ -8283,8 +8275,7 @@ window.MODULES = [
    "lernergebnisse": [
     "Mit den wachsenden Anforderungen an die Funktionalität, Qualität und Kosten von IT-Dienstleistungen steigt die Bedeutung einer effektiven und effizienten IT-Leistungserbringung.",
     "Entsprechend breit ist das Spektrum der Managementaufgaben und -prozesse, die ein IT-Dienstleister heute wahrnehmen muss und die unter dem Begriff des IT-Service-Managements …",
-    "Im ersten Teil dieses Moduls lernen die Studierenden die zentralen Bestandteile des IT-Service-Managements kennen und erhalten einen Einblick in aktuelle Referenzmodelle in der Praxis, …",
-    "ITIL, COBIT oder MOF."
+    "Im ersten Teil dieses Moduls lernen die Studierenden die zentralen Bestandteile des IT-Service-Managements kennen und erhalten einen Einblick in aktuelle Referenzmodelle in der Praxis, z. B. ITIL, COBIT oder MOF."
    ],
    "bestandteile": [
     {
@@ -8323,8 +8314,8 @@ window.MODULES = [
    "version": "5",
    "url": "https://moseskonto.tu-berlin.de/moses/modultransfersystem/bolognamodule/beschreibung/anzeigen.html?number=70159&version=5&sprache=1",
    "gueltigkeit": "Seit WiSe 2021/22",
-   "sprache": "English",
-   "lehrsprache": "English",
+   "sprache": "Englisch",
+   "lehrsprache": "Englisch",
    "verantwortlich": "Blind, Knut",
    "fakultaet": "Fakultät VII",
    "institut": "Institut für Technologie und Management",
@@ -8379,7 +8370,7 @@ window.MODULES = [
    "nummer": "70163",
    "version": "4",
    "url": "https://moseskonto.tu-berlin.de/moses/modultransfersystem/bolognamodule/beschreibung/anzeigen.html?number=70163&version=4&sprache=1",
-   "gueltigkeit": "Seit WS 2019/20",
+   "gueltigkeit": "Seit WiSe 2019/20",
    "sprache": "Deutsch, Englisch",
    "lehrsprache": "Deutsch",
    "verantwortlich": "Haase, Martin Sebastian",
@@ -8436,7 +8427,7 @@ window.MODULES = [
    "fachgebiet": "FG S-Professur Innovationsökonomie",
    "turnus": "SoSe",
    "pruefungsform": "Portfolioprüfung",
-   "dauer": "100 Punkte insgesamt: Fallstudie (20 P, 30 Seiten); Fallstudie Präsentation (30 P, 2x 15 Min); Klausur (40 P, 60 Min); Multiple-choice Tests (10 P, 5 Min je Quiz (5-10 Quizze pro semester))",
+   "dauer": "100 Punkte insgesamt: Fallstudie (20 P, 30 Seiten); Fallstudie Präsentation (30 P, 2x 15 Min); Klausur (40 P, 60 Min); Multiple-Choice-Tests (10 P, 5 Min je Quiz (5-10 Quizze pro Semester))",
    "lehrinhalte": [
     "Wissen als öffentliches Gut, Institutionen",
     "Formelle Schutzmaßnahmen: Patente, Gebrauchsmuster, Marken",
@@ -8444,8 +8435,8 @@ window.MODULES = [
     "Lizenzierung, Patent Pools, Open Innovation, Bewertung von IP"
    ],
    "lernergebnisse": [
-    "Ziel der Veranstaltung ist es den Teilnehmer einen umfassenden Überblick über den Umgang und den Schutz geistigen Eigentums zu ermöglichen und die Grundlagen des IP-Managements zu …",
-    "Die theoretischen und empirischen Erkenntnisse der Vorlesungsveranstaltungen werden ergänzt durch im Rahmen der Übungsveranstaltung stattfindenden Fallstudien mit Partnern aus der …",
+    "Ziel der Veranstaltung ist es, den Teilnehmern einen umfassenden Überblick über den Umgang mit geistigem Eigentum und dessen Schutz zu ermöglichen und die Grundlagen des IP-Managements zu …",
+    "Die theoretischen und empirischen Erkenntnisse der Vorlesungsveranstaltungen werden ergänzt durch im Rahmen der Übungsveranstaltung stattfindende Fallstudien mit Partnern aus der …",
     "Die Studierenden werden befähigt, Unterschiede zwischen den Methoden und Instrumenten des Schutzes geistigen Eigentums zu erkennen und dabei die Vor- und Nachteile kritisch abzuwägen. …"
    ],
    "bestandteile": [
@@ -8484,7 +8475,7 @@ window.MODULES = [
    "nummer": "70034",
    "version": "5",
    "url": "https://moseskonto.tu-berlin.de/moses/modultransfersystem/bolognamodule/beschreibung/anzeigen.html?number=70034&version=5&sprache=1",
-   "gueltigkeit": "Seit WS 2019/20",
+   "gueltigkeit": "Seit WiSe 2019/20",
    "sprache": "Deutsch",
    "lehrsprache": "Deutsch",
    "verantwortlich": "Lachmann, Maik",
@@ -8548,7 +8539,7 @@ window.MODULES = [
    "verantwortlich": "Heinemann, Frank",
    "fakultaet": "Fakultät VII",
    "institut": "Institut für Volkswirtschaftslehre und Wirtschaftsrecht",
-   "fachgebiet": "FG Volkswirtschaftlehre, insbesondere Makroökonomie",
+   "fachgebiet": "FG Volkswirtschaftslehre, insbesondere Makroökonomie",
    "turnus": "WiSe/SoSe",
    "pruefungsform": "Portfolioprüfung",
    "dauer": "100 Punkte insgesamt: Hausaufgabe 1 / Präsentation (5 P, 20 Min); Hausaufgabe 2 (5 P, 2-3 Seiten); Hausaufgabe 3 (5 P, 2-3 Seiten); Hausaufgabe 4 (5 P, 2-3 Seiten); Multiple Choice Test (20 P, 20 Min); Klausur (60 P, 60 Min)",
@@ -8561,7 +8552,7 @@ window.MODULES = [
    "lernergebnisse": [
     "In der Veranstaltung Makroökonomik wird eine umfassende Einführung in gesamtwirtschaftliche Zusammenhänge gegeben.",
     "Die Studierenden sollen befähigt werden, aktuelle wirtschaftspolitische Diskussionen qualifiziert zu verfolgen und sich an ihnen zu beteiligen.",
-    "Sie sollen in die Lage versetzt werden, Wirtschaftspolitik zu analysieren und Empfehlungen geben zu können."
+    "Sie sollen in die Lage versetzt werden, Wirtschaftspolitik zu analysieren und Empfehlungen zu geben."
    ],
    "bestandteile": [
     {
@@ -8605,7 +8596,7 @@ window.MODULES = [
    "verantwortlich": "Hirschhausen, Christian",
    "fakultaet": "Fakultät VII",
    "institut": "Institut für Volkswirtschaftslehre und Wirtschaftsrecht",
-   "fachgebiet": "FG Volkswirtschaftlehre, insb. Wirtschafts- und Infrastrukturpolitik",
+   "fachgebiet": "FG Volkswirtschaftslehre, insb. Wirtschafts- und Infrastrukturpolitik",
    "turnus": "SoSe",
    "pruefungsform": "Schriftliche Prüfung",
    "lehrinhalte": [
@@ -8615,9 +8606,9 @@ window.MODULES = [
     "Eigene Modelle für wirtschaftliche und technische Fragestellungen"
    ],
    "lernergebnisse": [
-    "Studierende erlernen aufbauend auf oder parallel zu den Grundlagen des Operations Research die Methoden der angewandten Mathematik zur computergestützen Lösung von größeren …",
+    "Studierende erlernen aufbauend auf oder parallel zu den Grundlagen des Operations Research die Methoden der angewandten Mathematik zur computergestützten Lösung von größeren …",
     "Behandelt wird das Lösen von linearen und ganzzahligen Problemen unter Verwendung von Methoden der angewandten Mathematik und insbesondere die Benutzung der Standard-Software Julia.",
-    "Studierende sind nach Abschluss der Veranstaltung in der Lage ein eigenes, umfangreicheres mathematisches Modell zur Lösung wirtschaftlicher und technischer Problemstellungen zu entwickeln."
+    "Studierende sind nach Abschluss der Veranstaltung in der Lage, ein eigenes, umfangreicheres mathematisches Modell zur Lösung wirtschaftlicher und technischer Problemstellungen zu entwickeln."
    ],
    "bestandteile": [
     {
@@ -8654,7 +8645,7 @@ window.MODULES = [
    "verantwortlich": "Hirschhausen, Christian",
    "fakultaet": "Fakultät VII",
    "institut": "Institut für Volkswirtschaftslehre und Wirtschaftsrecht",
-   "fachgebiet": "FG Volkswirtschaftlehre, insb. Wirtschafts- und Infrastrukturpolitik",
+   "fachgebiet": "FG Volkswirtschaftslehre, insb. Wirtschafts- und Infrastrukturpolitik",
    "turnus": "WiSe/SoSe",
    "pruefungsform": "Schriftliche Prüfung",
    "dauer": "100 Minuten",
@@ -8710,7 +8701,7 @@ window.MODULES = [
    "verantwortlich": "Hirschhausen, Christian",
    "fakultaet": "Fakultät VII",
    "institut": "Institut für Volkswirtschaftslehre und Wirtschaftsrecht",
-   "fachgebiet": "FG Volkswirtschaftlehre, insb. Wirtschafts- und Infrastrukturpolitik",
+   "fachgebiet": "FG Volkswirtschaftslehre, insb. Wirtschafts- und Infrastrukturpolitik",
    "turnus": "WiSe",
    "pruefungsform": "Portfolioprüfung",
    "dauer": "100 Punkte insgesamt: Schriftlicher Test (35 P, 60 Min.); Schriftlicher Test (35 P, 60 Min.); Semesterprojekt (30 P, 30h)",
@@ -8804,7 +8795,7 @@ window.MODULES = [
    "nummer": "70000",
    "version": "5",
    "url": "https://moseskonto.tu-berlin.de/moses/modultransfersystem/bolognamodule/beschreibung/anzeigen.html?number=70000&version=5&sprache=1",
-   "gueltigkeit": "Seit WS 2019/20",
+   "gueltigkeit": "Seit WiSe 2019/20",
    "sprache": "Deutsch, Englisch",
    "lehrsprache": "Deutsch",
    "verantwortlich": "Haase, Martin Sebastian",
@@ -8878,7 +8869,7 @@ window.MODULES = [
    "lernergebnisse": [
     "Die Studierenden werden dafür sensibilisiert, auf die nachhaltige Rationalität von Entscheidungen unter Risiko zu achten.",
     "Sie sind in der Lage, Risiken zu erfassen und Ausfall- sowie Risikoprämien zu kalkulieren.",
-    "Im Rahmen eines modernen Portoliomanagements können sie zwischen systematischen und unsystematischen Risiken unterscheiden und diese Risiken bewerten.",
+    "Im Rahmen eines modernen Portfoliomanagements können sie zwischen systematischen und unsystematischen Risiken unterscheiden und diese Risiken bewerten.",
     "Sie lernen Finanzinstrumente kennen, die ein effektives Risikomanagement erlauben, und können diese Instrumente fair bewerten."
    ],
    "bestandteile": [
@@ -8937,7 +8928,7 @@ window.MODULES = [
     "Die Dienstleistungsbranche ist der größte und am schnellsten wachsende Wirtschaftsbereich in Deutschland.",
     "Für viele Unternehmen sind Dienstleistungen zentrale Komponenten der Geschäftsmodelle geworden.",
     "Die Studierenden erhalten einen Überblick über Grundkonzepte und Methoden des Service Engineering.",
-    "Erlernte Konzepte zur Gestaltung und Management von Dienstleistungsangeboten werden im Rahmen von Übungen vertieft."
+    "Erlernte Konzepte zur Gestaltung und zum Management von Dienstleistungsangeboten werden im Rahmen von Übungen vertieft."
    ],
    "bestandteile": [
     {
@@ -9042,8 +9033,8 @@ window.MODULES = [
     "Parametrische und nichtparametrische Testverfahren"
    ],
    "lernergebnisse": [
-    "Die Studierenden haben grundlegendes Wissen über die induktive Statsitik.",
-    "Sie verstehen Stichprobendaten und Stichprobenstatistiken als unsicheren Ausschnitt aus der Grundgesamtheit und sind in der Lage Rückschlüsse von der Stichprobe auf die Grundgesamtheit …"
+    "Die Studierenden haben grundlegendes Wissen über die induktive Statistik.",
+    "Sie verstehen Stichprobendaten und Stichprobenstatistiken als unsicheren Ausschnitt aus der Grundgesamtheit und sind in der Lage, Rückschlüsse von der Stichprobe auf die Grundgesamtheit …"
    ],
    "bestandteile": [
     {
@@ -9098,7 +9089,7 @@ window.MODULES = [
     "Rechtliche Aspekte, CE-Kennzeichnung, Nachhaltigkeit"
    ],
    "lernergebnisse": [
-    "Während viele genormte Produkte, wie zum Beispiel das Papierformat DIN A4, für fast jedermann ein Begriff ist, ist der Nutzen von Normen, ihre Entstehung nach dem Konsensprinzip und ihre …",
+    "Während viele genormte Produkte, wie zum Beispiel das Papierformat DIN A4, für fast jedermann ein Begriff sind, ist der Nutzen von Normen, ihre Entstehung nach dem Konsensprinzip und ihre …",
     "In dem Modul Strategische Normung lernen die Studierenden, die Erarbeitung von Normen auf nationaler, europäischer und internationaler Ebene nachzuvollziehen und die Rollen der …"
    ],
    "bestandteile": [
@@ -9212,7 +9203,7 @@ window.MODULES = [
     "Die Studierenden",
     "erlernen die Grundlagen der Steuerlehre,",
     "erwerben Kenntnisse über die statistische Messung von Ungleichheit,",
-    "erlangen Wissen über die Bewertung von Ungleichheit,"
+    "erlangen Wissen über die Bewertung von Ungleichheit, …"
    ],
    "bestandteile": [
     {
@@ -9250,7 +9241,7 @@ window.MODULES = [
    "nummer": "70254",
    "version": "4",
    "url": "https://moseskonto.tu-berlin.de/moses/modultransfersystem/bolognamodule/beschreibung/anzeigen.html?number=70254&version=4&sprache=1",
-   "gueltigkeit": "Seit SS 2018",
+   "gueltigkeit": "Seit SoSe 2018",
    "sprache": "Deutsch",
    "lehrsprache": "Deutsch",
    "verantwortlich": "Hirth, Hans",
@@ -9433,10 +9424,10 @@ window.MODULES = [
     "Politische Ökonomie: Arrow-Paradox, Median-Wähler, Lobbying"
    ],
    "lernergebnisse": [
-    "Die Studierende erwerben mathematisch-formale Modellierungskompetenzen der Wohlfahrtsökonomie und der Politischen Ökonomie, wobei Methoden der Mikroökonomie, Spieltheorie und …",
-    "Die Studierende lernen, unter welchen Bedingungen Märkte aus ökonomischer Sicht versagen und mit welcher Politik der Staat dieses Marktversagen korrigieren kann.",
-    "Die Studierende verstehen grundlegende Mechanismen der politischen Ökonomie.",
-    "Die Studierende erkennen den Wert einer Vielfalt wissenschaftlicher Methoden (Theorie, Experimente, Empirie)."
+    "Die Studierenden erwerben mathematisch-formale Modellierungskompetenzen der Wohlfahrtsökonomie und der Politischen Ökonomie, wobei Methoden der Mikroökonomie, Spieltheorie und …",
+    "Die Studierenden lernen, unter welchen Bedingungen Märkte aus ökonomischer Sicht versagen und mit welcher Politik der Staat dieses Marktversagen korrigieren kann.",
+    "Die Studierenden verstehen grundlegende Mechanismen der politischen Ökonomie.",
+    "Die Studierenden erkennen den Wert einer Vielfalt wissenschaftlicher Methoden (Theorie, Experimente, Empirie)."
    ],
    "bestandteile": [
     {
@@ -9491,9 +9482,8 @@ window.MODULES = [
     "Europa- und internationalrechtliche Rahmenbedingungen"
    ],
    "lernergebnisse": [
-    "Die Studierenden sind in der Lage, Sachverhalte mit Bezug zum Wirtschaftsprivatrecht richtig einordnen und bewerten zu können.",
-    "Sie beherrschen die grundlegenden Institutionen des Wirtschaftsprivatrechts (insb.",
-    "Vertrag [Anbahnung und Zustandekommen von Verträgen sowie Erscheinungsformen vertraglicher Pflichtverletzungen], Delikte, Sacheigentum und Eigentumsübergang) sowie deren Einbettung in …",
+    "Die Studierenden sind in der Lage, Sachverhalte mit Bezug zum Wirtschaftsprivatrecht richtig einzuordnen und zu bewerten.",
+    "Sie beherrschen die grundlegenden Institutionen des Wirtschaftsprivatrechts (insb. Vertrag [Anbahnung und Zustandekommen von Verträgen sowie Erscheinungsformen vertraglicher Pflichtverletzungen], Delikte, Sacheigentum und Eigentumsübergang) sowie deren Einbettung in …",
     "Die im Modul Wirtschaftsprivatrecht erworbenen Kenntnisse und Fertigkeiten können im Rahmen der juristischen Module des Masterstudiums in verschiedene Richtungen vertieft werden."
    ],
    "bestandteile": [
@@ -9551,7 +9541,7 @@ window.MODULES = [
     "Angewandte Wirtschaftsforschung ist fast immer empirisch, d. h. verwendet fast immer tatsächliche Messungen/Beobachtungen, um Forschungsfragen zu untersuchen.",
     "Die Ökonometrie ist dafür die Schlüsselqualifikation.",
     "Die Regressionsanalyse ist ihr wichtigstes Handwerkszeug.",
-    "Die Studierenden sind in der Lage Zusammenhänge zwischen ökonomischen Variablen an Hand ihrer beobachteten Werte zu schätzen, oft mit dem Ziel ökonomische Hypothesen über den …"
+    "Die Studierenden sind in der Lage, Zusammenhänge zwischen ökonomischen Variablen anhand ihrer beobachteten Werte zu schätzen, oft mit dem Ziel, ökonomische Hypothesen über den …"
    ],
    "bestandteile": [
     {

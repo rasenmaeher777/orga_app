@@ -4,7 +4,8 @@ Web-App für Module, Semesterplanung und ToDos. Reines HTML/CSS/JavaScript ohne 
 
 ## Was die App kann
 
-- Alle Module der StuPO vom 13.10.2025 als Kästchen: 16 Pflichtmodule (inkl. Bachelorarbeit) und 168 Wahlpflichtmodule, gruppiert nach Bereich. Die Wahlpflichtbereiche sind einklappbar.
+- Anmeldesperre: Ohne Anmeldung zeigt die Seite nur einen einfarbigen Hintergrund mit dem Knopf „Mit Google anmelden". Module, ToDos und Kopfbereich erscheinen erst nach der Anmeldung; nach dem Abmelden ist die Seite wieder leer.
+- Alle Module der StuPO vom 13.10.2025 als Kästchen: 16 Pflichtmodule (inkl. Bachelorarbeit) und 177 Wahlpflichtmodule (168 aus der Modulliste der StuPO, 9 weitere aus der Moses-Modulliste zur StuPO 2025), gruppiert nach Bereich. Die Wahlpflichtbereiche sind einklappbar.
 - Semesterfeld pro Modul (oben rechts im Kästchen). Das Kästchen wird in der Semesterfarbe eingefärbt. Pflichtmodule starten mit dem Semester aus dem Studienverlaufsplan.
 - „Sortieren": Filter nach Semester, nach „Ohne Semester" und nach „Mit ToDos". Jeder Semester-Chip zeigt die eingeplanten LP.
 - ToDos pro Modul: Text eingeben, Enter. Abhaken lässt das ToDo verschwinden (5 Sekunden lang „Rückgängig" möglich).
@@ -23,8 +24,8 @@ Web-App für Module, Semesterplanung und ToDos. Reines HTML/CSS/JavaScript ohne 
 | --- | --- |
 | `index.html` | Seitengerüst |
 | `css/style.css` | Layout und Farben (Semesterfarben stehen ganz oben als `--s1` bis `--s10`) |
-| `js/app.js` | Logik: Zustand, Darstellung, Bedienung, Sync |
-| `js/firebase-config.js` | Firebase-Zugangsdaten für den Sync (anfangs leer) |
+| `js/app.js` | Logik: Zustand, Darstellung, Bedienung, Anmeldung und Sync |
+| `js/firebase-config.js` | Firebase-Zugangsdaten für Anmeldung und Sync |
 | `data/modules.js` | Alle Moduldaten, fest im Quellcode |
 | `docs/StuPo.pdf` | Studien- und Prüfungsordnung für den Download-Link (Dateiname mit genau dieser Groß-/Kleinschreibung, GitHub Pages unterscheidet sie) |
 
@@ -36,7 +37,7 @@ Im Projektordner im Terminal:
 python3 -m http.server 8000
 ```
 
-Dann <http://localhost:8000> öffnen. Ohne Firebase-Konfiguration läuft die App im lokalen Modus („Nur auf diesem Gerät").
+Dann <http://localhost:8000> öffnen und anmelden (`localhost` ist bei Firebase von Haus aus als Domain zugelassen). Ist `apiKey` in `js/firebase-config.js` leer, läuft die App im lokalen Modus ohne Anmeldung („Nur auf diesem Gerät").
 
 ## Auf GitHub Pages veröffentlichen
 
@@ -82,10 +83,13 @@ Einmalig, etwa 10 Minuten. Die Bezeichnungen in der Firebase-Konsole können lei
    ```
 
 6. **Projekteinstellungen (Zahnrad) → Allgemein → Meine Apps → Web-App hinzufügen (`</>`)**. Die angezeigten Werte `apiKey`, `authDomain`, `projectId` und `appId` in `js/firebase-config.js` eintragen.
-7. Committen und pushen. In der App erscheint oben rechts „Mit Google anmelden". Auf beiden Geräten mit demselben Google-Konto anmelden.
+7. Committen und pushen. Die App zeigt jetzt nur noch eine leere Seite mit dem Knopf „Mit Google anmelden". Auf beiden Geräten mit demselben Google-Konto anmelden.
 
 Gut zu wissen:
 
+- Die Anmeldesperre ist eine Sichtsperre im Browser. Deine eigenen Daten (Semester, ToDos, Termine) schützen die Firestore-Regeln aus Schritt 5. Die Moduldaten (`data/modules.js`) und die StuPO-PDF liegen dagegen als Dateien im öffentlichen Repository und bleiben über ihre direkte Adresse abrufbar.
+- Anmelden kann sich jedes Google-Konto; jedes Konto sieht nur seine eigenen Daten. Meldet sich in einem Browser ein anderes Konto an als zuvor, beginnt es mit leerem Stand.
+- Ohne Internetverbindung ist keine Anmeldung möglich, die Seite bleibt dann leer („Die Anmeldung ist gerade nicht erreichbar").
 - Die Werte in `firebase-config.js` sind keine Geheimnisse und dürfen im öffentlichen Repository stehen. Den Schutz übernehmen die Regeln aus Schritt 5.
 - Bei der ersten Anmeldung wird der lokale Stand dieses Geräts hochgeladen. Existiert in Firestore schon ein Stand, ersetzt er den lokalen.
 - Gespeichert wird ein Dokument unter `users/<deine-uid>/state/main` mit Semestern, ToDos und eigenen Modulen. Ein ToDo hat die Felder `id`, `text` und optional `due` (Frist als `"YYYY-MM-DD"`; ohne Frist fehlt das Feld). Klausurtermine liegen unter `exams` als `{ modulId: { t1, t2 } }`, ebenfalls als `"YYYY-MM-DD"` und nur, wenn ein Termin eingetragen ist.
