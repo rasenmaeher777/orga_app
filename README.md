@@ -29,6 +29,7 @@ Web-App für Module, Semesterplanung, ToDos und Noten. Reines HTML/CSS/JavaScrip
 | `css/style.css` | Layout und Farben (Semesterfarben stehen ganz oben als `--s1` bis `--s10`) |
 | `js/app.js` | Logik: Zustand, Darstellung, Bedienung, Anmeldung und Sync |
 | `js/grades.js` | Notenberechnung nach § 8 StuPO als reine Funktionen (ohne Zugriff auf Seite oder Zustand) |
+| `js/about.js` | Fenster „Über diese App“ (Zahnrad-Knopf): Entstehung, Aufbau, technische Daten und Live-Werte. Liest nur über `window.UNIAPP.info()` aus `app.js`; zeigt keine Kontodaten, Kennungen oder Schlüssel. Texte stehen oben im Abschnitt „Inhalte“. |
 | `js/firebase-config.js` | Firebase-Zugangsdaten für Anmeldung und Sync |
 | `data/modules.js` | Alle Moduldaten, fest im Quellcode |
 | `docs/StuPo.pdf` | Studien- und Prüfungsordnung für den Download-Link (Dateiname mit genau dieser Groß-/Kleinschreibung, GitHub Pages unterscheidet sie) |

@@ -84,6 +84,14 @@ button { cursor: pointer; }
   padding: 24px; text-align: center; color: var(--muted); font-size: 14px;
 }
 .gate p { margin: 0; }
+/* Logo: feste quadratische Fläche, damit beim Laden nichts springt; skaliert mit Breite und Höhe des Fensters.
+   Die Bilddatei hat den hellen Seitenhintergrund, die runden Ecken lassen sie im dunklen Modus wie ein App-Symbol wirken. */
+.gate .gate-logo {
+  display: block; flex: none; width: clamp(88px, min(30vw, 22vh), 148px); height: auto; aspect-ratio: 1 / 1;
+  max-width: 100%; object-fit: contain; border-radius: 22%; margin-bottom: 6px;
+}
+.gate .gate-title { margin: 0; color: var(--text); font-size: clamp(30px, 7vw, 44px); font-weight: 700; letter-spacing: -0.03em; line-height: 1.1; }
+.gate .gate-sub { margin: 0 0 20px; font-size: clamp(15px, 3.6vw, 18px); }
 .gate .btn { padding: 10px 18px; font-size: 14px; }
 .gate .btn:not(.primary) { color: var(--text); }
 
@@ -98,6 +106,21 @@ button { cursor: pointer; }
 .top-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-top: 14px; }
 .brand h1 { margin: 0; font-size: 20px; font-weight: 700; letter-spacing: -0.02em; }
 .brand p { margin: 1px 0 0; color: var(--muted); font-size: 12.5px; }
+/* Logo in der Kopfzeile. Es darf die Leiste nie höher machen und nichts verschieben:
+   - breite Fenster: links neben Titel und Unterzeile, aus dem Textfluss genommen
+   - Smartphone: klein in der Titelzeile; passt es dort nicht hinein, rutscht es in eine zweite Zeile,
+     die abgeschnitten wird, und ist dann schlicht nicht zu sehen
+   - sehr schmale Fenster (unter 375px): ausgeblendet, dort bricht schon der Titel um */
+.brand-logo { display: none; border-radius: 22%; }
+@media (min-width: 641px) {
+  .brand { position: relative; padding-left: 54px; }
+  .brand-logo { display: block; position: absolute; left: 0; top: 50%; width: 44px; height: 44px; transform: translateY(-50%); }
+}
+@media (min-width: 375px) and (max-width: 640px) {
+  .brand h1 { display: flex; flex-direction: row-reverse; justify-content: flex-end; flex-wrap: wrap; align-items: center; column-gap: 8px; height: 1.45em; overflow: hidden; }
+  .brand h1 span { flex: none; }
+  .brand-logo { display: block; flex: none; width: 26px; height: 26px; }
+}
 .brand a { color: var(--text); font-weight: 600; text-underline-offset: 2px; white-space: nowrap; padding: 8px 0; /* größere Tippfläche */ }
 
 .sync { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); flex-shrink: 0; }
@@ -420,5 +443,86 @@ main { padding-top: 16px; padding-bottom: 40px; min-height: 60vh; }
   .row-title { padding: 3px 0; }
   .stats dd { font-size: 19px; }
   .grade-table th:nth-child(4), .grade-table .grade-val { text-align: right; padding-right: 0; }
+}
+/* ---------- Fenster „Über diese App“ (js/about.js) ---------- */
+.all-toggle.icon-only { width: 34px; padding: 0; justify-content: center; }
+.all-toggle.icon-only .ico { width: 17px; height: 17px; stroke-width: 1.3; }
+.about-body { font-size: 14.5px; }
+.about-body p { margin: 0 0 10px; }
+.about-body h3 { margin-top: 26px; }
+.about-body h4 { margin: 18px 0 8px; font-size: 13.5px; font-weight: 700; }
+.about-body h4 .note { font-weight: 400; margin-left: 6px; }
+.about-lead { font-size: 17px; line-height: 1.45; letter-spacing: -0.01em; }
+.about-quote { margin: 14px 0 18px; padding: 2px 0 2px 14px; border-left: 3px solid var(--line); font-size: 15px; font-style: italic; }
+.about-quote cite { display: block; margin-top: 4px; font-size: 12.5px; font-style: normal; color: var(--muted); }
+.about-tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.about-tiles div { background: var(--bg); border: 1px solid var(--line); border-radius: 12px; padding: 12px 12px 11px; min-width: 0; }
+.about-tiles b { display: block; font-size: 24px; line-height: 1.1; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.about-tiles div > span { display: block; margin-top: 4px; font-size: 12.5px; line-height: 1.3; color: var(--muted); }
+
+.about-body .about-steps { list-style: none; margin: 0; padding: 0; counter-reset: step; }
+.about-steps li { position: relative; margin: 0; padding: 0 0 14px 38px; counter-increment: step; }
+.about-steps li::before {
+  content: counter(step); position: absolute; left: 0; top: 0; width: 24px; height: 24px; border-radius: 50%;
+  display: grid; place-content: center; font-size: 12.5px; font-weight: 700;
+  border: 2px solid var(--dot, var(--line)); background: var(--card);
+}
+.about-steps li::after { content: ""; position: absolute; left: 11px; top: 28px; bottom: 2px; width: 2px; background: var(--line); }
+.about-steps li:last-child { padding-bottom: 0; }
+.about-steps li:last-child::after { display: none; }
+.about-steps b { display: block; padding-top: 2px; }
+.about-steps p { margin: 3px 0 0; color: var(--muted); }
+
+.about-arch { display: flex; align-items: stretch; gap: 6px; margin: 4px 0 14px; }
+.arch-box { flex: 1 1 0; min-width: 0; border: 1px solid var(--line); border-radius: 12px; padding: 11px 12px; background: var(--bg); }
+.arch-box.main { border: 2px solid var(--text); background: var(--card); }
+.arch-box b { display: block; font-size: 14px; }
+.arch-box span { display: block; margin-top: 3px; font-size: 12.5px; line-height: 1.35; color: var(--muted); }
+.arch-link { flex: 0 0 96px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: var(--muted); }
+.arch-link span { font-size: 11.5px; line-height: 1.25; }
+.arch-link i { font-style: normal; font-size: 20px; line-height: 1.1; color: var(--text); }
+.about-body .about-points { padding-left: 18px; }
+.about-points li { margin: 6px 0; }
+
+.about-split { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.about-split > div { border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; background: var(--bg); }
+.about-split h4 { margin: 0 0 6px; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); }
+.about-split li { margin: 4px 0; }
+.about-body .about-gap { color: var(--muted); }
+
+.about-more { margin-top: 12px; border: 1px solid var(--line); border-radius: 12px; background: var(--bg); }
+.about-more:first-of-type { margin-top: 24px; }
+.about-more summary { cursor: pointer; padding: 12px 14px; font-weight: 650; border-radius: 12px; list-style-position: inside; }
+.about-more summary:focus-visible, .about-files a:focus-visible, .all-toggle.icon-only:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.about-more[open] summary { border-bottom: 1px solid var(--line); border-radius: 12px 12px 0 0; }
+.about-more > :not(summary) { margin-left: 14px; margin-right: 14px; }
+.about-more > :nth-child(2) { margin-top: 14px; }
+.about-more > :last-child { margin-bottom: 14px; }
+.about-more .facts dd { font-variant-numeric: tabular-nums; }
+.about-more .facts dt { overflow-wrap: anywhere; hyphens: auto; }
+.about-more > table { width: calc(100% - 28px); }
+.about-more .facts .wide { grid-column: 1 / -1; }
+.about-bar { height: 6px; margin-top: 6px; border-radius: 3px; background: var(--line); overflow: hidden; }
+.about-bar i { display: block; height: 100%; width: 0; border-radius: 3px; background: var(--ok); }
+.about-body .about-clock { margin-bottom: 0; }
+.about-files { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+.about-files th { text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); font-weight: 700; padding: 4px 10px 4px 0; }
+.about-files td { padding: 6px 10px 6px 0; border-top: 1px solid var(--line); vertical-align: top; }
+.about-files th:nth-child(n+3), .about-files td:nth-child(n+3) { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; padding-right: 0; padding-left: 10px; }
+.about-files tfoot td { font-weight: 650; }
+.about-files a { color: inherit; }
+.about-files code { font: 12.5px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; }
+.about-files .row-what { display: none; color: var(--muted); font-size: 12.5px; }
+.about-files + .note { margin-top: 8px; }
+@media (max-width: 640px) {
+  .all-toggle.icon-only { width: 34px; padding: 0; }
+  .about-lead { font-size: 16px; }
+  .about-tiles { grid-template-columns: 1fr 1fr; }
+  .about-arch { flex-direction: column; }
+  .arch-link { flex: none; flex-direction: row; gap: 8px; padding: 0 4px; }
+  .arch-link i { transform: rotate(90deg); }
+  .about-split { grid-template-columns: 1fr; }
+  .about-files .hide-s { display: none; }
+  .about-files .row-what { display: block; }
 }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }

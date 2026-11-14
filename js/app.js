@@ -19,6 +19,7 @@
   const LS_WISH = 'uniapp-wish-v1';     // Wunschschnitt im Zielrechner (nur in diesem Browser)
   const LS_UID = 'uniapp-uid-v1'; // Konto, zu dem der lokal gespeicherte Stand gehört
   const MAX_SEM = 10;
+  const FIREBASE_SDK = '10.12.2';
 
   const $ = (sel, root = document) => root.querySelector(sel);
   const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -89,6 +90,8 @@
   }
 
   let state = loadLocal();
+  // Kennzahlen dieser Sitzung für das Fenster „Über diese App“ (js/about.js); sie werden nirgends gespeichert
+  const metrics = { started: Date.now(), renders: 0, lastRenderMs: 0, saves: 0, pushes: 0, snapshots: 0, lastSync: 0 };
   // done: gerade abgehakte ToDos, die noch kurz durchgestrichen zu sehen sind
   const ui = { filter: 'all', q: '', open: new Set(['Pflichtbereich']), allOpen: false, done: new Set(), gradesOpen: false, howOpen: false, wish: '' };
   try { const o = JSON.parse(localStorage.getItem(LS_OPEN)); if (Array.isArray(o)) ui.open = new Set(o); } catch { /* Standard */ }
@@ -151,6 +154,7 @@
   }
 
   const ICON_CAL = '<svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><rect x="2" y="3" width="12" height="11" rx="2.5"/><path d="M2 6.5h12M5.5 1.5v3M10.5 1.5v3"/></svg>';
+  const ICON_GEAR = '<svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M6.83 3.14L7.12 1.46L8.88 1.46L9.17 3.14L10.61 3.74L12.00 2.75L13.25 4.00L12.26 5.39L12.86 6.83L14.54 7.12L14.54 8.88L12.86 9.17L12.26 10.61L13.25 12.00L12.00 13.25L10.61 12.26L9.17 12.86L8.88 14.54L7.12 14.54L6.83 12.86L5.39 12.26L4.00 13.25L2.75 12.00L3.74 10.61L3.14 9.17L1.46 8.88L1.46 7.12L3.14 6.83L3.74 5.39L2.75 4.00L4.00 2.75L5.39 3.74Z"/><circle cx="8" cy="8" r="2.1"/></svg>';
   const ICON_PLUS = '<svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 3v10M3 8h10"/></svg>';
 
   // Fristanzeige eines ToDos. Darüber liegt ein unsichtbares Datumsfeld (siehe .datebtn in style.css),
@@ -188,6 +192,7 @@
           <div class="today-btns">
             <button class="all-toggle" data-act="toggle-all" data-focus="all-toggle" aria-expanded="${ui.allOpen}"><span class="chev"></span>Alle ToDos (${rows.length})</button>
             <button class="all-toggle" data-act="toggle-grades" data-focus="grades-toggle" aria-expanded="${ui.gradesOpen}"><span class="chev"></span>Noten</button>
+            <button class="all-toggle icon-only" data-act="about" data-focus="about-btn" aria-label="Über diese App" title="Über diese App">${ICON_GEAR}</button>
           </div>
         </div>
         ${ui.allOpen ? `<div class="all-panel">${list}</div>` : ''}
@@ -326,12 +331,16 @@
     const dlg = $('#detail');
     if (dlg.open) dlg.close();
     dlg.innerHTML = '';
+    if (window.ABOUT) window.ABOUT.close();
     clearTimeout(toastTimer);
     $('#toast').hidden = true;
   }
 
   function render() {
     if (locked) return;
+    const t0 = performance.now();
+    metrics.renders++;
+    queueMicrotask(() => { metrics.lastRenderMs = performance.now() - t0; }); // läuft direkt nach dem Zeichnen
     renderPending = false;
     now = dayInfo();
     // Fokus und angefangene Eingaben merken, damit beim Neuzeichnen (z. B. durch Sync) nichts verloren geht
@@ -514,6 +523,7 @@
 
   // Änderung übernehmen: lokal speichern, neu zeichnen, an Firestore schicken
   function commit(patch) {
+    metrics.saves++;
     saveLocal();
     refresh();
     sync.push(patch);
@@ -565,6 +575,8 @@
       ui.gradesOpen = !ui.gradesOpen;
       try { localStorage.setItem(LS_GRADES, ui.gradesOpen ? '1' : '0'); } catch { /* egal */ }
       render();
+    } else if (el.dataset.act === 'about') {
+      if (window.ABOUT) window.ABOUT.open();
     } else if (el.dataset.act === 'toggle-how') {
       ui.howOpen = !ui.howOpen;
       render();
@@ -748,8 +760,10 @@
       // Anmeldesperre: Ist Firebase eingerichtet, bleibt die App gesperrt, bis jemand angemeldet ist.
       // Beim Verbinden ist die Seite leer; danach steht dort die Anmeldung oder ein Hinweis, falls sie nicht erreichbar ist.
       setLocked(!!cfg.apiKey && !user);
-      gate.innerHTML = status === 'out' ? '<button class="btn primary" data-sync="in">Mit Google anmelden</button>'
-        : status === 'error' ? '<p>Die Anmeldung ist gerade nicht erreichbar.</p><button class="btn" data-sync="retry">Neu laden</button>'
+      // Überschrift der Anmeldeseite; beim Verbinden bleibt die Seite leer, damit sie bei angemeldeten Personen nicht kurz aufblitzt
+      const gateHead = '<img class="gate-logo" src="Logo.png" alt="" width="512" height="512"><h1 class="gate-title">Uni Organisator</h1><p class="gate-sub">Aufgaben, Noten, Module organisieren</p>';
+      gate.innerHTML = status === 'out' ? gateHead + '<button class="btn primary" data-sync="in">Mit Google anmelden</button>'
+        : status === 'error' ? gateHead + '<p>Die Anmeldung ist gerade nicht erreichbar.</p><button class="btn" data-sync="retry">Neu laden</button>'
         : '';
       if (status === 'local') el.innerHTML = '<span class="dot"></span><span title="Daten liegen nur in diesem Browser. Sync: siehe README.">Nur auf diesem Gerät</span>';
       else if (status === 'loading') el.innerHTML = '<span class="dot"></span><span>Verbinde …</span>';
@@ -771,12 +785,13 @@
 
     function push(patch) {
       if (!ref) return;
-      fb.setDoc(ref, prepare(patch), { merge: true }).catch((err) => { console.error('Sync fehlgeschlagen', err); status = 'error'; draw(); });
+      metrics.pushes++;
+      fb.setDoc(ref, prepare(patch), { merge: true }).then(() => { metrics.lastSync = Date.now(); }).catch((err) => { console.error('Sync fehlgeschlagen', err); status = 'error'; draw(); });
     }
 
     async function init() {
       try {
-        const base = 'https://www.gstatic.com/firebasejs/10.12.2/';
+        const base = `https://www.gstatic.com/firebasejs/${FIREBASE_SDK}/`;
         const [app, auth, fs] = await Promise.all([import(base + 'firebase-app.js'), import(base + 'firebase-auth.js'), import(base + 'firebase-firestore.js')]);
         fb = { ...auth, ...fs };
         const fbApp = app.initializeApp(cfg);
@@ -800,6 +815,8 @@
           const failed = (err) => { console.error('Sync-Fehler', err); status = 'error'; draw(); };
           unsub = fs.onSnapshot(ref, (snap) => {
             if (snap.metadata.hasPendingWrites) return; // eigene, noch nicht bestätigte Änderung
+            metrics.snapshots++;
+            metrics.lastSync = Date.now();
             if (!snap.exists()) { fs.setDoc(ref, state).catch(failed); return; } // erste Anmeldung: lokalen Stand hochladen
             state = normalize(snap.data());
             saveLocal();
@@ -824,8 +841,30 @@
 
     draw();
     if (cfg.apiKey) init();
-    return { push, DELETE };
+    return { push, DELETE, status: () => status };
   })();
+
+  // Lesender Zugriff für das Fenster „Über diese App“ (js/about.js). Bewusst ohne Konto, Kennungen und Schlüssel.
+  window.UNIAPP = {
+    info() {
+      const todos = Object.values(state.todos).flat();
+      const stateJson = JSON.stringify(state);
+      return {
+        sync: sync.status(),
+        firebaseSdk: FIREBASE_SDK,
+        metrics: { ...metrics },
+        stateBytes: new Blob([stateJson]).size,
+        counts: {
+          todos: todos.length,
+          todosDue: todos.filter((t) => t.due).length,
+          grades: Object.keys(state.grades).length,
+          exams: Object.values(state.exams).reduce((n, e) => n + Object.keys(e).length, 0),
+          custom: Object.keys(state.custom).length,
+          planned: allModules().filter((m) => semOf(m)).length,
+        },
+      };
+    },
+  };
 
   render();
 })();
